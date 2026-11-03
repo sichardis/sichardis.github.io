@@ -9,6 +9,7 @@
   <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./styles.css">
   <link rel="stylesheet" href="./home.css">
+  <link rel="stylesheet" href="./projects.css">
   <script type="module" src="./script.js"></script>
 </head>
 <body>
@@ -79,11 +80,12 @@
     </div>
 
     <div data-page="projects" hidden>
-      <section class="page-intro container"><p class="eyebrow">PROJECTS</p><h1>엮어온 매듭</h1><p>필요를 발견하고, 여러 생각을 엮어, 실제 사용 흐름으로 구체화한 작업입니다.</p></section>
+      <section class="page-intro container"><p class="eyebrow">PROJECTS</p><h1>엮어온 매듭</h1><p>무엇이 필요한지 충분히 살핀 뒤, 선택의 이유를 화면과 사용 과정에서 확인하고 싶습니다.<br>기획에서 디자인과 검증으로 배움을 넓혀 가고 있습니다.</p></section>
       <section class="project-list container" aria-label="전체 프로젝트">
-        <div class="work-toolbar"><p id="project-count" aria-live="polite"></p><div class="filters" role="group" aria-label="프로젝트 분류"><button type="button" data-filter="all" aria-pressed="true">전체</button><button type="button" data-filter="service" aria-pressed="false">서비스 기획</button><button type="button" data-filter="ux" aria-pressed="false">UX 개선</button><button type="button" data-filter="ongoing" aria-pressed="false">진행 중</button></div></div>
+        <div class="work-toolbar"><div class="filters" role="group" aria-label="문서 유형"></div><p id="project-count" class="sr-only" aria-live="polite"></p></div>
         <div class="project-grid work-grid" id="work-grid"></div>
       </section>
+      <div class="back-to-top-wrap"><button class="back-to-top" type="button">상단으로 ↑</button></div>
     </div>
 
     <div data-page="about" hidden>
@@ -100,6 +102,8 @@
   </main>
 
   <footer class="site-footer"><div class="container footer-grid"><a class="brand" href="#/"><span>정서영</span><span lang="en">Seoyeong Jeong</span></a><div><h2 lang="en">Quick Links</h2><a href="#/projects">프로젝트</a><a href="#/about">소개</a></div><div><h2 lang="en">Contact</h2><a href="tel:+821091633356">+82 10 9163 3356</a><a href="mailto:richardis6551@naver.com">richardis6551@naver.com</a></div></div></footer>
+
+  <dialog id="process-dialog" aria-labelledby="process-title"><button type="button" class="process-close" aria-label="과정 상세 닫기">×</button><div id="process-content"></div></dialog>
 
   <dialog id="document-dialog" aria-labelledby="document-title"><div class="document-dialog-header"><span>정서영 · PORTFOLIO</span><button type="button" id="document-close" aria-label="자료 창 닫기">×</button></div><div id="document-content"></div><a class="download-link" href="./assets/seoyeong-resume-and-letter.docx" download>이력서·자기소개서 파일 내려받기 <span aria-hidden="true">↓</span></a></dialog>
 </body>
