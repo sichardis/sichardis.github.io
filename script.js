@@ -189,3 +189,18 @@ processDialog.addEventListener('click',event=>{
 window.addEventListener('hashchange' , () => renderRoute({focus:true}));
 renderProjects();
 renderRoute();
+
+// The thread can be explored by pointer, keyboard, or touch.
+const threadStops = [...document.querySelectorAll('.thread-stop')];
+threadStops.forEach(stop => {
+  stop.addEventListener('click', () => {
+    const expanded = stop.getAttribute('aria-expanded') !== 'true';
+    threadStops.forEach(item => item.setAttribute('aria-expanded', String(item === stop && expanded)));
+  });
+  stop.addEventListener('keydown', event => {
+    if (event.key === 'Escape') { stop.setAttribute('aria-expanded','false'); stop.blur(); }
+  });
+});
+document.addEventListener('click', event => {
+  if (!event.target.closest('.thread-stop')) threadStops.forEach(stop => stop.setAttribute('aria-expanded','false'));
+});
