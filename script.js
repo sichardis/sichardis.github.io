@@ -8,7 +8,7 @@ let activeFilter = 'all';
 const summaries = {
   chak: '작은 선행을 함께 실천하고 주고받은 배려를 기록하며, 즐거움을 발견하는 챌린지 서비스',
   bridge: '시니어의 경험을 기업 맞춤 언어로 번역하는 커리어 브랜딩 서비스',
-  lotte: '영화 탐색 및 예매 기능의 개선을 제안한 프로젝트',
+  lotte: '영화 탐색부터 예매 확인까지의 기능과 이용 흐름을 개선하기 위한 제안서',
 };
 
 function card(project, featured = false) {
@@ -16,10 +16,10 @@ function card(project, featured = false) {
   const image = project.cover
     ? `<img src="${escape(project.cover)}" alt="${escape(project.title)} 프로젝트 표지" loading="lazy" width="800" height="450">`
     : `<span class="project-cover-type">${escape(project.word || project.title)}</span>`;
-  const title = project.id === 'chak' ? '착! (Chak!)' : project.id === 'bridge' && featured ? 'Bridge' : project.id === 'lotte' ? '[롯데시네마] 탐색 및 예매 기능 개선 제안서' : project.title;
-  let meta = `${featured ? '대표 | ' : ''}${escape(project.role || project.type)}`;
+  const title = project.id === 'chak' ? '착! (Chak!)' : project.id === 'bridge' && featured ? '브릿지 (Bridge)' : project.id === 'lotte' ? '[롯데시네마] 탐색 및 예매 기능 개선 제안서' : project.title;
+  let meta = featured ? `대표 | ${project.id === 'lotte' ? '제안서' : '기획서'}` : escape(project.role || project.type);
   if (project.id === 'bridge' && featured) meta = '대표 | 기획서 | 커뮤니케이션디자인 공모전 특별상';
-  const date = project.id === 'chak' ? '2026.09–12 · 진행 중' : project.id === 'bridge' ? '2026.03–06' : project.year || '';
+  const date = project.id === 'chak' ? '2026.09–12 · 진행 중' : project.id === 'bridge' ? '2026.03–06' : project.id === 'lotte' ? '2026.09–12' : project.year || '';
   return `<article class="project-card"><a class="project-card-link" href="${projectUrl(project.id)}">
     <div class="project-image">${image}${ongoing ? '<span class="project-status">진행 중</span>' : ''}</div>
     <h3>${escape(title)}</h3>
@@ -107,6 +107,29 @@ $('#document-close').addEventListener('click', () => $('#document-dialog').close
 $('#document-dialog').addEventListener('click', (event) => {
   const bounds = event.currentTarget.getBoundingClientRect();
   if (event.target === event.currentTarget && (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom)) event.currentTarget.close();
+});
+const motion = () => matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth';
+$('.explore-link').addEventListener('click', (event) => {
+  event.preventDefault();
+  $('#selected-title').focus({preventScroll:true});
+  $('#selected').scrollIntoView({behavior:motion()});
+});
+$('.back-to-top').addEventListener('click', () => {
+  window.scrollTo({top:0,behavior:motion()});
+  $('.site-header .brand').focus({preventScroll:true});
+});
+document.querySelectorAll('a[href="#/projects"]').forEach((link) => {
+  link.addEventListener('click', () => {
+    activeFilter = 'all';
+    document.querySelectorAll('[data-filter]').forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.filter === 'all')));
+    renderProjects();
+    if (location.hash === '#/projects') window.scrollTo({top:0,behavior:motion()});
+  });
+});
+document.querySelectorAll('a[href="#/"], a[href="#/about"]').forEach((link) => {
+  link.addEventListener('click', () => {
+    if (location.hash === link.getAttribute('href') || (!location.hash && link.getAttribute('href') === '#/')) window.scrollTo({top:0,behavior:motion()});
+  });
 });
 window.addEventListener('hashchange', () => renderRoute({focus:true}));
 renderProjects();

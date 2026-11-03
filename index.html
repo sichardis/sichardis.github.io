@@ -4,10 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#ffffff">
-  <meta name="description" content="실마리를 찾고 생각을 엮어, 직접 만들고 검증하며 매듭짓는 정서영의 포트폴리오.">
+  <meta name="description" content="실마리를 찾아 근거로 매듭짓는 정서영의 포트폴리오.">
   <title>정서영 Seoyeong Jeong | 포트폴리오</title>
   <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./home.css">
   <script type="module" src="./script.js"></script>
 </head>
 <body>
@@ -25,56 +26,56 @@
   <main id="content" tabindex="-1">
     <div data-page="home">
       <section class="hero container" aria-labelledby="hero-title">
-        <h1 id="hero-title">실마리를 찾고 생각을 엮어,<br>
-직접 만들고 검증하며 매듭짓는 정서영입니다.</h1>
-        <div class="hero-intro">
-          <p>무엇이 필요한지 충분히 살핀 뒤, 선택의 이유를 화면과 사용 과정에서 확인하고 싶습니다.<br class="desktop-break">기획에서 디자인과 검증으로 배움을 넓혀 가고 있습니다.</p>
-          <div class="document-links">
-            <button class="document-button" type="button" data-document="resume">이력서 · 경험의 실 담아가기 <span aria-hidden="true">↗</span></button>
-            <button class="document-button" type="button" data-document="letter">자기소개서 · 생각의 매듭 담아가기 <span aria-hidden="true">↗</span></button>
+        <div class="hero-layout">
+          <div class="hero-copy">
+            <h1 id="hero-title">실마리를 찾아<br>근거로 매듭짓는 정서영입니다.</h1>
+            <div class="document-links">
+              <button class="document-button" type="button" data-document="resume">이력서 · 경험의 실 담아가기</button>
+              <button class="document-button" type="button" data-document="letter">자기소개서 · 생각의 매듭 담아가기</button>
+            </div>
           </div>
+          <div class="hero-visual" role="img" aria-label="히어로 이미지 준비 영역"><span aria-hidden="true">img</span></div>
         </div>
         <a class="explore-link" href="#selected">대표 프로젝트 보러 가기 <span aria-hidden="true">↓</span></a>
       </section>
 
       <section class="featured-section" id="selected" aria-labelledby="selected-title">
         <div class="container">
-          <h2 id="selected-title">촘촘한 매듭</h2>
-          <p class="section-description">대표적인 프로젝트 풀어서 보기</p>
+          <h2 id="selected-title" tabindex="-1">촘촘한 매듭</h2>
+          <p class="section-description">대표적인 프로젝트 묶어서 보기</p>
           <div class="project-grid" id="featured-grid"></div>
-          <div class="section-end"><a class="arrow-link" href="#/projects">엮어온 매듭 보러 가기 <span aria-hidden="true">↗</span></a></div>
+          <div class="section-end"><a class="arrow-link" href="#/projects">엮어온 매듭 풀어 보기 <span aria-hidden="true">↗</span></a></div>
         </div>
       </section>
 
       <section class="profile-section container" aria-labelledby="profile-title">
-        <div class="profile-visual" role="img" aria-label="정서영 이름을 담은 임시 프로필 이미지">
-          <span class="profile-caption">실마리에서 매듭으로</span>
-          <span class="profile-name" lang="en">SEOYEONG<br>
-JEONG<span class="profile-period">.</span></span>
-          <span class="profile-caption" lang="en">OBSERVE. CONNECT. VERIFY.</span>
+        <div class="profile-portrait">
+          <h2 id="profile-title">경험의 실</h2>
+          <p class="section-description">중요한 이력 사항 묶어서 보기</p>
+          <img class="profile-photo" src="./assets/student_jeongseoyeong.png" alt="정서영 프로필 사진" width="600" height="751" loading="lazy">
         </div>
         <div class="profile-content">
-          <h2 id="profile-title">안녕하세요, 촘촘히 매듭짓는 정서영입니다.</h2>
-          <p class="profile-intro">사람의 필요에서 실마리를 찾고, 여러 의견을 엮어 화면의 흐름으로 정리합니다.<br>
-직접 만들고 검증하며 배우는 과정에서 호기심으로 새 질문을 찾고,<br class="desktop-break">성찰력으로 처음의 판단을 다듬어 다음 설계로 이어갑니다.</p>
+          <h3 class="profile-slogan">실마리를 찾아 근거로 매듭짓는 정서영입니다.</h3>
+          <p class="profile-intro">작은 불편을 발견하는 일이 기획의 시작이라고 생각합니다.<br>
+사용자의 이야기에서 얻은 단서를 구체적인 해결 방법으로 발전시키고,<br class="desktop-break">
+그 방법이 실제로 도움이 되는지 검증합니다.</p>
           <dl class="profile-facts">
             <div><dt>생년월일</dt><dd>2004.09.18</dd></div>
             <div><dt>거주</dt><dd>서울 중랑구 망우동</dd></div>
-            <div class="education"><dt>전공</dt><dd>계원예술대학교<small>디지털미디어디자인과 기획 세부전공<br>
-2027.02 졸업 예정</small></dd></div>
-            <div><dt>전화</dt><dd><a href="tel:+821091633356">010-9163-3356</a></dd></div>
-            <div class="email-fact"><dt>이메일</dt><dd><a href="mailto:richardis6551@naver.com">richardis6551@naver.com</a></dd></div>
+            <div class="education"><dt>전공</dt><dd>계원예술대학교<small>디지털미디어디자인과 기획 세부전공<br>2027.02 졸업 예정</small></dd></div>
+            <div><dt>전화</dt><dd>010-9163-3356</dd></div>
+            <div class="email-fact"><dt>이메일</dt><dd>richardis6551@naver.com</dd></div>
           </dl>
           <div class="attitudes">
-            <p class="attitudes-label">매듭을 완성하는<br>
-세 가지 태도</p>
-            <article><h3><span>01 실마리 찾기</span>필요의 실마리를 찾는 세심함</h3><p>사용자의 상황과 작은 불편을 살피고, 해결해야 할 질문을 분명히 합니다.</p></article>
-            <article><h3><span>02 생각 엮기</span>의견과 근거를 엮는 구성력</h3><p>다양한 관점을 비교하고 한 문장도 살피며, 목표에 맞는 화면 흐름을 설계합니다.</p></article>
-            <article><h3><span>03 매듭짓기</span>핵심을 골라 매듭짓는 결단력</h3><p>중요한 것을 선택해 결과물로 구체화하고, 검증하며 다음 설계의 실마리를 찾습니다.</p></article>
+            <p class="attitudes-label">실마리에서<br>매듭까지</p>
+            <article><h3><span>01 실마리 찾기</span>관찰로 필요를 발견합니다.</h3><p>사용자의 상황과 작은 불편을 살펴, 해결해야 할 문제를 구체화합니다.</p></article>
+            <article><h3><span>02 생각 엮기</span>정리로 방향을 세웁니다.</h3><p>조사에서 얻은 의견과 근거를 엮어, 서비스 목표에 맞는 구조와 흐름을 설계합니다.</p></article>
+            <article><h3><span>03 매듭 짓기</span>검증으로 기획을 다듬습니다.</h3><p>제안한 흐름이 사용자의 불편을 해결하는지 확인하고, 결과를 바탕으로 기획을 보완합니다.</p></article>
           </div>
-          <div class="section-end"><a class="arrow-link" href="#/about">경험의 실 보러 가기 <span aria-hidden="true">↗</span></a></div>
+          <div class="section-end"><a class="arrow-link" href="#/about">경험의 실 풀어 보기 <span aria-hidden="true">↗</span></a></div>
         </div>
       </section>
+      <div class="back-to-top-wrap"><button class="back-to-top" type="button"><span aria-hidden="true">↑</span>상단으로</button></div>
     </div>
 
     <div data-page="projects" hidden>
