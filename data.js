@@ -66,6 +66,7 @@ export const projects = [
   },
   {
     "id": "rocketfresh",
+    "cover": "./assets/rocketfresh-cover.jpg",
     "title": "로켓프레시",
     "subtitle": "메인페이지 UX 리뉴얼 제안",
     "year": "2025",
@@ -81,6 +82,7 @@ export const projects = [
   },
   {
     "id": "kaywon",
+    "cover": "./assets/kaywon-cover.jpg",
     "title": "계원예술대학교 웹사이트",
     "subtitle": "웹사이트 UX 리뉴얼 제안",
     "year": "2025",
