@@ -62,7 +62,7 @@ export const projects = [
     "question": "작은 선행이 일회성으로 끝나지 않고 자연스럽게 이어질 수 있는 조건을 고민하고 있습니다.",
     "approach": "참여 흐름과 서비스 구조를 팀과 함께 설계하고 있습니다.",
     "outcome": "현재 진행 중인 작업으로, 최종 결과물과 검증 내용은 완성 후 업데이트할 예정입니다.",
-    "cover": "./assets/chak-cover.svg"
+    "cover": "./assets/chak-cover.png"
   },
   {
     "id": "rocketfresh",
@@ -96,11 +96,12 @@ export const projects = [
   },
   {
     "id": "lotte",
+    "status": "ongoing",
     "title": "롯데시네마",
     "subtitle": "탐색 및 예매 기능 개선 제안",
     "type": "UX 개선",
     "filter": "ux",
-    "cover": "./assets/lotte-cover.svg",
+    "cover": "./assets/lotte-cover.jpg",
     "lead": "영화 탐색과 예매 기능의 개선을 제안한 프로젝트입니다.",
     "pending": true
   }

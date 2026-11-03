@@ -28,7 +28,7 @@ const summaries = {
 };
 
 function card(project, featured = false) {
-  const ongoing = project.filter === 'ongoing';
+  const ongoing = project.filter === 'ongoing' || project.status === 'ongoing';
   const image = project.cover
     ? `<img src="${escape(project.cover)}" alt="${escape(project.title)} 프로젝트 표지" loading="lazy" width="800" height="450">`
     : `<span class="project-cover-type">${escape(project.word || project.title)}</span>`;
@@ -37,7 +37,7 @@ function card(project, featured = false) {
   let meta = !featured ? `${featuredIds.includes(project.id) ? '대표 | ' : ''}${filters.find(([id])=>id===project.documentType)?.[1] || ''}` : featured ? `대표 | ${project.id === 'lotte' ? '제안서' : '기획서'}` : escape(project.role || project.type);
   if (project.id === 'bridge') meta = '대표 | 기획서 | 커뮤니케이션디자인 공모전 특별상';
   const sourceId = project.id.replace('-storyboard','');
-  const date = featured ? (project.id === 'chak' ? '2026.09–12 · 진행 중' : project.id === 'bridge' ? '2026.03–06' : '2026.09–12') : ['bridge','bluedog','korail'].includes(sourceId) ? '2026.03–06' : sourceId === 'lotte' || sourceId === 'chak' || sourceId === 'kaywon' ? '2026.09–12' : sourceId === 'rocketfresh' ? '2025.09–12' : project.id === 'chak' ? '2026.09–12 · 진행 중' : project.id === 'bridge' ? '2026.03–06' : project.id === 'lotte' ? '2026.09–12' : project.year || '';
+  const date = featured ? (project.id === 'chak' ? '2026.09–12 · 진행 중' : project.id === 'bridge' ? '2026.03–06' : '2026.09–12 · 진행 중') : ['bridge','bluedog','korail'].includes(sourceId) ? '2026.03–06' : sourceId === 'lotte' || sourceId === 'chak' || sourceId === 'kaywon' ? '2026.09–12' : sourceId === 'rocketfresh' ? '2025.09–12' : project.id === 'chak' ? '2026.09–12 · 진행 중' : project.id === 'bridge' ? '2026.03–06' : project.id === 'lotte' ? '2026.09–12' : project.year || '';
   return `<article class="project-card"><a class="project-card-link" href="${projectUrl(project.id)}">
     <div class="project-image">${image}${ongoing ? '<span class="project-status">진행 중</span>' : ''}</div>
     <h3>${escape(title)}</h3>
@@ -73,7 +73,7 @@ function renderDetail(id) {
     ${project.cover ? `<img class="detail-cover" src="${escape(project.cover)}" alt="${escape(project.title)} 프로젝트 표지" width="1280" height="720">` : ''}
     ${stories.filter(([,body]) => body).map(([title,body]) => `<section class="detail-story"><h2>${escape(title)}</h2><p>${escape(body)}</p></section>`).join('')}
     ${project.detail ? `<img class="detail-image" src="${escape(project.detail)}" alt="${escape(project.title)} 기획서의 주요 산출물" loading="lazy">` : ''}
-    <div class="detail-actions">${project.pdf ? `<a class="solid-link" href="${escape(project.pdf)}" target="_blank" rel="noopener noreferrer">프로젝트 원본 PDF 보기 <span aria-hidden="true">↗</span></a><a class="arrow-link" href="${escape(project.pdf)}" download>내려받기 <span aria-hidden="true">↓</span></a>` : `<p class="detail-note">${project.filter === 'ongoing' ? '현재 진행 중인 프로젝트입니다. 최종 결과물과 검증 내용은 작업 완료 후 업데이트합니다.' : '상세 내용과 작업 자료를 정리하고 있습니다.'}</p>`}</div>
+    <div class="detail-actions">${project.pdf ? `<a class="solid-link" href="${escape(project.pdf)}" target="_blank" rel="noopener noreferrer">프로젝트 원본 PDF 보기 <span aria-hidden="true">↗</span></a><a class="arrow-link" href="${escape(project.pdf)}" download>내려받기 <span aria-hidden="true">↓</span></a>` : `<p class="detail-note">${(project.filter === 'ongoing' || project.status === 'ongoing') ? '현재 진행 중인 프로젝트입니다. 최종 결과물과 검증 내용은 작업 완료 후 업데이트합니다.' : '상세 내용과 작업 자료를 정리하고 있습니다.'}</p>`}</div>
     <nav class="detail-next" aria-label="다른 프로젝트">${previous ? `<a href="${projectUrl(previous.id)}">← ${escape(previous.title)}</a>` : '<span></span>'}${next ? `<a href="${projectUrl(next.id)}">${escape(next.title)} →</a>` : ''}</nav>`;
   return project.title;
 }
