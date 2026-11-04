@@ -78,6 +78,38 @@ function renderDetail(id) {
   return project.title;
 }
 
+// Keep the section index in sync with both click navigation and manual scrolling.
+let bridgeIndexFrame = 0;
+function setBridgeSection(id) {
+  document.querySelectorAll('.section-index [data-section]').forEach(button => {
+    if (button.dataset.section === id) button.setAttribute('aria-current','location');
+    else button.removeAttribute('aria-current');
+  });
+}
+function queueBridgeIndexUpdate() {
+  if (bridgeIndexFrame) return;
+  bridgeIndexFrame = requestAnimationFrame(() => {
+    bridgeIndexFrame = 0;
+    if (!$('#content').classList.contains('bridge-page')) return;
+    const sections = [...document.querySelectorAll('.bridge-section')];
+    if (!sections.length) return;
+    const header = $('.site-header').getBoundingClientRect().bottom;
+    const index = $('.section-index');
+    const mobile = matchMedia('(max-width:800px)').matches;
+    const scrollPadding = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
+    const sectionMargin = parseFloat(getComputedStyle(sections[0]).scrollMarginTop) || 0;
+    const threshold = Math.max(header + (mobile ? index.getBoundingClientRect().height : 0) + 12, scrollPadding + sectionMargin + 4);
+    let current = sections[0];
+    for (const section of sections) {
+      if (section.getBoundingClientRect().top <= threshold) current = section;
+    }
+    if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 4) current = sections.at(-1);
+    setBridgeSection(current.id);
+  });
+}
+window.addEventListener('scroll',queueBridgeIndexUpdate,{passive:true});
+window.addEventListener('resize',queueBridgeIndexUpdate,{passive:true});
+
 function renderRoute({ focus = false } = {}) {
   if (previousPage === 'projects') listScroll = window.scrollY;
   if ($('#process-dialog').open) $('#process-dialog').close();
@@ -104,6 +136,7 @@ function renderRoute({ focus = false } = {}) {
   $('#content').classList.toggle('bridge-page', page === 'detail' && route[1] === 'bridge');
   const restoreList = page === 'projects' && previousPage === 'detail';
   previousPage = page;
+  queueBridgeIndexUpdate();
   document.title = `${name} | 정서영 포트폴리오`;
   if ($('#document-dialog').open) $('#document-dialog').close();
   if (sectionLink) requestAnimationFrame(() => $('#selected').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth'}));
@@ -159,8 +192,9 @@ document.querySelectorAll('a[href="#/"], a[href="#/about"]').forEach((link) => {
 });
 const processDialog = $('#process-dialog');
 function openProcess(index) {
-  processIndex = index;
-  $('#process-content').innerHTML = processMarkup(index);
+  processIndex = Math.max(0, Math.min(5, index));
+  $('.process-dialog-meta').textContent = `브릿지 · 기획 과정 ${String(processIndex+1).padStart(2,'0')} / 06`;
+  $('#process-content').innerHTML = processMarkup(processIndex);
   if (!processDialog.open) processDialog.showModal();
   processDialog.scrollTop = 0;
   $('#process-title').setAttribute('tabindex','-1');
@@ -171,6 +205,7 @@ $('#detail-content').addEventListener('click', event => {
   if (process) openProcess(Number(process.dataset.process));
   const jump = event.target.closest('[data-section]');
   if (jump) {
+    setBridgeSection(jump.dataset.section);
     const target = document.getElementById(jump.dataset.section);
     target.focus({preventScroll:true}); target.scrollIntoView({behavior:motion()});
   }
@@ -180,7 +215,7 @@ $('#detail-content').addEventListener('click', event => {
 processDialog.querySelector('.process-close').addEventListener('click',()=>processDialog.close());
 processDialog.addEventListener('click',event=>{
   if (event.target.closest('[data-process-next]')) openProcess((processIndex+1)%6);
-  if (event.target.closest('[data-process-prev]')) openProcess((processIndex+5)%6);
+  if (event.target.closest('[data-process-prev]')) openProcess(Math.max(0,processIndex-1));
   if (event.target === processDialog) {
     const b=processDialog.getBoundingClientRect();
     if(event.clientX<b.left||event.clientX>b.right||event.clientY<b.top||event.clientY>b.bottom) processDialog.close();

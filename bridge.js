@@ -8,7 +8,7 @@ export const steps = [
 ];
 export function processMarkup(index) {
  const step=steps[index];
- return `<h2 id="process-title">${step.title}</h2><p class="process-summary">${step.summary}</p><img src="./assets/bridge-process-${index+1}.jpg" alt="브릿지 ${step.title} 원본 자료" width="1600" height="900">${step.sections.map(([title,body])=>`<section class="process-explanation"><h3>${title}</h3><p>${body}</p></section>`).join('')}<div class="process-pagination"><button type="button" data-process-prev>〈 이전 단계</button><span>${index+1} / 6</span><button type="button" data-process-next>다음 단계 〉</button></div>`;
+ return `<h2 id="process-title">${step.title}</h2><p class="process-summary">${step.summary}</p><img src="./assets/bridge-process-${index+1}.jpg" alt="브릿지 ${step.title} 원본 자료" width="1600" height="900">${step.sections.map(([title,body])=>`<section class="process-explanation"><h3>${title}</h3><p>${body}</p></section>`).join('')}<div class="process-pagination">${index > 0 ? '<button type="button" data-process-prev>〈 이전 단계</button>' : '<span aria-hidden="true"></span>'}<span class="process-page-count" aria-label="전체 6단계 중 ${index+1}단계">${index+1} / 6</span><button type="button" data-process-next>${index === steps.length - 1 ? '처음으로 ↻' : '다음 단계 〉'}</button></div>`;
 }
 export function bridgeMarkup() {
  return `<a class="back-link" href="#/projects" data-list-return>〈 전체 프로젝트</a>
