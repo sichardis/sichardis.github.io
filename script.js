@@ -138,15 +138,9 @@ function renderRoute({ focus = false } = {}) {
   previousPage = page;
   queueBridgeIndexUpdate();
   document.title = `${name} | 정서영 포트폴리오`;
-  if ($('#document-dialog').open) $('#document-dialog').close();
   if (sectionLink) requestAnimationFrame(() => $('#selected').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth'}));
   else { window.scrollTo({top:restoreList ? listScroll : 0,behavior:'instant'}); if (focus) $('#content').focus({preventScroll:true}); }
 }
-
-const documents = {
-  resume: `<h2 id="document-title">경험의 실</h2><p>관찰과 인터뷰에서 질문을 찾고, 화면의 흐름과 사용성 평가로 판단을 구체화해 왔습니다.</p><dl><div><dt>학력</dt><dd>계원예술대학교 디지털미디어디자인과 기획 세부전공<br>2027년 2월 졸업 예정</dd></div><div><dt>주요 경험</dt><dd>브릿지 서비스 기획 총괄 · 블루독 현장 관찰 및 인터뷰 · 코레일톡 사용성 평가 및 아이트래킹</dd></div><div><dt>수상</dt><dd>제32회 커뮤니케이션디자인 국제어워드 특별상<br>브릿지 · 디지털미디어디자인 부문 · 팀 수상</dd></div></dl>`,
-  letter: `<h2 id="document-title">생각의 매듭</h2><p>사람의 필요에서 실마리를 찾고, 여러 의견을 엮어 화면의 흐름으로 정리합니다.</p><p>현장 관찰과 인터뷰에서 질문을 얻고, 스토리보드와 사용성 평가로 선택의 이유를 확인합니다. 코레일톡 프로젝트에서는 처음 예상했던 문제와 실제 이용자의 어려움이 다르다는 점을 확인하고 개선 방향을 바꾸었습니다.</p><p>직접 만들고 검증하며 배우는 과정에서 새 질문을 찾고, 처음의 판단을 다듬어 다음 설계로 이어가고자 합니다.</p><p>아래 파일에서 이력서와 자기소개서 원문을 확인할 수 있습니다.</p>`,
-};
 
 $('.filters').addEventListener('click', event => {
   const button = event.target.closest('[data-filter]');
@@ -154,17 +148,6 @@ $('.filters').addEventListener('click', event => {
   activeFilter = button.dataset.filter;
   renderProjects();
   $(`[data-filter="${activeFilter}"]`).focus({preventScroll:true});
-});
-document.querySelectorAll('[data-document]').forEach((button) => {
-  button.addEventListener('click', () => {
-    $('#document-content').innerHTML = documents[button.dataset.document];
-    $('#document-dialog').showModal();
-  });
-});
-$('#document-close').addEventListener('click', () => $('#document-dialog').close());
-$('#document-dialog').addEventListener('click', (event) => {
-  const bounds = event.currentTarget.getBoundingClientRect();
-  if (event.target === event.currentTarget && (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom)) event.currentTarget.close();
 });
 const motion = () => matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth';
 $('.explore-link').addEventListener('click', (event) => {
