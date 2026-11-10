@@ -378,6 +378,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
 .detail-facts dt { margin-bottom: 3px; }
 .detail-facts dd { margin: 0; line-height: 1.5; }
 .detail-cover { margin-top: 0; }
+.storyboard-cover { outline: 1px solid var(--line); outline-offset: -1px; }
 .detail-story { gap: 10px 26px; padding-block: 26px; }
 .detail-story h2 { line-height: 1.45; }
 .detail-image { margin-top: 30px; }
