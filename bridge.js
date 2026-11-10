@@ -20,6 +20,8 @@ export function bridgeMarkup(hero) {
  <section id="bridge-background" class="bridge-section" tabindex="-1"><h2>배경·목표</h2><h3 class="bridge-goal">시니어의 경험을 직무 언어로 정리합니다.</h3><p>데스크리서치와 온라인 설문조사를 바탕으로, 경력보유자가 자신의 경험을 이력서와 프로필로 정리하는 과정의 어려움을 살핀 후, 재취업을 준비하는 시니어가 경력과 강점을 직무에 맞는 표현으로 정리하도록 돕는 것을 서비스의 핵심 과제로 설정했습니다.<br>사용자가 대화로 경험을 설명하고, 정리된 내용을 확인·수정한 뒤 커리어 프로필을 완성하는 서비스의 흐름을 설계했습니다.</p></section>
  <section id="bridge-process" class="bridge-section" tabindex="-1"><h2>과정</h2><p>이미지를 클릭해 브릿지의 주요 과정을 확인해 보세요.</p><div class="process-grid">${steps.map((step,i)=>`<button type="button" class="process-card" data-process="${i}" aria-label="${String(i+1).padStart(2,'0')} ${step.title} 상세 보기"><img src="./assets/bridge-process-${i+1}.jpg" alt="${step.title}" loading="lazy" width="1600" height="900"><span>${String(i+1).padStart(2,'0')} ${step.title}</span></button>`).join('')}</div><a class="bridge-download" href="./assets/bridge.pdf" download>브릿지(Bridge) 기획서 전체 보기 · PDF <span aria-hidden="true">↓</span></a></section>
  <section id="bridge-contribution" class="bridge-section" tabindex="-1"><h2>기여</h2><ul><li>조사 결과를 바탕으로 핵심 문제와 서비스 방향을 정했습니다.</li><li>사용자 요구와 서비스 목표에 따라 기능의 우선순위를 정했습니다.</li><li>사용자 여정 지도·정보 구조도·이용 흐름도를 작성했습니다.</li><li>화면별 목적과 필수 정보를 공유하고 검토 의견을 정리했습니다.</li></ul></section>
+ <div class="bridge-ending">
  <section id="bridge-result" class="bridge-section" tabindex="-1"><h2>결과</h2><p>경력 정리에 자동화를 활용하고 표현의 최종 결정권은 이용자에게 두는 서비스 원칙을 도출했습니다.<br>이를 통해 시니어의 경력 정리 부담을 줄이고, 기업이 지원자의 경험과 강점을 직무에 맞춰 이해하도록 도울 것으로 기대합니다.</p></section>
- <div class="back-to-top-wrap"><button class="back-to-top" type="button" data-detail-top>상단으로 ↑</button></div></article></div>`;
+ <div class="back-to-top-wrap"><button class="back-to-top" type="button" data-detail-top>상단으로 ↑</button></div>
+ </div></article></div>`;
 }

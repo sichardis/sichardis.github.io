@@ -3,7 +3,11 @@
 button,input,select,textarea{font-family:inherit}h1,h2,h3,h4{letter-spacing:-.035em;font-weight:500}h4{margin:0}
 /* Keep the page anchored horizontally without creating a second vertical scroller. */
 html, body { overflow-x: clip; }
-html { overscroll-behavior-x: none; scroll-padding-top: 100px; }
+html {
+  --page-scroll-padding: 100px;
+  overscroll-behavior-x: none;
+  scroll-padding-top: var(--page-scroll-padding);
+}
 .site-header{height:var(--header-height)}.site-header .brand,.site-header .brand span:last-child{font-size:14px!important;letter-spacing:-.01em}.site-header nav a{font-size:14px}.site-header nav{gap:40px}
 /* Keep the entire hero, including its scroll cue, inside the first viewport. */
 .hero{min-height:calc(100svh - var(--header-height));padding:36px 0 24px;display:grid;grid-template-rows:minmax(0,1fr) auto;row-gap:24px}
@@ -68,8 +72,19 @@ html { overscroll-behavior-x: none; scroll-padding-top: 100px; }
 .process-pagination button:first-child{justify-self:start}.process-pagination button:last-child{justify-self:end}.process-pagination button:hover{background:#fafafa;border-color:#aaa}
 .process-page-count{font-variant-numeric:tabular-nums;color:#999}
 @media(max-width:800px){.section-index{gap:14px}.section-index button{padding-left:12px}.section-index button:before{left:1px;width:4px;height:4px}#process-dialog{width:calc(100% - 24px);max-height:90svh}.process-dialog-toolbar{padding:8px 12px}.process-dialog-meta{font-size:11px}#process-content{padding:22px 20px 24px}#process-title{font-size:21px}#process-content .process-summary{margin:8px 0 16px;font-size:14px}#process-content .process-explanation{margin-top:22px}#process-content .process-explanation h3{font-size:15px;margin-bottom:6px}#process-content .process-explanation p{font-size:14px}#process-content .process-pagination{gap:10px;margin-top:26px;padding-top:18px}.process-pagination button{padding:9px 10px;font-size:12px}}
-.bridge-section{scroll-margin-top:24px}
-@media(max-width:800px){.bridge-section{scroll-margin-top:64px}}
+body:has(.bridge-page) { --bridge-footer-min-height: 300px; }
+.bridge-page ~ .site-footer { min-height: var(--bridge-footer-min-height); }
+.bridge-layout { --bridge-scroll-margin: 24px; }
+.bridge-section { scroll-margin-top: var(--bridge-scroll-margin); }
+
+/* Leave enough space for the last heading to reach the same position as the others. */
+.bridge-ending {
+  margin-top: 44px;
+  min-height: calc(100dvh - var(--page-scroll-padding) - var(--bridge-scroll-margin) - var(--bridge-footer-min-height));
+}
+.bridge-ending .bridge-section { margin-top: 0; }
+@media (max-width: 800px) { .bridge-layout { --bridge-scroll-margin: 64px; } }
+@media (max-width: 680px) { body:has(.bridge-page) { --bridge-footer-min-height: 220px; } }
 
 
 /* First feedback pass: keep related copy close and preview the work below. */

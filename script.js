@@ -1,5 +1,5 @@
 import { projects as sourceProjects, featuredIds } from './data.js?v=profile-polish';
-import { bridgeMarkup, processMarkup } from './bridge.js?v=profile-polish';
+import { bridgeMarkup, processMarkup } from './bridge.js?v=bridge-index';
 
 const projects = sourceProjects.map(p => ({...p, documentType: ['chak','bridge','bluedog'].includes(p.id) ? 'plan' : p.id === 'korail' ? 'report' : 'proposal'}));
 for (const id of ['chak','lotte','bluedog','rocketfresh','kaywon']) {
@@ -122,7 +122,6 @@ function queueBridgeIndexUpdate() {
     for (const section of sections) {
       if (section.getBoundingClientRect().top <= threshold) current = section;
     }
-    if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 4) current = sections.at(-1);
     setBridgeSection(current.id);
   });
 }
@@ -224,9 +223,10 @@ $('#detail-content').addEventListener('click', event => {
   if (process) openProcess(Number(process.dataset.process));
   const jump = event.target.closest('[data-section]');
   if (jump) {
-    setBridgeSection(jump.dataset.section);
     const target = document.getElementById(jump.dataset.section);
-    target.focus({preventScroll:true}); target.scrollIntoView({behavior:motion()});
+    target.focus({preventScroll:true});
+    target.scrollIntoView({behavior:'instant'});
+    setBridgeSection(target.id);
   }
   if (event.target.closest('[data-detail-top]')) window.scrollTo({top:0,behavior:motion()});
 });
