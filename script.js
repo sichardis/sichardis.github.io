@@ -1,12 +1,13 @@
 import { projects as sourceProjects, featuredIds } from './data.js?v=detail-copy';
 import { bridgeMarkup, processMarkup } from './bridge.js?v=detail-copy';
-import { caseStudies } from './case-studies.js?v=detail-copy';
+import { caseStudies } from './case-studies.js?v=storyboard-covers';
 import { caseStudyMarkup, caseProcessMarkup } from './case-study.js?v=project-details';
 
 const projects = sourceProjects.map(p => ({...p, documentType: ['chak','bridge','bluedog'].includes(p.id) ? 'plan' : p.id === 'korail' ? 'report' : 'proposal'}));
 for (const id of ['chak','lotte','bluedog','rocketfresh','kaywon']) {
   const original = projects.find(p => p.id === id);
-  projects.push({...original, id: id+'-storyboard', title: `[${original.title}] 화면설계서`, subtitle: '화면 구성과 기능, 이용 단계별 연결을 정리한 설계서', documentType:'storyboard', pdf:null, detail:null, role:'화면설계서', pending:true, lead:'화면별 목적과 기능, 이용 흐름을 정리한 문서입니다. 상세 자료는 준비 중입니다.', question:'', approach:'', outcome:''});
+  const storyboardId = id + '-storyboard';
+  projects.push({...original, id:storyboardId, cover:caseStudies[storyboardId]?.cover ?? original.cover, title: `[${original.title}] 화면설계서`, subtitle: '화면 구성과 기능, 이용 단계별 연결을 정리한 설계서', documentType:'storyboard', pdf:null, detail:null, role:'화면설계서', pending:true, lead:'화면별 목적과 기능, 이용 단계별 연결을 정리한 문서입니다. 상세 자료는 준비 중입니다.', question:'', approach:'', outcome:''});
 }
 const documentOrder = ['chak','bridge','bluedog','korail','lotte','rocketfresh','kaywon','chak-storyboard','lotte-storyboard','bluedog-storyboard','rocketfresh-storyboard','kaywon-storyboard'];
 projects.sort((a,b)=>documentOrder.indexOf(a.id)-documentOrder.indexOf(b.id));

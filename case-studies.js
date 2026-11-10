@@ -714,11 +714,12 @@ export const caseStudies = {
         "image": "bluedog-states.jpg"
       }
     ],
-    "cover": "./assets/case-studies/bluedog-storyboard-cover.jpg",
+    "cover": "./assets/case-studies/bluedog-storyboard-cover.png",
     "pdf": "./assets/bluedog.pdf",
     "pdfLabel": "블루독 원본 PDF 보기 · 화면설계 15–19쪽"
   },
   "rocketfresh-storyboard": {
+    "cover": "./assets/case-studies/rocketfresh-storyboard-cover.png",
     "title": "쿠팡 로켓프레시 화면설계서",
     "subtitle": "장보기 탐색과 구매 연결을 구체화한 반응형 화면설계서",
     "year": "2025",
@@ -858,6 +859,7 @@ export const caseStudies = {
     ]
   },
   "kaywon-storyboard": {
+    "cover": "./assets/case-studies/kaywon-storyboard-cover.png",
     "title": "계원예술대학교 메인페이지 화면설계서",
     "subtitle": "사용자별 퀵서비스와 기기별 탐색 방식을 구체화한 화면설계",
     "year": "2025",
@@ -1115,6 +1117,7 @@ export const caseStudies = {
     ]
   },
   "chak-storyboard": {
+    "cover": "./assets/case-studies/chak-storyboard-cover.png",
     "title": "착! (Chak!) 화면설계서",
     "subtitle": "개인 미션과 그룹 챌린지의 화면과 동작을 정리한 설계서",
     "year": "2026",
@@ -1355,6 +1358,7 @@ export const caseStudies = {
     ]
   },
   "lotte-storyboard": {
+    "cover": "./assets/case-studies/lotte-storyboard-cover.png",
     "title": "롯데시네마 탐색·예매 화면설계서",
     "subtitle": "영화 검색부터 특별관·회차 비교까지의 화면과 동작",
     "year": "2026",
