@@ -111,6 +111,15 @@ html{scroll-padding-top:100px}.site-header{height:var(--header-height)}.site-hea
 .bridge-facts dt { margin-bottom: 4px; }
 .about-profile h1 { line-height: 1.4; }
 .about-profile-grid { margin-top: 24px; }
+.about-portraits {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-self: start;
+  align-items: start;
+}
+.profile-photo, .about-portraits img, .about-photo-placeholder {
+  height: auto;
+  aspect-ratio: 4 / 5;
+}
 .about-facts { margin-top: 24px; padding-top: 0; }
 .about-section-heading { margin-bottom: 24px; }
 .about-section-heading p { margin-top: 4px; line-height: 1.5; }
@@ -231,9 +240,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
   font-size: 15px;
   font-weight: 650;
 }
-.tool-icon svg { width: 22px; height: 22px; }
-.tool-icon--brand { background: transparent; }
-.tool-icon--brand img { width: 100%; height: auto; }
+.tool-icon svg, .tool-icon img { width: 22px; height: 22px; }
 .tool-level { margin-top: 9px; }
 .tool-level summary {
   display: flex;
@@ -345,5 +352,5 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
   .tool-card { padding: 12px; }
   .tool-card h4 { gap: 6px; font-size: 14px; }
   .tool-icon { flex-basis: 24px; height: 24px; }
-  .tool-icon svg { width: 18px; height: 18px; }
+  .tool-icon svg, .tool-icon img { width: 18px; height: 18px; }
 }
