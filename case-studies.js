@@ -999,6 +999,7 @@ export const caseStudies = {
     ]
   },
   "chak": {
+    "processImagePlaceholder": "이미지 준비 중",
     "title": "착! (Chak!)",
     "subtitle": "작은 선행을 함께 실천하고 기록하는 챌린지 서비스",
     "year": "2026",
@@ -1117,6 +1118,7 @@ export const caseStudies = {
     ]
   },
   "chak-storyboard": {
+    "processImagePlaceholder": "이미지 준비 중",
     "cover": "./assets/case-studies/chak-storyboard-cover.png",
     "pdfParts": {
       "folder": "./assets/chak-storyboard-v0.7",
@@ -1245,6 +1247,7 @@ export const caseStudies = {
     ]
   },
   "lotte": {
+    "processImagePlaceholder": "이미지 준비 중",
     "title": "[롯데시네마] 탐색 및 예매 기능 개선 제안서",
     "subtitle": "특별관을 발견하고 비교하기 쉬운 영화 예매 경험",
     "year": "2026",
@@ -1365,6 +1368,7 @@ export const caseStudies = {
     ]
   },
   "lotte-storyboard": {
+    "processImagePlaceholder": "이미지 준비 중",
     "cover": "./assets/case-studies/lotte-storyboard-cover.png",
     "title": "롯데시네마 탐색·예매 화면설계서",
     "subtitle": "영화 검색부터 특별관·회차 비교까지의 화면과 동작",

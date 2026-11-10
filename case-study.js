@@ -6,9 +6,9 @@ const sectionLabels = [
   ['result', '결과'],
 ];
 
-function processMedia(step, escape, loading = 'eager') {
-  if (!step.image) {
-    return '<div class="case-process-media case-process-placeholder" role="img" aria-label="이미지 자료 준비 중"></div>';
+function processMedia(step, escape, {loading = 'eager', placeholder = ''} = {}) {
+  if (placeholder || !step.image) {
+    return `<div class="case-process-media case-process-placeholder" role="img" aria-label="${escape(placeholder || '이미지 자료 준비 중')}">${escape(placeholder)}</div>`;
   }
   return `<img class="case-process-media" src="./assets/case-studies/${escape(step.image)}" alt="${escape(step.title)} 자료" width="1600" height="900" loading="${loading}">`;
 }
@@ -20,7 +20,7 @@ export function caseStudyMarkup(project, hero, escape) {
   const cards = project.steps.map((step, i) => {
     const label = `${String(i + 1).padStart(2, '0')} ${escape(step.title)}`;
     return `<button type="button" class="process-card" data-process="${i}" aria-label="${label} 상세 보기">
-      ${processMedia(step, escape, 'lazy')}<span>${label}</span>
+      ${processMedia(step, escape, {loading:'lazy', placeholder:project.processImagePlaceholder})}<span>${label}</span>
     </button>`;
   }).join('');
   const downloadLabel = `${escape(project.pdfLabel || project.title + ' 원본 전체 보기')} · PDF`;
@@ -64,12 +64,13 @@ export function caseStudyMarkup(project, hero, escape) {
   </div>`;
 }
 
-export function caseProcessMarkup(steps, index, escape) {
+export function caseProcessMarkup(project, index, escape) {
+  const steps = project.steps;
   const step = steps[index];
   const count = steps.length;
   return `<h2 id="process-title">${escape(step.title)}</h2>
     <p class="process-summary">${escape(step.summary)}</p>
-    ${processMedia(step, escape)}
+    ${processMedia(step, escape, {placeholder:project.processImagePlaceholder})}
     ${step.sections.map(([title, text]) => `<section class="process-explanation"><h3>${escape(title)}</h3><p>${escape(text)}</p></section>`).join('')}
     <div class="process-pagination">
       ${index ? '<button type="button" data-process-prev>〈 이전 단계</button>' : '<span aria-hidden="true"></span>'}

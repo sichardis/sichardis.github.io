@@ -1,7 +1,7 @@
 import { projects as sourceProjects, featuredIds } from './data.js?v=detail-copy';
 import { bridgeMarkup, processMarkup } from './bridge.js?v=detail-copy';
-import { caseStudies } from './case-studies.js?v=chak-pdf';
-import { caseStudyMarkup, caseProcessMarkup } from './case-study.js?v=chak-pdf';
+import { caseStudies } from './case-studies.js?v=process-placeholders';
+import { caseStudyMarkup, caseProcessMarkup } from './case-study.js?v=process-placeholders';
 
 const projects = sourceProjects.map(p => ({...p, documentType: ['chak','bridge','bluedog'].includes(p.id) ? 'plan' : p.id === 'korail' ? 'report' : 'proposal'}));
 for (const id of ['chak','lotte','bluedog','rocketfresh','kaywon']) {
@@ -261,7 +261,7 @@ function openProcess(index) {
   processIndex = Math.max(0, Math.min(count - 1, index));
   const name = detailProject.id === 'bridge' ? '브릿지 · 기획 과정' : `${detailProject.title} · 과정`;
   $('.process-dialog-meta').textContent = `${name} ${String(processIndex+1).padStart(2,'0')} / ${String(count).padStart(2,'0')}`;
-  $('#process-content').innerHTML = steps ? caseProcessMarkup(steps, processIndex, escape) : processMarkup(processIndex);
+  $('#process-content').innerHTML = steps ? caseProcessMarkup(detailProject, processIndex, escape) : processMarkup(processIndex);
   if (!processDialog.open) processDialog.showModal();
   processDialog.scrollTop = 0;
   $('#process-title').setAttribute('tabindex','-1');
