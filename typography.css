@@ -243,10 +243,24 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
   border: 0;
   border-radius: 5px;
   background: var(--accent-soft);
-  transition: transform .18s ease;
 }
-.tool-level .skill-meter .filled { background: var(--accent); }
-.tool-level:is([open], :hover, :focus-within) .filled { transform: scaleY(1.6); }
+.tool-level .skill-meter .filled {
+  background: linear-gradient(var(--accent), var(--accent)) left / 100% 100% no-repeat var(--accent-soft);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .tool-level .skill-meter[data-fill="waiting"] .filled { background-size: 0 100%; }
+  .tool-level .skill-meter[data-fill="visible"] .filled {
+    animation: fill-skill-segment 130ms linear both;
+  }
+  .tool-level .skill-meter[data-fill="visible"] .filled:nth-child(2) { animation-delay: 130ms; }
+  .tool-level .skill-meter[data-fill="visible"] .filled:nth-child(3) { animation-delay: 260ms; }
+  .tool-level .skill-meter[data-fill="visible"] .filled:nth-child(4) { animation-delay: 390ms; }
+  .tool-level .skill-meter[data-fill="visible"] .filled:nth-child(5) { animation-delay: 520ms; }
+}
+@keyframes fill-skill-segment {
+  from { background-size: 0 100%; }
+  to { background-size: 100% 100%; }
+}
 .tool-level > p { margin: 0; color: #000; font-size: 12px; }
 
 /* The same controls and spacing apply to all project details. */

@@ -87,6 +87,17 @@ function renderDetail(id) {
   return project.title;
 }
 
+const skillMeters = document.querySelectorAll('.tool-level .skill-meter');
+const skillMeterObserver = 'IntersectionObserver' in window
+  ? new IntersectionObserver((entries, observer) => {
+      for (const { target, intersectionRatio } of entries) {
+        if (intersectionRatio < 0.5) continue;
+        target.dataset.fill = 'visible';
+        observer.unobserve(target);
+      }
+    }, { threshold: 0.5 })
+  : null;
+
 function renderRoute({ focus = false } = {}) {
   if (previousPage === 'projects') listScroll = window.scrollY;
   const hash = location.hash || '#/';
@@ -108,6 +119,12 @@ function renderRoute({ focus = false } = {}) {
     let id;
     try { id = decodeURIComponent(route[1] || ''); } catch { id = ''; }
     name = renderDetail(id);
+  }
+  if (page === 'about' && previousPage !== 'about' && skillMeterObserver) {
+    for (const meter of skillMeters) {
+      meter.dataset.fill = 'waiting';
+      skillMeterObserver.observe(meter);
+    }
   }
   const restoreList = page === 'projects' && previousPage === 'detail';
   previousPage = page;
