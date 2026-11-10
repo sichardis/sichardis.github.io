@@ -87,6 +87,12 @@ body:has(.case-study-page) { --bridge-footer-min-height: 300px; }
 @media (max-width: 680px) { body:has(.case-study-page) { --bridge-footer-min-height: 220px; } }
 
 .case-copy p + p { margin-top: 5px; }
+.detail-lead,
+.bridge-section p,
+#process-content .process-summary,
+#process-content .process-explanation p {
+  white-space: pre-line;
+}
 .case-process-media,
 #process-content > .case-process-media {
   display: block;
