@@ -1,7 +1,7 @@
 import { projects as sourceProjects, featuredIds } from './data.js?v=detail-copy';
 import { bridgeMarkup, processMarkup } from './bridge.js?v=detail-copy';
-import { caseStudies } from './case-studies.js?v=storyboard-covers';
-import { caseStudyMarkup, caseProcessMarkup } from './case-study.js?v=project-details';
+import { caseStudies } from './case-studies.js?v=chak-pdf';
+import { caseStudyMarkup, caseProcessMarkup } from './case-study.js?v=chak-pdf';
 
 const projects = sourceProjects.map(p => ({...p, documentType: ['chak','bridge','bluedog'].includes(p.id) ? 'plan' : p.id === 'korail' ? 'report' : 'proposal'}));
 for (const id of ['chak','lotte','bluedog','rocketfresh','kaywon']) {
@@ -79,7 +79,8 @@ function renderDetail(id) {
   const baseProject = projects.find((project) => project.id === id);
   const project = baseProject && {...baseProject, ...caseStudies[id]};
   detailProject = project;
-  const download = $('.detail-pdf');
+  const download = $('.detail-toolbar a.detail-pdf');
+  $('.detail-toolbar [data-pdf-parts]').hidden = !project?.pdfParts;
   download.hidden = !project?.pdf;
   if (project?.pdf) download.href = project.pdf;
   else download.removeAttribute('href');
@@ -207,6 +208,53 @@ document.querySelectorAll('a[href="#/"], a[href="#/about"]').forEach((link) => {
   });
 });
 const processDialog = $('#process-dialog');
+let pdfPending = false;
+
+async function downloadPdfParts({folder, count, size, filename}) {
+  if (pdfPending) return;
+  pdfPending = true;
+  const controls = [...document.querySelectorAll('[data-pdf-parts]')];
+  const labels = controls.map(button => button.firstElementChild.textContent);
+  controls.forEach(button => {
+    button.disabled = true;
+    button.firstElementChild.textContent = 'PDF 받는 중…';
+  });
+
+  try {
+    // The original PDF is stored in parts to fit the upload limit.
+    const parts = await Promise.all(Array.from({length:count}, async (_, index) => {
+      const number = String(index + 1).padStart(2, '0');
+      const response = await fetch(`${folder}/${number}.bin`);
+      if (!response.ok) throw new Error('PDF part unavailable');
+      return response.blob();
+    }));
+    const pdf = new Blob(parts, {type:'application/pdf'});
+    if (pdf.size !== size) throw new Error('Incomplete PDF');
+    const url = URL.createObjectURL(pdf);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    document.body.append(link);
+    link.click();
+    link.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 60000);
+  } catch {
+    window.alert('PDF를 내려받지 못했어요. 다시 시도해 주세요.');
+  } finally {
+    pdfPending = false;
+    controls.forEach((button, index) => {
+      button.disabled = false;
+      button.firstElementChild.textContent = labels[index];
+    });
+  }
+}
+
+$('#content').addEventListener('click', event => {
+  if (event.target.closest('[data-pdf-parts]') && detailProject?.pdfParts) {
+    downloadPdfParts(detailProject.pdfParts);
+  }
+});
+
 function openProcess(index) {
   const steps = detailProject.steps;
   const count = steps?.length ?? 6;

@@ -348,7 +348,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
   max-width: 1244px;
   margin-inline: auto;
 }
-.detail-toolbar a {
+.detail-toolbar :is(a, button) {
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -369,6 +369,8 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
 .detail-actions .solid-link:hover { background: var(--accent-hover); }
 .bridge-download { border-color: var(--accent-line); }
 .bridge-download:hover { border-color: var(--accent); }
+.bridge-download[data-pdf-parts] { width: 100%; text-align: left; }
+[data-pdf-parts]:disabled { opacity: .7; }
 .detail-heading .eyebrow { margin-bottom: 8px; color: #000; }
 .detail-heading h1, .bridge-article h1 { line-height: 1.28; }
 .detail-subtitle, .bridge-subtitle { margin-top: 7px; line-height: 1.45; }

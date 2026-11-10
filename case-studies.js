@@ -1118,10 +1118,17 @@ export const caseStudies = {
   },
   "chak-storyboard": {
     "cover": "./assets/case-studies/chak-storyboard-cover.png",
+    "pdfParts": {
+      "folder": "./assets/chak-storyboard-v0.7",
+      "count": 8,
+      "size": 47916904,
+      "filename": "착! 화면설계서 v0.7.pdf"
+    },
+    "pdfLabel": "착! (Chak!) 화면설계서 전체 보기",
     "title": "착! (Chak!) 화면설계서",
     "subtitle": "개인 미션과 그룹 챌린지의 화면과 동작을 정리한 설계서",
     "year": "2026",
-    "period": "2026.09.28 · v0.4",
+    "period": "2026.10.12 · v0.7",
     "type": "모바일 화면설계",
     "role": "화면설계서 공동 작성",
     "team": "2인 공동 작성",

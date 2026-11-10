@@ -23,9 +23,12 @@ export function caseStudyMarkup(project, hero, escape) {
       ${processMedia(step, escape, 'lazy')}<span>${label}</span>
     </button>`;
   }).join('');
-  const download = project.pdf
-    ? `<a class="bridge-download" href="${escape(project.pdf)}" download>${escape(project.pdfLabel || project.title + ' 원본 전체 보기')} · PDF <span aria-hidden="true">↓</span></a>`
-    : '';
+  const downloadLabel = `${escape(project.pdfLabel || project.title + ' 원본 전체 보기')} · PDF`;
+  const download = project.pdfParts
+    ? `<button class="bridge-download" type="button" data-pdf-parts><span>${downloadLabel}</span><span aria-hidden="true">↓</span></button>`
+    : project.pdf
+      ? `<a class="bridge-download" href="${escape(project.pdf)}" download>${downloadLabel} <span aria-hidden="true">↓</span></a>`
+      : '';
   const paragraphs = items => items.map(item => `<p>${escape(item)}</p>`).join('');
 
   return `<div class="bridge-layout">
