@@ -1022,7 +1022,7 @@ export const caseStudies = {
   "chak": {
     "processImagePlaceholder": "이미지 준비 중",
     "title": "착! (Chak!)",
-    "subtitle": "작은 선행을 함께 실천하고 기록하는 챌린지 서비스",
+    "subtitle": "일상 속 선행을 발견하는 선행 챌린지 서비스",
     "year": "2026",
     "type": "캡스톤 디자인 · 진행 중",
     "role": "팀장 · 서비스 기획",

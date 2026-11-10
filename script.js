@@ -1,6 +1,6 @@
-import { projects as sourceProjects, featuredIds } from './data.js?v=detail-copy';
+import { projects as sourceProjects, featuredIds } from './data.js?v=profile-slogans';
 import { bridgeMarkup, processMarkup } from './bridge.js?v=detail-copy';
-import { caseStudies } from './case-studies.js?v=proposal-pdfs';
+import { caseStudies } from './case-studies.js?v=profile-slogans';
 import { caseStudyMarkup, caseProcessMarkup } from './case-study.js?v=process-placeholders';
 
 const projects = sourceProjects.map(p => ({...p, documentType: ['chak','bridge','bluedog'].includes(p.id) ? 'plan' : p.id === 'korail' ? 'report' : 'proposal'}));
@@ -22,23 +22,22 @@ const projectUrl = (id) => `#/project/${encodeURIComponent(id)}`;
 let activeFilter = 'all';
 
 const summaries = {
-  chak: '작은 선행을 함께 실천하고 주고받은 배려를 기록하며, 즐거움을 발견하는 챌린지 서비스',
-  bridge: '시니어의 경험을 기업 맞춤 언어로 번역하는 커리어 브랜딩 서비스',
-  bluedog: '은퇴견의 입양, 산책 참여 등을 종합적으로 관리하여 은퇴견과 과천 지역사회를 연결하는 지역 상생 서비스',
-  korail: '빠르고 편리한 예약내역 확인을 위해 분산된 기능, 정보구조를 통합한 개선안 보고서',
-  rocketfresh: '상품을 살펴보고 선택하는 과정에 맞춰 메인페이지의 정보 배치와 탐색 구조를 리뉴얼한 제안서',
-  kaywon: '학교 정보를 목적에 따라 쉽게 찾을 수 있도록 메인페이지의 콘텐츠 배치와 메뉴 구조를 정리한 제안서',
-  lotte: '영화 탐색부터 예매 확인까지의 기능과 이용 흐름을 개선하기 위한 제안서',
-};
-
-const featuredSlogans = {
-  chak: '함께 선행을 실천하는 챌린지',
-  bridge: '시니어 커리어 브랜딩 서비스',
-  lotte: '영화 탐색·예매 흐름 개선 제안',
+  chak: '일상 속 선행을 발견하는\n선행 챌린지 서비스',
+  bridge: '시니어의 경험을 직무 언어로 잇는\n커리어 브랜딩 서비스',
+  bluedog: '은퇴견과 과천 시민을 잇는\n산책·입양·돌봄 서비스',
+  korail: '예약 승차권을 쉽게 찾도록\n조회 동선을 개선한 보고서',
+  rocketfresh: '목적에 맞는 상품을 찾도록\n장보기 탐색을 개선한 제안서',
+  kaywon: '학사·입시 정보를 찾기 쉽게\n메인페이지를 개선한 제안서',
+  lotte: '특별관을 비교하고 예매하는\n흐름을 개선한 앱 제안서',
+  'chak-storyboard': '개인 미션과 그룹 챌린지의\n참여·인증 흐름을 담은 화면설계',
+  'lotte-storyboard': '영화 검색부터 특별관 비교까지\n예매 흐름을 담은 화면설계',
+  'bluedog-storyboard': '은퇴견 산책·입양·돌봄의\n이용 흐름을 담은 화면설계',
+  'rocketfresh-storyboard': '상품 탐색과 레시피 장보기를\n연결한 반응형 화면설계',
+  'kaywon-storyboard': '학사·입시 정보와 퀵서비스를\n정리한 반응형 화면설계',
 };
 
 function card(project, featured = false) {
-  const description = featured ? featuredSlogans[project.id] : summaries[project.id];
+  const description = escape(summaries[project.id] || project.subtitle).replace('\n', featured ? ' ' : '<br>');
   const ongoing = project.filter === 'ongoing' || project.status === 'ongoing';
   const image = project.cover
     ? `<img src="${escape(project.cover)}" alt="${escape(project.title)} 프로젝트 표지" loading="lazy" width="800" height="450">`
@@ -52,7 +51,7 @@ function card(project, featured = false) {
   return `<article class="project-card"><a class="project-card-link" href="${projectUrl(project.id)}">
     <div class="project-image">${image}${ongoing ? '<span class="project-status">진행 중</span>' : ''}</div>
     <h3>${escape(title)}</h3>
-    <p class="project-card-description">${escape(description || project.subtitle)}</p>
+    <p class="project-card-description">${description}</p>
     <p class="project-card-meta"><span>${meta}</span>${date ? `<span>${escape(date)}</span>` : ''}</p>
   </a></article>`;
 }

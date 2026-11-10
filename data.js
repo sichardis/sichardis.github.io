@@ -52,7 +52,7 @@ export const projects = [
   {
     "id": "chak",
     "title": "착!",
-    "subtitle": "선행 문화를 확산하는 챌린지 서비스",
+    "subtitle": "일상 속 선행을 발견하는 선행 챌린지 서비스",
     "year": "2026",
     "type": "캡스톤 디자인 · 진행 중",
     "filter": "ongoing",
