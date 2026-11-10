@@ -134,25 +134,27 @@ html{scroll-padding-top:100px}.site-header{height:var(--header-height)}.site-hea
 
 /* Accent color, thread callouts, and tool cards. */
 :root {
-  --accent: #6344a6;
-  --accent-soft: #f1ebfb;
-  --accent-line: #d9caef;
+  --accent: #f98d22;
+  --accent-ink: #8d4100;
+  --accent-on: #281500;
+  --accent-soft: #fff1e3;
+  --accent-line: #f3c397;
 }
 .site-header nav a[aria-current="page"],
 .hero .explore-link:hover,
-.arrow-link:hover { color: var(--accent); }
-.filters button[aria-pressed="true"] { background: var(--accent); }
-.project-status { background: var(--accent-soft); color: var(--accent); }
+.arrow-link:hover { color: var(--accent-ink); }
+.filters button[aria-pressed="true"] { background: var(--accent); color: var(--accent-on); }
+.project-status { background: var(--accent-soft); color: var(--accent-ink); }
 .about-section-heading::before { border-color: var(--accent-line); }
 
 .thread-knot .thread-dot {
   width: 10px;
   height: 10px;
   background: var(--accent);
-  box-shadow: 0 0 0 4px #fff, 0 0 0 9px #6344a63d;
+  box-shadow: 0 0 0 4px #fff, 0 0 0 9px #f98d223d;
 }
 .thread-knot:is(:hover, :focus-visible, [aria-expanded="true"]) .thread-dot {
-  box-shadow: 0 0 0 4px #fff, 0 0 0 11px #6344a652;
+  box-shadow: 0 0 0 4px #fff, 0 0 0 11px #f98d2252;
 }
 .thread-stop .thread-tip {
   bottom: 36px;
@@ -161,7 +163,7 @@ html{scroll-padding-top:100px}.site-header{height:var(--header-height)}.site-hea
   background: #fff;
   border: 1px solid var(--accent-line);
   border-radius: 10px;
-  box-shadow: 0 8px 28px #2f194415;
+  box-shadow: 0 8px 28px #54260015;
   font-size: 13px;
   line-height: 1.55;
   word-break: keep-all;
@@ -169,7 +171,7 @@ html{scroll-padding-top:100px}.site-header{height:var(--header-height)}.site-hea
 .thread-start .thread-tip { left: 0; }
 .thread-weave .thread-tip { left: calc(50% - min(140px, 32vw)); }
 .thread-knot .thread-tip { left: auto; right: -16px; }
-.thread-tip strong { display: block; color: var(--accent); font-size: 16px; font-weight: 600; }
+.thread-tip strong { display: block; color: var(--accent-ink); font-size: 16px; font-weight: 600; }
 .thread-tip > span {
   max-width: none;
   margin-top: 4px;
@@ -201,7 +203,7 @@ html{scroll-padding-top:100px}.site-header{height:var(--header-height)}.site-hea
   height: 30px;
   border-radius: 7px;
   background: var(--accent-soft);
-  color: var(--accent);
+  color: var(--accent-ink);
   font-size: 15px;
   font-weight: 650;
 }
@@ -229,7 +231,7 @@ html{scroll-padding-top:100px}.site-header{height:var(--header-height)}.site-hea
 }
 .tool-level .skill-meter .filled { background: var(--accent); }
 .tool-level:is([open], :hover, :focus-within) .filled { transform: scaleY(1.6); }
-.tool-level > p { margin: 0; color: var(--accent); font-size: 12px; }
+.tool-level > p { margin: 0; color: var(--accent-ink); font-size: 12px; }
 
 /* The same controls and spacing apply to all project details. */
 .detail-toolbar {
@@ -253,16 +255,16 @@ html{scroll-padding-top:100px}.site-header{height:var(--header-height)}.site-hea
   padding: 8px 14px;
   border: 1px solid var(--accent-line);
   border-radius: 6px;
-  color: var(--accent);
+  color: var(--accent-ink);
   font-size: 13px;
   font-weight: 550;
   line-height: 1.4;
 }
 .detail-toolbar .back-link { margin: 0; }
 .detail-toolbar a:hover { background: var(--accent-soft); }
-.detail-toolbar .detail-pdf { background: var(--accent); color: #fff; border-color: var(--accent); }
-.detail-toolbar .detail-pdf:hover { background: #50338b; }
-.detail-heading .eyebrow { margin-bottom: 8px; color: var(--accent); }
+.detail-toolbar .detail-pdf { background: var(--accent); color: var(--accent-on); border-color: var(--accent); }
+.detail-toolbar .detail-pdf:hover { background: #ed7e13; }
+.detail-heading .eyebrow { margin-bottom: 8px; color: var(--accent-ink); }
 .detail-heading h1, .bridge-article h1 { line-height: 1.28; }
 .detail-subtitle, .bridge-subtitle { margin-top: 7px; line-height: 1.45; }
 .detail-lead { margin-top: 16px; }
@@ -282,8 +284,8 @@ html{scroll-padding-top:100px}.site-header{height:var(--header-height)}.site-hea
   padding-top: 22px;
   border-top: 1px solid var(--line);
 }
-.bridge-section h2 { color: var(--accent); }
-.section-index button[aria-current="location"] { color: var(--accent); }
+.bridge-section h2 { color: var(--accent-ink); }
+.section-index button[aria-current="location"] { color: var(--accent-ink); }
 .bridge-section h3 { margin-top: 16px; }
 .bridge-section ul { padding-inline-start: 20px; }
 .bridge-section li + li { margin-top: 4px; }
