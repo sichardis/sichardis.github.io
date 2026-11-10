@@ -1,4 +1,5 @@
 import { projects as sourceProjects, featuredIds } from './data.js?v=20261110-2';
+import { bridgeMarkup, processMarkup } from './bridge.js?v=bridge-hero';
 
 const projects = sourceProjects.map(p => ({...p, documentType: ['chak','bridge','bluedog'].includes(p.id) ? 'plan' : p.id === 'korail' ? 'report' : 'proposal'}));
 for (const id of ['chak','lotte','bluedog','rocketfresh','kaywon']) {
@@ -10,6 +11,7 @@ projects.sort((a,b)=>documentOrder.indexOf(a.id)-documentOrder.indexOf(b.id));
 const filters = [['all','전체'],['featured','대표'],['plan','기획서'],['report','보고서'],['proposal','제안서'],['storyboard','화면설계서']];
 let listScroll = 0;
 let previousPage = '';
+let processIndex = 0;
 const $ = (selector) => document.querySelector(selector);
 const escape = (value = '') => String(value).replace(/[&<>"']/g, (character) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[character]));
 const projectUrl = (id) => `#/project/${encodeURIComponent(id)}`;
@@ -61,6 +63,14 @@ function renderProjects() {
   $('#project-count').textContent = `${activeFilter === 'all' ? '전체' : '해당'} ${visible.length}개`;
 }
 
+function detailHero(project) {
+  return `
+    <div class="detail-heading"><p class="eyebrow">${escape([project.year,project.type].filter(Boolean).join(' / '))}</p><h1 id="detail-title">${escape(project.title)}</h1><p class="detail-subtitle">${escape(project.subtitle)}</p></div>
+    <p class="detail-lead">${escape(project.lead)}</p>
+    <dl class="detail-facts">${project.role ? `<div><dt>담당 역할</dt><dd>${escape(project.role)}</dd></div>` : ''}<div><dt>프로젝트 유형</dt><dd>${escape(project.type)}</dd></div>${project.year ? `<div><dt>기간</dt><dd>${project.id === 'chak' ? '2026.09–12 · 진행 중' : escape(project.period || project.year)}</dd></div>` : ''}</dl>
+    ${project.cover ? `<img class="detail-cover" src="${escape(project.cover)}" alt="${escape(project.title)} 프로젝트 표지" width="1280" height="720">` : ''}`;
+}
+
 function renderDetail(id) {
   const index = projects.findIndex((project) => project.id === id);
   const project = projects[index];
@@ -72,20 +82,53 @@ function renderDetail(id) {
     $('#detail-content').innerHTML = '<div class="not-found"><h1 id="detail-title">프로젝트를 찾을 수 없습니다.</h1><p>프로젝트 목록에서 작업을 다시 선택해 주세요.</p></div>';
     return '프로젝트를 찾을 수 없습니다';
   }
+  if (id === 'bridge') {
+    $('#detail-content').innerHTML = bridgeMarkup(detailHero(project));
+    return project.title;
+  }
   const stories = [['출발점',project.question],['접근과 선택',project.approach],[project.filter === 'ongoing' ? '진행 현황' : '결과와 배움',project.outcome]];
   const previous = projects[index - 1];
   const next = projects[index + 1];
   $('#detail-content').innerHTML = `
-    <div class="detail-heading"><p class="eyebrow">${escape([project.year,project.type].filter(Boolean).join(' / '))}</p><h1 id="detail-title">${escape(project.title)}</h1><p class="detail-subtitle">${escape(project.subtitle)}</p></div>
-    <p class="detail-lead">${escape(project.lead)}</p>
-    <dl class="detail-facts">${project.role ? `<div><dt>담당 역할</dt><dd>${escape(project.role)}</dd></div>` : ''}<div><dt>프로젝트 유형</dt><dd>${escape(project.type)}</dd></div>${project.year ? `<div><dt>기간</dt><dd>${project.id === 'chak' ? '2026.09–12 · 진행 중' : escape(project.period || project.year)}</dd></div>` : ''}</dl>
-    ${project.cover ? `<img class="detail-cover" src="${escape(project.cover)}" alt="${escape(project.title)} 프로젝트 표지" width="1280" height="720">` : ''}
+    ${detailHero(project)}
     ${stories.filter(([,body]) => body).map(([title,body]) => `<section class="detail-story"><h2>${escape(title)}</h2><p>${escape(body)}</p></section>`).join('')}
     ${project.detail ? `<img class="detail-image" src="${escape(project.detail)}" alt="${escape(project.title)} 기획서의 주요 산출물" loading="lazy">` : ''}
     <div class="detail-actions">${project.pdf ? `<a class="solid-link" href="${escape(project.pdf)}" target="_blank" rel="noopener noreferrer">프로젝트 원본 PDF 보기 <span aria-hidden="true">↗</span></a><a class="arrow-link" href="${escape(project.pdf)}" download>내려받기 <span aria-hidden="true">↓</span></a>` : `<p class="detail-note">${(project.filter === 'ongoing' || project.status === 'ongoing') ? '현재 진행 중인 프로젝트입니다. 최종 결과물과 검증 내용은 작업 완료 후 업데이트합니다.' : '상세 내용과 작업 자료를 정리하고 있습니다.'}</p>`}</div>
     <nav class="detail-next" aria-label="다른 프로젝트">${previous ? `<a href="${projectUrl(previous.id)}">← ${escape(previous.title)}</a>` : '<span></span>'}${next ? `<a href="${projectUrl(next.id)}">${escape(next.title)} →</a>` : ''}</nav>`;
   return project.title;
 }
+
+// Keep the section index in sync with both click navigation and manual scrolling.
+let bridgeIndexFrame = 0;
+function setBridgeSection(id) {
+  document.querySelectorAll('.section-index [data-section]').forEach(button => {
+    if (button.dataset.section === id) button.setAttribute('aria-current','location');
+    else button.removeAttribute('aria-current');
+  });
+}
+function queueBridgeIndexUpdate() {
+  if (bridgeIndexFrame) return;
+  bridgeIndexFrame = requestAnimationFrame(() => {
+    bridgeIndexFrame = 0;
+    if (!$('#content').classList.contains('bridge-page')) return;
+    const sections = [...document.querySelectorAll('.bridge-section')];
+    if (!sections.length) return;
+    const header = $('.site-header').getBoundingClientRect().bottom;
+    const index = $('.section-index');
+    const mobile = matchMedia('(max-width:800px)').matches;
+    const scrollPadding = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
+    const sectionMargin = parseFloat(getComputedStyle(sections[0]).scrollMarginTop) || 0;
+    const threshold = Math.max(header + (mobile ? index.getBoundingClientRect().height : 0) + 12, scrollPadding + sectionMargin + 4);
+    let current = sections[0];
+    for (const section of sections) {
+      if (section.getBoundingClientRect().top <= threshold) current = section;
+    }
+    if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 4) current = sections.at(-1);
+    setBridgeSection(current.id);
+  });
+}
+window.addEventListener('scroll',queueBridgeIndexUpdate,{passive:true});
+window.addEventListener('resize',queueBridgeIndexUpdate,{passive:true});
 
 const skillMeters = document.querySelectorAll('.tool-level .skill-meter');
 const skillMeterObserver = 'IntersectionObserver' in window
@@ -100,6 +143,7 @@ const skillMeterObserver = 'IntersectionObserver' in window
 
 function renderRoute({ focus = false } = {}) {
   if (previousPage === 'projects') listScroll = window.scrollY;
+  if (processDialog.open) processDialog.close();
   const hash = location.hash || '#/';
   if (hash === '#content') {
     $('#content').focus({preventScroll:true});
@@ -115,11 +159,12 @@ function renderRoute({ focus = false } = {}) {
     else link.removeAttribute('aria-current');
   });
   let name = page === 'projects' ? '프로젝트' : page === 'about' ? '자기소개' : '정서영';
+  let id;
   if (detail) {
-    let id;
     try { id = decodeURIComponent(route[1] || ''); } catch { id = ''; }
     name = renderDetail(id);
   }
+  $('#content').classList.toggle('bridge-page', detail && id === 'bridge');
   if (page === 'about' && previousPage !== 'about' && skillMeterObserver) {
     for (const meter of skillMeters) {
       meter.dataset.fill = 'waiting';
@@ -128,6 +173,7 @@ function renderRoute({ focus = false } = {}) {
   }
   const restoreList = page === 'projects' && previousPage === 'detail';
   previousPage = page;
+  queueBridgeIndexUpdate();
   document.title = `${name} | 정서영 포트폴리오`;
   if (sectionLink) requestAnimationFrame(() => $('#selected').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth'}));
   else { window.scrollTo({top:restoreList ? listScroll : 0,behavior:'instant'}); if (focus) $('#content').focus({preventScroll:true}); }
@@ -163,6 +209,36 @@ document.querySelectorAll('a[href="#/"], a[href="#/about"]').forEach((link) => {
   link.addEventListener('click', () => {
     if (location.hash === link.getAttribute('href') || (!location.hash && link.getAttribute('href') === '#/')) window.scrollTo({top:0,behavior:motion()});
   });
+});
+const processDialog = $('#process-dialog');
+function openProcess(index) {
+  processIndex = Math.max(0, Math.min(5, index));
+  $('.process-dialog-meta').textContent = `브릿지 · 기획 과정 ${String(processIndex+1).padStart(2,'0')} / 06`;
+  $('#process-content').innerHTML = processMarkup(processIndex);
+  if (!processDialog.open) processDialog.showModal();
+  processDialog.scrollTop = 0;
+  $('#process-title').setAttribute('tabindex','-1');
+  $('#process-title').focus({preventScroll:true});
+}
+$('#detail-content').addEventListener('click', event => {
+  const process = event.target.closest('[data-process]');
+  if (process) openProcess(Number(process.dataset.process));
+  const jump = event.target.closest('[data-section]');
+  if (jump) {
+    setBridgeSection(jump.dataset.section);
+    const target = document.getElementById(jump.dataset.section);
+    target.focus({preventScroll:true}); target.scrollIntoView({behavior:motion()});
+  }
+  if (event.target.closest('[data-detail-top]')) window.scrollTo({top:0,behavior:motion()});
+});
+processDialog.querySelector('.process-close').addEventListener('click',()=>processDialog.close());
+processDialog.addEventListener('click',event=>{
+  if (event.target.closest('[data-process-next]')) openProcess((processIndex+1)%6);
+  if (event.target.closest('[data-process-prev]')) openProcess(Math.max(0,processIndex-1));
+  if (event.target === processDialog) {
+    const b=processDialog.getBoundingClientRect();
+    if(event.clientX<b.left||event.clientX>b.right||event.clientY<b.top||event.clientY>b.bottom) processDialog.close();
+  }
 });
 window.addEventListener('hashchange' , () => renderRoute({focus:true}));
 renderProjects();

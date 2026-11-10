@@ -10,9 +10,10 @@ export function processMarkup(index) {
  const step=steps[index];
  return `<h2 id="process-title">${step.title}</h2><p class="process-summary">${step.summary}</p><img src="./assets/bridge-process-${index+1}.jpg" alt="브릿지 ${step.title} 원본 자료" width="1600" height="900">${step.sections.map(([title,body])=>`<section class="process-explanation"><h3>${title}</h3><p>${body}</p></section>`).join('')}<div class="process-pagination">${index > 0 ? '<button type="button" data-process-prev>〈 이전 단계</button>' : '<span aria-hidden="true"></span>'}<span class="process-page-count" aria-label="전체 6단계 중 ${index+1}단계">${index+1} / 6</span><button type="button" data-process-next>${index === steps.length - 1 ? '처음으로 ↻' : '다음 단계 〉'}</button></div>`;
 }
-export function bridgeMarkup() {
+export function bridgeMarkup(hero) {
  return `<div class="bridge-layout"><nav class="section-index" aria-label="브릿지 상세 목차">${[['summary','요약'],['background','배경·목표'],['process','과정'],['contribution','기여'],['result','결과']].map(([id,label])=>`<button type="button" data-section="bridge-${id}">${label}</button>`).join('')}</nav>
- <article class="bridge-article"><h1 id="detail-title">브릿지 (Bridge)</h1><p class="bridge-subtitle">시니어의 경험을 직무 언어로 번역하는 커리어 브랜딩 서비스</p><img class="bridge-cover" src="./assets/bridge-cover.jpg" alt="브릿지 프로젝트 대표 이미지" width="1280" height="720">
+ <article class="bridge-article">
+ <div class="bridge-hero">${hero}</div>
  <section id="bridge-summary" class="bridge-section" tabindex="-1"><h2>요약</h2><p>브릿지는 시니어가 축적한 경험과 강점을 직무에 맞는 표현으로 정리하도록 돕는 서비스 기획 프로젝트입니다.<br>대화를 통한 경험 정리부터 표현의 확인·수정, 커리어 프로필 완성까지의 이용 흐름을 제안했습니다.</p>
  <dl class="bridge-facts"><div><dt>프로젝트 유형</dt><dd>기획서</dd></div><div><dt>팀 구성</dt><dd>3인</dd></div><div><dt>기간</dt><dd>2026.03.03–2026.06.09</dd></div><div><dt>담당 역할</dt><dd>서비스 기획</dd></div></dl>
  <h3>수상 내역</h3><p>제32회 커뮤니케이션디자인 국제어워드 디지털미디어디자인 부문 특별상</p><h3>주요 수행 과업</h3><p>환경 및 경쟁 서비스 분석, 설문조사 결과 분석, 핵심 문제 정의, 서비스 방향 수립, 사용자 여정 지도 작성, 정보 구조도 작성, 서비스 이용 흐름도 작성</p></section>
