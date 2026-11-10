@@ -1,5 +1,7 @@
 import { projects as sourceProjects, featuredIds } from './data.js?v=profile-polish';
 import { bridgeMarkup, processMarkup } from './bridge.js?v=bridge-index';
+import { caseStudies } from './case-studies.js?v=project-details';
+import { caseStudyMarkup, caseProcessMarkup } from './case-study.js?v=project-details';
 
 const projects = sourceProjects.map(p => ({...p, documentType: ['chak','bridge','bluedog'].includes(p.id) ? 'plan' : p.id === 'korail' ? 'report' : 'proposal'}));
 for (const id of ['chak','lotte','bluedog','rocketfresh','kaywon']) {
@@ -12,6 +14,7 @@ const filters = [['all','전체'],['featured','대표'],['plan','기획서'],['r
 let listScroll = 0;
 let previousPage = '';
 let processIndex = 0;
+let detailProject;
 const $ = (selector) => document.querySelector(selector);
 const escape = (value = '') => String(value).replace(/[&<>"']/g, (character) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[character]));
 const projectUrl = (id) => `#/project/${encodeURIComponent(id)}`;
@@ -71,8 +74,9 @@ function detailHero(project) {
 }
 
 function renderDetail(id) {
-  const index = projects.findIndex((project) => project.id === id);
-  const project = projects[index];
+  const baseProject = projects.find((project) => project.id === id);
+  const project = baseProject && {...baseProject, ...caseStudies[id]};
+  detailProject = project;
   const download = $('.detail-pdf');
   download.hidden = !project?.pdf;
   if (project?.pdf) download.href = project.pdf;
@@ -85,31 +89,23 @@ function renderDetail(id) {
     $('#detail-content').innerHTML = bridgeMarkup(detailHero(project));
     return project.title;
   }
-  const stories = [['출발점',project.question],['접근과 선택',project.approach],[project.filter === 'ongoing' ? '진행 현황' : '결과와 배움',project.outcome]];
-  const previous = projects[index - 1];
-  const next = projects[index + 1];
-  $('#detail-content').innerHTML = `
-    ${detailHero(project)}
-    ${stories.filter(([,body]) => body).map(([title,body]) => `<section class="detail-story"><h2>${escape(title)}</h2><p>${escape(body)}</p></section>`).join('')}
-    ${project.detail ? `<img class="detail-image" src="${escape(project.detail)}" alt="${escape(project.title)} 기획서의 주요 산출물" loading="lazy">` : ''}
-    <div class="detail-actions">${project.pdf ? `<a class="solid-link" href="${escape(project.pdf)}" target="_blank" rel="noopener noreferrer">프로젝트 원본 PDF 보기 <span aria-hidden="true">↗</span></a><a class="arrow-link" href="${escape(project.pdf)}" download>내려받기 <span aria-hidden="true">↓</span></a>` : `<p class="detail-note">${(project.filter === 'ongoing' || project.status === 'ongoing') ? '현재 진행 중인 프로젝트입니다. 최종 결과물과 검증 내용은 작업 완료 후 업데이트합니다.' : '상세 내용과 작업 자료를 정리하고 있습니다.'}</p>`}</div>
-    <nav class="detail-next" aria-label="다른 프로젝트">${previous ? `<a href="${projectUrl(previous.id)}">← ${escape(previous.title)}</a>` : '<span></span>'}${next ? `<a href="${projectUrl(next.id)}">${escape(next.title)} →</a>` : ''}</nav>`;
+  $('#detail-content').innerHTML = caseStudyMarkup(project, detailHero(project), escape);
   return project.title;
 }
 
 // Keep the section index in sync with both click navigation and manual scrolling.
-let bridgeIndexFrame = 0;
-function setBridgeSection(id) {
+let detailIndexFrame = 0;
+function setDetailSection(id) {
   document.querySelectorAll('.section-index [data-section]').forEach(button => {
     if (button.dataset.section === id) button.setAttribute('aria-current','location');
     else button.removeAttribute('aria-current');
   });
 }
-function queueBridgeIndexUpdate() {
-  if (bridgeIndexFrame) return;
-  bridgeIndexFrame = requestAnimationFrame(() => {
-    bridgeIndexFrame = 0;
-    if (!$('#content').classList.contains('bridge-page')) return;
+function queueDetailIndexUpdate() {
+  if (detailIndexFrame) return;
+  detailIndexFrame = requestAnimationFrame(() => {
+    detailIndexFrame = 0;
+    if (!$('#content').classList.contains('case-study-page')) return;
     const sections = [...document.querySelectorAll('.bridge-section')];
     if (!sections.length) return;
     const header = $('.site-header').getBoundingClientRect().bottom;
@@ -122,11 +118,11 @@ function queueBridgeIndexUpdate() {
     for (const section of sections) {
       if (section.getBoundingClientRect().top <= threshold) current = section;
     }
-    setBridgeSection(current.id);
+    setDetailSection(current.id);
   });
 }
-window.addEventListener('scroll',queueBridgeIndexUpdate,{passive:true});
-window.addEventListener('resize',queueBridgeIndexUpdate,{passive:true});
+window.addEventListener('scroll',queueDetailIndexUpdate,{passive:true});
+window.addEventListener('resize',queueDetailIndexUpdate,{passive:true});
 
 const skillMeters = document.querySelectorAll('.tool-level .skill-meter');
 const skillMeterObserver = 'IntersectionObserver' in window
@@ -162,7 +158,7 @@ function renderRoute({ focus = false } = {}) {
     try { id = decodeURIComponent(route[1] || ''); } catch { id = ''; }
     name = renderDetail(id);
   }
-  $('#content').classList.toggle('bridge-page', detail && id === 'bridge');
+  $('#content').classList.toggle('case-study-page', detail && Boolean(detailProject));
   if (page === 'about' && previousPage !== 'about' && skillMeterObserver) {
     for (const meter of skillMeters) {
       meter.dataset.fill = 'waiting';
@@ -171,7 +167,7 @@ function renderRoute({ focus = false } = {}) {
   }
   const restoreList = page === 'projects' && previousPage === 'detail';
   previousPage = page;
-  queueBridgeIndexUpdate();
+  queueDetailIndexUpdate();
   document.title = `${name} | 정서영 포트폴리오`;
   if (sectionLink) requestAnimationFrame(() => $('#selected').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth'}));
   else { window.scrollTo({top:restoreList ? listScroll : 0,behavior:'instant'}); if (focus) $('#content').focus({preventScroll:true}); }
@@ -210,9 +206,12 @@ document.querySelectorAll('a[href="#/"], a[href="#/about"]').forEach((link) => {
 });
 const processDialog = $('#process-dialog');
 function openProcess(index) {
-  processIndex = Math.max(0, Math.min(5, index));
-  $('.process-dialog-meta').textContent = `브릿지 · 기획 과정 ${String(processIndex+1).padStart(2,'0')} / 06`;
-  $('#process-content').innerHTML = processMarkup(processIndex);
+  const steps = detailProject.steps;
+  const count = steps?.length ?? 6;
+  processIndex = Math.max(0, Math.min(count - 1, index));
+  const name = detailProject.id === 'bridge' ? '브릿지 · 기획 과정' : `${detailProject.title} · 과정`;
+  $('.process-dialog-meta').textContent = `${name} ${String(processIndex+1).padStart(2,'0')} / ${String(count).padStart(2,'0')}`;
+  $('#process-content').innerHTML = steps ? caseProcessMarkup(steps, processIndex, escape) : processMarkup(processIndex);
   if (!processDialog.open) processDialog.showModal();
   processDialog.scrollTop = 0;
   $('#process-title').setAttribute('tabindex','-1');
@@ -231,7 +230,7 @@ $('#detail-content').addEventListener('click', event => {
 });
 processDialog.querySelector('.process-close').addEventListener('click',()=>processDialog.close());
 processDialog.addEventListener('click',event=>{
-  if (event.target.closest('[data-process-next]')) openProcess((processIndex+1)%6);
+  if (event.target.closest('[data-process-next]')) openProcess((processIndex+1)%(detailProject.steps?.length ?? 6));
   if (event.target.closest('[data-process-prev]')) openProcess(Math.max(0,processIndex-1));
   if (event.target === processDialog) {
     const b=processDialog.getBoundingClientRect();

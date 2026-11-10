@@ -32,7 +32,7 @@ html {
 .footer-grid .brand,.footer-grid .brand span:last-child{font-size:15px}.footer-grid h2,.footer-grid>div a{font-size:13px}.footer-grid h2{margin-bottom:16px}.footer-grid>div a{margin-top:12px}
 /* Project catalog and all document detail routes. */
 [data-page=projects] .page-intro{padding-top:54px;padding-bottom:76px}[data-page=projects] .page-intro h1,.page-intro h1{font-size:32px;font-weight:500;line-height:1.4}[data-page=projects] .page-intro>p:last-child,.page-intro>p:last-child{font-size:16px;line-height:1.65;margin-top:18px}.filters{gap:8px}.filters button{font-size:13px;padding:8px 14px;line-height:1.5}.filters button[aria-pressed=true]{background:#333;color:#fff}.work-grid{row-gap:48px}.work-grid .project-card-meta{padding-top:18px}
-.project-detail{max-width:1120px}.back-link,.bridge-page .back-link{font-size:13px;margin-bottom:32px}.detail-heading h1,.bridge-article h1{font-size:34px;line-height:1.4;font-weight:500}.detail-subtitle,.bridge-subtitle{font-size:20px;line-height:1.6;margin-top:10px}.detail-lead{font-size:17px;line-height:1.65;margin-top:28px}.detail-facts{gap:40px;margin:28px 0;padding:20px 0}.detail-facts dt{font-size:12px}.detail-facts dd{font-size:14px}.detail-story{grid-template-columns:150px 1fr;gap:30px;padding:36px 0}.detail-story h2{font-size:19px}.detail-story p{font-size:16px;line-height:1.65}.detail-note{font-size:14px}.solid-link{font-size:14px;padding:12px 18px}.detail-next,.detail-next a{font-size:14px}.bridge-page .project-detail{max-width:1500px}.bridge-layout{grid-template-columns:120px minmax(0,1060px);gap:64px;justify-content:center}.section-index{top:110px}.section-index button{font-size:13px;padding:9px 0}.bridge-section{margin-top:44px;scroll-margin-top:104px}.bridge-section h2,.bridge-section h3{font-size:14px;font-weight:400}.bridge-section p,.bridge-section li{font-size:16px;line-height:1.65}.bridge-section .bridge-goal{font-size:23px;font-weight:500}.bridge-facts{margin-top:36px;gap:20px}.bridge-facts dt{font-size:13px;margin-bottom:7px}.bridge-facts dd{font-size:15px}.process-card span{font-size:13px;padding:10px 14px}.bridge-download{font-size:14px;padding:14px 18px;border:1px solid #ddd;background:#fff}
+.project-detail{max-width:1120px}.back-link,.case-study-page .back-link{font-size:13px;margin-bottom:32px}.detail-heading h1,.bridge-article h1{font-size:34px;line-height:1.4;font-weight:500}.detail-subtitle,.bridge-subtitle{font-size:20px;line-height:1.6;margin-top:10px}.detail-lead{font-size:17px;line-height:1.65;margin-top:28px}.detail-facts{gap:40px;margin:28px 0;padding:20px 0}.detail-facts dt{font-size:12px}.detail-facts dd{font-size:14px}.detail-story{grid-template-columns:150px 1fr;gap:30px;padding:36px 0}.detail-story h2{font-size:19px}.detail-story p{font-size:16px;line-height:1.65}.detail-note{font-size:14px}.solid-link{font-size:14px;padding:12px 18px}.detail-next,.detail-next a{font-size:14px}.case-study-page .project-detail{max-width:1500px}.bridge-layout{grid-template-columns:120px minmax(0,1060px);gap:64px;justify-content:center}.section-index{top:110px}.section-index button{font-size:13px;padding:9px 0}.bridge-section{margin-top:44px;scroll-margin-top:104px}.bridge-section h2,.bridge-section h3{font-size:14px;font-weight:400}.bridge-section p,.bridge-section li{font-size:16px;line-height:1.65}.bridge-section .bridge-goal{font-size:23px;font-weight:500}.bridge-facts{margin-top:36px;gap:20px}.bridge-facts dt{font-size:13px;margin-bottom:7px}.bridge-facts dd{font-size:15px}.process-card span{font-size:13px;padding:10px 14px}.bridge-download{font-size:14px;padding:14px 18px;border:1px solid #ddd;background:#fff}
 #process-dialog{width:min(1240px,calc(100% - 64px));padding:64px 80px}.process-close{top:-44px;margin:-40px -48px 14px auto;font-size:30px}#process-title{font-size:25px;font-weight:500}.process-summary,.process-explanation p{font-size:15px;line-height:1.65}.process-explanation h3{font-size:17px}.process-pagination button{font-size:13px;padding:10px 16px}.process-pagination span{font-size:12px}#document-title{font-size:26px}#document-content p,#document-content dd{font-size:15px}.download-link{font-size:13px;padding:12px 16px}
 /* About: keep a clear hierarchy without oversized section labels. */
 .about-profile{padding-top:48px}.about-profile h1{font-size:34px;font-weight:500;line-height:1.55}.about-profile-grid{margin-top:36px}.about-profile-copy>p{font-size:16px;line-height:1.65}.about-facts>div{font-size:14px;padding:12px 0}.about-facts dt{font-size:12px}.about-facts dd small{font-size:12px}.about-section{margin-top:108px}.about-section-heading{margin-bottom:30px}.about-section-heading h2{font-size:28px;font-weight:500;line-height:1.45}.about-section-heading p{font-size:14px;margin-top:8px}.about-section-heading:before{width:90px;border-top-width:1px;margin-bottom:16px}.about-records h3,.about-skills h3{font-size:18px;font-weight:500;margin-bottom:18px}.about-records h3{padding-bottom:14px;margin-bottom:0}.record-row{font-size:14px;padding:18px 0}.record-row dt{font-size:12px}.record-row small{font-size:12px;margin-top:8px}.about-skills h4{font-size:16px;font-weight:500}.about-skills p{font-size:13px;line-height:1.6}.ability-grid article,.tool-card,.ux-columns article{padding:20px}.skill-meter{margin-top:20px;gap:5px}.skill-meter i{width:10px;height:10px}.ux-columns dt{font-size:14px}.ux-columns dd{font-size:12px;margin-top:10px}.attitude-rows article{grid-template-columns:70px 1fr 1.35fr;gap:24px;padding:32px 0}.attitude-rows article>span{font-size:12px}.attitude-rows h3{font-size:18px;font-weight:400}.attitude-rows p{font-size:14px;line-height:1.65}.contact-cards a{padding:32px 24px}.contact-cards span{font-size:12px}.contact-cards strong{font-size:16px;font-weight:500}.thread-tip strong{font-size:21px}.thread-tip>span{font-size:13px}
@@ -72,8 +72,8 @@ html {
 .process-pagination button:first-child{justify-self:start}.process-pagination button:last-child{justify-self:end}.process-pagination button:hover{background:#fafafa;border-color:#aaa}
 .process-page-count{font-variant-numeric:tabular-nums;color:#999}
 @media(max-width:800px){.section-index{gap:14px}.section-index button{padding-left:12px}.section-index button:before{left:1px;width:4px;height:4px}#process-dialog{width:calc(100% - 24px);max-height:90svh}.process-dialog-toolbar{padding:8px 12px}.process-dialog-meta{font-size:11px}#process-content{padding:22px 20px 24px}#process-title{font-size:21px}#process-content .process-summary{margin:8px 0 16px;font-size:14px}#process-content .process-explanation{margin-top:22px}#process-content .process-explanation h3{font-size:15px;margin-bottom:6px}#process-content .process-explanation p{font-size:14px}#process-content .process-pagination{gap:10px;margin-top:26px;padding-top:18px}.process-pagination button{padding:9px 10px;font-size:12px}}
-body:has(.bridge-page) { --bridge-footer-min-height: 300px; }
-.bridge-page ~ .site-footer { min-height: var(--bridge-footer-min-height); }
+body:has(.case-study-page) { --bridge-footer-min-height: 300px; }
+.case-study-page ~ .site-footer { min-height: var(--bridge-footer-min-height); }
 .bridge-layout { --bridge-scroll-margin: 24px; }
 .bridge-section { scroll-margin-top: var(--bridge-scroll-margin); }
 
@@ -84,8 +84,20 @@ body:has(.bridge-page) { --bridge-footer-min-height: 300px; }
 }
 .bridge-ending .bridge-section { margin-top: 0; }
 @media (max-width: 800px) { .bridge-layout { --bridge-scroll-margin: 64px; } }
-@media (max-width: 680px) { body:has(.bridge-page) { --bridge-footer-min-height: 220px; } }
+@media (max-width: 680px) { body:has(.case-study-page) { --bridge-footer-min-height: 220px; } }
 
+.case-copy p + p { margin-top: 5px; }
+.case-process-media,
+#process-content > .case-process-media {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: contain;
+  background: #eee;
+}
+.case-process-placeholder,
+#process-content > .case-process-placeholder { background: #dedede; }
 
 /* First feedback pass: keep related copy close and preview the work below. */
 .hero {
@@ -326,7 +338,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
   gap: 8px 16px;
   margin-bottom: 28px;
 }
-.bridge-page .detail-toolbar {
+.case-study-page .detail-toolbar {
   max-width: 1244px;
   margin-inline: auto;
 }
