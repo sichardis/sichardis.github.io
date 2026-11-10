@@ -11,7 +11,15 @@ html{scroll-padding-top:100px}.site-header{height:var(--header-height)}.site-hea
 .hero .explore-link span{font-size:20px}
 .document-links,.hero .document-links,.about-profile-copy .document-links{gap:10px;margin-top:26px;flex-direction:row;flex-wrap:wrap;align-items:center;max-width:none}
 .document-button,.hero .document-button,.about-profile-copy .document-button{flex:0 1 auto;min-width:0;min-height:40px;padding:9px 15px;font-size:13px;font-weight:400;line-height:1.5;letter-spacing:-.01em;white-space:nowrap;border:1px solid #dcdcdc;border-radius:3px;background:#fff;box-shadow:none;justify-content:center;gap:10px;transition:background .15s,border-color .15s}
-.document-button:hover,.hero .document-button:hover,.about-profile-copy .document-button:hover{background:#f7f7f7;border-color:#aaa;transform:none}
+.document-button:is(:hover,:focus-visible),
+.hero .document-button:is(:hover,:focus-visible),
+.about-profile-copy .document-button:is(:hover,:focus-visible) {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #000;
+  transform: none;
+}
+.document-button:is(:hover,:focus-visible)::after { color: #000; }
 .document-button:after{content:'↓';font-size:13px;color:#888}
 .featured-section h2,.profile-portrait h2{font-size:30px;font-weight:500;line-height:1.4}.section-description{font-size:16px;margin-top:8px}.project-card h3{font-size:17px;font-weight:500;line-height:1.55;margin-top:16px}.project-card-description{font-size:14px;line-height:1.6;margin-top:8px;min-height:0}.project-card-meta{font-size:12px;line-height:1.7}.project-status{font-size:11px;padding:5px 9px}.arrow-link{font-size:15px;gap:10px}.arrow-link span{font-size:22px}.profile-slogan{font-size:28px;font-weight:500;line-height:1.5}.profile-intro{font-size:16px;line-height:1.65}.profile-facts>div{font-size:15px}.profile-facts dt{font-size:13px}.profile-facts dd small{font-size:12px}.attitudes h3{font-size:14px}.attitudes article p{font-size:13px;padding-top:40px}.attitudes-label{font-size:12px}.back-to-top{font-size:14px}.back-to-top span{font-size:20px}
 .footer-grid .brand,.footer-grid .brand span:last-child{font-size:15px}.footer-grid h2,.footer-grid>div a{font-size:13px}.footer-grid h2{margin-bottom:16px}.footer-grid>div a{margin-top:12px}
@@ -26,10 +34,10 @@ html{scroll-padding-top:100px}.site-header{height:var(--header-height)}.site-hea
 @media(max-width:400px){.document-links,.hero .document-links,.about-profile-copy .document-links{gap:8px}.document-button,.hero .document-button,.about-profile-copy .document-button{font-size:11px;padding:9px 10px;gap:6px}.hero h1{font-size:25px}.site-header .brand span:last-child{font-size:10px!important}.thread-tip>span{font-size:11px}}
 
 /* Canvas and the research-led tactile thread illustration. */
-:root{--canvas:#FAFAFA;--band:#FAFAFA;background:var(--canvas)}body,main{background:var(--canvas)}.site-header{background:rgba(250,250,250,.94)}.featured-section,.site-footer{background:var(--canvas)}
+:root{--canvas:#FEFEFE;--band:#FEFEFE;background:var(--canvas)}body,main{background:var(--canvas)}.site-header{background:rgba(254,254,254,.94)}.featured-section,.site-footer{background:var(--canvas)}
 .hero-visual.thread-scene{aspect-ratio:3/2;background:transparent;max-width:min(960px,calc((100svh - 260px)*1.5))}.hero-rope{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:contain;mix-blend-mode:multiply}
-.thread-start{left:14%;top:60%}.thread-weave{left:44%;top:49%}.thread-knot{left:67%;top:49%}.thread-dot{width:6px;height:6px;box-shadow:0 0 0 5px rgba(250,250,250,.9);background:#4a4944}.thread-tip>span{background:rgba(250,250,250,.97)}
-@media(max-width:800px){.section-index{background:rgba(250,250,250,.97)}.hero-visual.thread-scene{max-width:520px}.thread-knot .thread-tip{right:-10px}.thread-dot{box-shadow:0 0 0 4px rgba(250,250,250,.92)}}
+.thread-start{left:14%;top:60%}.thread-weave{left:44%;top:49%}.thread-knot{left:67%;top:49%}.thread-dot{width:6px;height:6px;box-shadow:0 0 0 5px rgba(254,254,254,.9);background:#4a4944}.thread-tip>span{background:rgba(254,254,254,.97)}
+@media(max-width:800px){.section-index{background:rgba(254,254,254,.97)}.hero-visual.thread-scene{max-width:520px}.thread-knot .thread-tip{right:-10px}.thread-dot{box-shadow:0 0 0 4px rgba(254,254,254,.92)}}
 .thread-start{top:63%}.thread-knot{left:64%;top:46%}
 /* Bridge reading rhythm, current section, and process dialog. */
 .section-index button{position:relative;padding-left:16px;color:#8a8a8a;font-weight:400;transition:color .15s}
@@ -224,6 +232,8 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
   font-weight: 650;
 }
 .tool-icon svg { width: 22px; height: 22px; }
+.tool-icon--brand { background: transparent; }
+.tool-icon--brand img { width: 100%; height: auto; }
 .tool-level { margin-top: 9px; }
 .tool-level summary {
   display: flex;
