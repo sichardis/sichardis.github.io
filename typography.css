@@ -14,7 +14,7 @@ html {
 .hero-layout{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:64px;align-items:center}
 .hero h1{font-size:clamp(28px,1.9vw,36px);line-height:1.55;letter-spacing:-.04em;font-weight:500}
 .hero-visual.thread-scene{width:100%;max-width:min(960px,calc((100svh - 260px)*1.6045));justify-self:center}
-.hero .explore-link{justify-self:center;align-self:end;flex-direction:column;gap:2px;margin:0;padding:8px 20px;font-size:14px;line-height:1.5;font-weight:400}
+.hero .explore-link{position:relative;top:10px;justify-self:center;align-self:end;flex-direction:column;gap:2px;margin:0;padding:8px 20px;font-size:14px;line-height:1.5;font-weight:400}
 .hero .explore-link span{font-size:20px}
 .document-links,.hero .document-links,.about-profile .document-links{gap:10px;margin-top:26px;flex-direction:row;flex-wrap:wrap;align-items:center;max-width:none}
 .document-button,.hero .document-button,.about-profile .document-button{flex:0 1 auto;min-width:0;min-height:40px;padding:9px 15px;font-size:13px;font-weight:400;line-height:1.5;letter-spacing:-.01em;white-space:nowrap;border:1px solid #dcdcdc;border-radius:3px;background:#fff;box-shadow:none;justify-content:center;gap:10px;transition:background .15s,border-color .15s}
@@ -141,7 +141,8 @@ body:has(.case-study-page) { --bridge-footer-min-height: 300px; }
   max-width: 1100px;
 }
 /* Position the interactive stops against the original image proportions. */
-.thread-artwork { position: relative; width: 100%; }
+.thread-artwork { position: relative; width: 100%; pointer-events: none; }
+.thread-artwork .thread-stop { pointer-events: auto; }
 .featured-section { padding-top: 48px; }
 .section-description { margin-top: 4px; line-height: 1.5; }
 .project-grid { margin-top: 28px; }
@@ -167,12 +168,17 @@ body:has(.case-study-page) { --bridge-footer-min-height: 300px; }
 .bridge-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 22rem; }
 .bridge-facts dt { margin-bottom: 4px; }
 .about-profile h1 { line-height: 1.4; }
-.profile-title-end { white-space: nowrap; }
-.knot-icon {
-  display: inline-block;
-  width: 1.35em;
-  margin-inline-start: .35em;
-  vertical-align: -.22em;
+.about-records .record-heading { display: flex; align-items: center; gap: 8px; }
+.attitude-rows .attitude-marker {
+  display: flex;
+  align-items: center;
+  height: 26px;
+  padding-top: 0;
+}
+.attitude-marker svg { display: none; width: 22px; height: 22px; color: var(--accent); }
+@media (hover: hover) {
+  .attitude-rows article:hover .attitude-marker > span { display: none; }
+  .attitude-rows article:hover .attitude-marker svg { display: block; }
 }
 .about-profile-grid {
   grid-template-areas: "portraits copy" "portraits documents";

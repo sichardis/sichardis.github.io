@@ -171,7 +171,7 @@ function renderRoute({ focus = false } = {}) {
   previousPage = page;
   queueDetailIndexUpdate();
   document.title = `${name} | 정서영 포트폴리오`;
-  if (sectionLink) requestAnimationFrame(() => $('#selected').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth'}));
+  if (sectionLink) requestAnimationFrame(scrollToFeatured);
   else { window.scrollTo({top:restoreList ? listScroll : 0,behavior:'instant'}); if (focus) $('#content').focus({preventScroll:true}); }
 }
 
@@ -183,10 +183,14 @@ $('.filters').addEventListener('click', event => {
   $(`[data-filter="${activeFilter}"]`).focus({preventScroll:true});
 });
 const motion = () => matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth';
+function scrollToFeatured() {
+  const title = $('#selected-title');
+  title.focus({preventScroll:true});
+  title.scrollIntoView({behavior:motion(), block:'start'});
+}
 $('.explore-link').addEventListener('click', (event) => {
   event.preventDefault();
-  $('#selected-title').focus({preventScroll:true});
-  $('#selected').scrollIntoView({behavior:motion()});
+  scrollToFeatured();
 });
 document.querySelectorAll('.back-to-top').forEach(button => button.addEventListener('click', () => {
   window.scrollTo({top:0,behavior:motion()});
