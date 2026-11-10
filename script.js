@@ -1,7 +1,7 @@
 import { projects as sourceProjects, featuredIds } from './data.js?v=project-polish';
-import { bridgeMarkup, steps as bridgeSteps } from './bridge.js?v=project-polish';
+import { bridgeMarkup, steps as bridgeSteps } from './bridge.js?v=team-photos';
 import { caseStudies } from './case-studies.js?v=project-polish';
-import { caseStudyMarkup, caseProcessMarkup } from './case-study.js?v=project-polish';
+import { caseStudyMarkup, caseProcessMarkup } from './case-study.js?v=team-photos';
 
 const projects = sourceProjects.map(p => ({...p, documentType: ['chak','bridge','bluedog'].includes(p.id) ? 'plan' : p.id === 'korail' ? 'report' : 'proposal'}));
 for (const id of ['chak','lotte','bluedog','rocketfresh','kaywon']) {

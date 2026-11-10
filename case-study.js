@@ -1,10 +1,29 @@
+const teamPhotosLabel = '팀 활동 사진';
+
 const sectionLabels = [
   ['summary', '요약'],
   ['background', '배경·목표'],
   ['process', '과정'],
   ['contribution', '기여'],
   ['result', '결과'],
+  ['team-photos', teamPhotosLabel],
 ];
+
+export function detailIndexButtons(projectId) {
+  return sectionLabels.map(([key, label]) =>
+    `<button type="button" data-section="${projectId}-${key}">${label}</button>`).join('');
+}
+
+export function teamPhotosMarkup(projectId) {
+  return `<section id="${projectId}-team-photos" class="bridge-section" tabindex="-1">
+    <h2>${teamPhotosLabel}</h2>
+    <div class="team-photo-grid">
+      <div class="team-photo-placeholder" lang="en">Image</div>
+      <div class="team-photo-placeholder" lang="en">Image</div>
+      <div class="team-photo-placeholder" lang="en">Image</div>
+    </div>
+  </section>`;
+}
 
 function processMedia(step, escape, {loading = 'eager', placeholder = ''} = {}) {
   if (placeholder || !step.image) {
@@ -15,8 +34,6 @@ function processMedia(step, escape, {loading = 'eager', placeholder = ''} = {}) 
 
 export function caseStudyMarkup(project, hero, escape) {
   const sectionId = key => `${project.id}-${key}`;
-  const index = sectionLabels.map(([key, label]) =>
-    `<button type="button" data-section="${sectionId(key)}">${label}</button>`).join('');
   const cards = project.steps.map((step, i) => {
     const label = `${String(i + 1).padStart(2, '0')} ${escape(step.title)}`;
     return `<button type="button" class="process-card" data-process="${i}" aria-label="${label} 상세 보기">
@@ -32,7 +49,7 @@ export function caseStudyMarkup(project, hero, escape) {
   const paragraphs = items => items.map(item => `<p>${escape(item)}</p>`).join('');
 
   return `<div class="bridge-layout">
-    <nav class="section-index" aria-label="${escape(project.title)} 상세 목차">${index}</nav>
+    <nav class="section-index" aria-label="${escape(project.title)} 상세 목차">${detailIndexButtons(project.id)}</nav>
     <article class="bridge-article">
       <div class="bridge-hero">${hero}</div>
       <section id="${sectionId('summary')}" class="bridge-section" tabindex="-1">
@@ -54,10 +71,11 @@ export function caseStudyMarkup(project, hero, escape) {
       <section id="${sectionId('contribution')}" class="bridge-section" tabindex="-1">
         <h2>기여</h2><ul>${project.contributions.map(item => `<li>${escape(item)}</li>`).join('')}</ul>
       </section>
+      <section id="${sectionId('result')}" class="bridge-section case-copy" tabindex="-1">
+        <h2>결과</h2>${paragraphs(project.results)}
+      </section>
       <div class="bridge-ending">
-        <section id="${sectionId('result')}" class="bridge-section case-copy" tabindex="-1">
-          <h2>결과</h2>${paragraphs(project.results)}
-        </section>
+        ${teamPhotosMarkup(project.id)}
         <div class="back-to-top-wrap"><button class="back-to-top" type="button" data-detail-top>상단으로 ↑</button></div>
       </div>
     </article>
