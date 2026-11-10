@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="./home.css">
   <link rel="stylesheet" href="./projects.css?v=project-details">
   <link rel="stylesheet" href="./about.css?v=profile-slogans">
-  <link rel="stylesheet" href="./typography.css?v=profile-slogans">
+  <link rel="stylesheet" href="./typography.css?v=wider-thread">
   <script type="module" src="./script.js?v=profile-slogans"></script>
 </head>
 <body>
@@ -34,10 +34,12 @@
         <div class="hero-layout">
           <h1 id="hero-title">실마리를 찾아 근거로 매듭짓는 정서영입니다.</h1>
           <div class="hero-visual thread-scene" aria-label="실마리에서 매듭까지, 세 지점에서 기획 과정을 확인하세요">
-            <img class="hero-rope" src="./assets/thread-rope-hero.png" alt="부드러운 곡선으로 이어져 하나의 매듭을 이루는 입체 로프" width="1280" height="853" fetchpriority="high">
-            <button class="thread-stop thread-start" type="button" aria-label="실마리를 찾고" aria-expanded="false" aria-controls="thread-tip-1"><span class="thread-dot" aria-hidden="true"></span><span class="thread-tip" id="thread-tip-1"><strong>실마리를 찾고</strong><span>사용자의 상황과 작은 불편을 관찰해 해결해야 할 질문을 찾습니다.</span></span></button>
-            <button class="thread-stop thread-weave" type="button" aria-label="실을 엮어서" aria-expanded="false" aria-controls="thread-tip-2"><span class="thread-dot" aria-hidden="true"></span><span class="thread-tip" id="thread-tip-2"><strong>실을 엮어서</strong><span>서로 다른 의견과 근거를 비교해 기획의 방향과 흐름을 정리합니다.</span></span></button>
-            <button class="thread-stop thread-knot" type="button" aria-label="매듭 짓습니다" aria-expanded="false" aria-controls="thread-tip-3"><span class="thread-dot" aria-hidden="true"></span><span class="thread-tip" id="thread-tip-3"><strong>매듭 짓습니다</strong><span>핵심 과제의 우선순위를 정하고 선택한 이유를 기획으로 구체화합니다.</span></span></button>
+            <div class="thread-artwork">
+              <img class="hero-rope" src="./assets/thread-rope-hero.png" alt="부드러운 곡선으로 이어져 하나의 매듭을 이루는 입체 로프" width="1280" height="853" fetchpriority="high">
+              <button class="thread-stop thread-start" type="button" aria-label="실마리를 찾고" aria-expanded="false" aria-controls="thread-tip-1"><span class="thread-dot" aria-hidden="true"></span><span class="thread-tip" id="thread-tip-1"><strong>실마리를 찾고</strong><span>사용자의 상황과 작은 불편을 관찰해 해결해야 할 질문을 찾습니다.</span></span></button>
+              <button class="thread-stop thread-weave" type="button" aria-label="실을 엮어서" aria-expanded="false" aria-controls="thread-tip-2"><span class="thread-dot" aria-hidden="true"></span><span class="thread-tip" id="thread-tip-2"><strong>실을 엮어서</strong><span>서로 다른 의견과 근거를 비교해 기획의 방향과 흐름을 정리합니다.</span></span></button>
+              <button class="thread-stop thread-knot" type="button" aria-label="매듭 짓습니다" aria-expanded="false" aria-controls="thread-tip-3"><span class="thread-dot" aria-hidden="true"></span><span class="thread-tip" id="thread-tip-3"><strong>매듭 짓습니다</strong><span>핵심 과제의 우선순위를 정하고 선택한 이유를 기획으로 구체화합니다.</span></span></button>
+            </div>
           </div>
           <div class="document-links">
             <a class="document-button" href="./assets/seoyeong-resume-and-letter.docx" download="정서영_이력서_자기소개서.docx">이력서 · 경험의 실 담아가기</a>
@@ -97,7 +99,7 @@
     </div>
 
     <div data-page="about" hidden>
-      <section class="about-profile container" aria-labelledby="about-title"><h1 id="about-title">실마리를 찾아 근거로 매듭짓는 정서영입니다.</h1>
+      <section class="about-profile container" aria-labelledby="about-title"><h1 id="about-title">실마리를 찾아 근거로 매듭짓는 <span class="profile-title-end">정서영입니다.<img class="knot-icon" src="./assets/knot-icon.svg" width="40" height="32" alt=""></span></h1>
         <div class="about-profile-grid"><div class="about-portraits"><img src="./assets/student_jeongseoyeong.png" alt="정서영 프로필 사진" width="600" height="751"><div class="about-photo-placeholder" role="img" aria-label="두 번째 소개 이미지 준비 영역">img</div></div>
         <div class="document-links"><a class="document-button" href="./assets/seoyeong-resume-and-letter.docx" download="정서영_이력서_자기소개서.docx">이력서 · 경험의 실 담아가기</a><a class="document-button" href="./assets/seoyeong-resume-and-letter.docx" download="정서영_이력서_자기소개서.docx">자기소개서 · 생각의 매듭 담아가기</a></div>
         <div class="about-profile-copy"><p>작은 불편을 발견하는 일이 기획의 시작이라고 생각합니다.<br>
