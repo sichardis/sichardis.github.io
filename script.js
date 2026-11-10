@@ -1,6 +1,5 @@
-import { projects as sourceProjects, featuredIds } from './data.js';
+import { projects as sourceProjects, featuredIds } from './data.js?v=20261110-2';
 
-import { bridgeMarkup, processMarkup } from './bridge.js?v=20261110-1';
 const projects = sourceProjects.map(p => ({...p, documentType: ['chak','bridge','bluedog'].includes(p.id) ? 'plan' : p.id === 'korail' ? 'report' : 'proposal'}));
 for (const id of ['chak','lotte','bluedog','rocketfresh','kaywon']) {
   const original = projects.find(p => p.id === id);
@@ -11,7 +10,6 @@ projects.sort((a,b)=>documentOrder.indexOf(a.id)-documentOrder.indexOf(b.id));
 const filters = [['all','전체'],['featured','대표'],['plan','기획서'],['report','보고서'],['proposal','제안서'],['storyboard','화면설계서']];
 let listScroll = 0;
 let previousPage = '';
-let processIndex = 0;
 const $ = (selector) => document.querySelector(selector);
 const escape = (value = '') => String(value).replace(/[&<>"']/g, (character) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[character]));
 const projectUrl = (id) => `#/project/${encodeURIComponent(id)}`;
@@ -36,10 +34,11 @@ const featuredSlogans = {
 function card(project, featured = false) {
   const description = featured ? featuredSlogans[project.id] : summaries[project.id];
   const ongoing = project.filter === 'ongoing' || project.status === 'ongoing';
-  const image = project.cover
-    ? `<img src="${escape(project.cover)}" alt="${escape(project.title)} 프로젝트 표지" loading="lazy" width="800" height="450">`
+  const thumbnail = project.thumbnail || project.cover;
+  const image = thumbnail
+    ? `<img src="${escape(thumbnail)}" alt="${escape(project.title)} 프로젝트 표지" loading="lazy" width="800" height="450">`
     : `<span class="project-cover-type">${escape(project.word || project.title)}</span>`;
-  let title = project.documentType === 'storyboard' ? project.title : project.id === 'chak' ? '착! (Chak!)' : project.id === 'bridge' ? '브릿지 (Bridge)' : project.id === 'lotte' ? '[롯데시네마] 탐색 및 예매 기능 개선 제안서' : project.title;
+  let title = project.documentType === 'storyboard' ? project.title : project.id === 'chak' ? '착! (Chak!)' : project.id === 'lotte' ? '[롯데시네마] 탐색 및 예매 기능 개선 제안서' : project.title;
   if (!featured) title = ({bluedog:'블루독 (Blue Dog)',korail:'[코레일톡] 기능 분산 구조 및 탐색 혼란 기능 개선 보고서',rocketfresh:'[쿠팡 로켓프레시] 메인페이지 UX 리뉴얼 제안서',kaywon:'[계원예술대학교] 메인페이지 UX 리뉴얼 제안서'})[project.id] || title;
   let meta = !featured ? `${featuredIds.includes(project.id) ? '대표 | ' : ''}${filters.find(([id])=>id===project.documentType)?.[1] || ''}` : featured ? `대표 | ${project.id === 'lotte' ? '제안서' : '기획서'}` : escape(project.role || project.type);
   if (project.id === 'bridge') meta = '대표 | 기획서 | 커뮤니케이션디자인 공모전 특별상';
@@ -73,14 +72,13 @@ function renderDetail(id) {
     $('#detail-content').innerHTML = '<div class="not-found"><h1 id="detail-title">프로젝트를 찾을 수 없습니다.</h1><p>프로젝트 목록에서 작업을 다시 선택해 주세요.</p></div>';
     return '프로젝트를 찾을 수 없습니다';
   }
-  if (id === 'bridge') { $('#detail-content').innerHTML = bridgeMarkup(); return '브릿지 (Bridge)'; }
   const stories = [['출발점',project.question],['접근과 선택',project.approach],[project.filter === 'ongoing' ? '진행 현황' : '결과와 배움',project.outcome]];
   const previous = projects[index - 1];
   const next = projects[index + 1];
   $('#detail-content').innerHTML = `
     <div class="detail-heading"><p class="eyebrow">${escape([project.year,project.type].filter(Boolean).join(' / '))}</p><h1 id="detail-title">${escape(project.title)}</h1><p class="detail-subtitle">${escape(project.subtitle)}</p></div>
     <p class="detail-lead">${escape(project.lead)}</p>
-    <dl class="detail-facts">${project.role ? `<div><dt>담당 역할</dt><dd>${escape(project.role)}</dd></div>` : ''}<div><dt>프로젝트 유형</dt><dd>${escape(project.type)}</dd></div>${project.year ? `<div><dt>기간</dt><dd>${project.id === 'chak' ? '2026.09–12 · 진행 중' : project.id === 'bridge' ? '2026.03–06' : escape(project.year)}</dd></div>` : ''}</dl>
+    <dl class="detail-facts">${project.role ? `<div><dt>담당 역할</dt><dd>${escape(project.role)}</dd></div>` : ''}<div><dt>프로젝트 유형</dt><dd>${escape(project.type)}</dd></div>${project.year ? `<div><dt>기간</dt><dd>${project.id === 'chak' ? '2026.09–12 · 진행 중' : escape(project.period || project.year)}</dd></div>` : ''}</dl>
     ${project.cover ? `<img class="detail-cover" src="${escape(project.cover)}" alt="${escape(project.title)} 프로젝트 표지" width="1280" height="720">` : ''}
     ${stories.filter(([,body]) => body).map(([title,body]) => `<section class="detail-story"><h2>${escape(title)}</h2><p>${escape(body)}</p></section>`).join('')}
     ${project.detail ? `<img class="detail-image" src="${escape(project.detail)}" alt="${escape(project.title)} 기획서의 주요 산출물" loading="lazy">` : ''}
@@ -89,41 +87,8 @@ function renderDetail(id) {
   return project.title;
 }
 
-// Keep the section index in sync with both click navigation and manual scrolling.
-let bridgeIndexFrame = 0;
-function setBridgeSection(id) {
-  document.querySelectorAll('.section-index [data-section]').forEach(button => {
-    if (button.dataset.section === id) button.setAttribute('aria-current','location');
-    else button.removeAttribute('aria-current');
-  });
-}
-function queueBridgeIndexUpdate() {
-  if (bridgeIndexFrame) return;
-  bridgeIndexFrame = requestAnimationFrame(() => {
-    bridgeIndexFrame = 0;
-    if (!$('#content').classList.contains('bridge-page')) return;
-    const sections = [...document.querySelectorAll('.bridge-section')];
-    if (!sections.length) return;
-    const header = $('.site-header').getBoundingClientRect().bottom;
-    const index = $('.section-index');
-    const mobile = matchMedia('(max-width:800px)').matches;
-    const scrollPadding = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
-    const sectionMargin = parseFloat(getComputedStyle(sections[0]).scrollMarginTop) || 0;
-    const threshold = Math.max(header + (mobile ? index.getBoundingClientRect().height : 0) + 12, scrollPadding + sectionMargin + 4);
-    let current = sections[0];
-    for (const section of sections) {
-      if (section.getBoundingClientRect().top <= threshold) current = section;
-    }
-    if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 4) current = sections.at(-1);
-    setBridgeSection(current.id);
-  });
-}
-window.addEventListener('scroll',queueBridgeIndexUpdate,{passive:true});
-window.addEventListener('resize',queueBridgeIndexUpdate,{passive:true});
-
 function renderRoute({ focus = false } = {}) {
   if (previousPage === 'projects') listScroll = window.scrollY;
-  if ($('#process-dialog').open) $('#process-dialog').close();
   const hash = location.hash || '#/';
   if (hash === '#content') {
     $('#content').focus({preventScroll:true});
@@ -144,10 +109,8 @@ function renderRoute({ focus = false } = {}) {
     try { id = decodeURIComponent(route[1] || ''); } catch { id = ''; }
     name = renderDetail(id);
   }
-  $('#content').classList.toggle('bridge-page', page === 'detail' && route[1] === 'bridge');
   const restoreList = page === 'projects' && previousPage === 'detail';
   previousPage = page;
-  queueBridgeIndexUpdate();
   document.title = `${name} | 정서영 포트폴리오`;
   if (sectionLink) requestAnimationFrame(() => $('#selected').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth'}));
   else { window.scrollTo({top:restoreList ? listScroll : 0,behavior:'instant'}); if (focus) $('#content').focus({preventScroll:true}); }
@@ -183,36 +146,6 @@ document.querySelectorAll('a[href="#/"], a[href="#/about"]').forEach((link) => {
   link.addEventListener('click', () => {
     if (location.hash === link.getAttribute('href') || (!location.hash && link.getAttribute('href') === '#/')) window.scrollTo({top:0,behavior:motion()});
   });
-});
-const processDialog = $('#process-dialog');
-function openProcess(index) {
-  processIndex = Math.max(0, Math.min(5, index));
-  $('.process-dialog-meta').textContent = `브릿지 · 기획 과정 ${String(processIndex+1).padStart(2,'0')} / 06`;
-  $('#process-content').innerHTML = processMarkup(processIndex);
-  if (!processDialog.open) processDialog.showModal();
-  processDialog.scrollTop = 0;
-  $('#process-title').setAttribute('tabindex','-1');
-  $('#process-title').focus({preventScroll:true});
-}
-$('#detail-content').addEventListener('click', event => {
-  const process = event.target.closest('[data-process]');
-  if (process) openProcess(Number(process.dataset.process));
-  const jump = event.target.closest('[data-section]');
-  if (jump) {
-    setBridgeSection(jump.dataset.section);
-    const target = document.getElementById(jump.dataset.section);
-    target.focus({preventScroll:true}); target.scrollIntoView({behavior:motion()});
-  }
-  if (event.target.closest('[data-detail-top]')) window.scrollTo({top:0,behavior:motion()});
-});
-processDialog.querySelector('.process-close').addEventListener('click',()=>processDialog.close());
-processDialog.addEventListener('click',event=>{
-  if (event.target.closest('[data-process-next]')) openProcess((processIndex+1)%6);
-  if (event.target.closest('[data-process-prev]')) openProcess(Math.max(0,processIndex-1));
-  if (event.target === processDialog) {
-    const b=processDialog.getBoundingClientRect();
-    if(event.clientX<b.left||event.clientX>b.right||event.clientY<b.top||event.clientY>b.bottom) processDialog.close();
-  }
 });
 window.addEventListener('hashchange' , () => renderRoute({focus:true}));
 renderProjects();
