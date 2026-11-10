@@ -135,8 +135,6 @@ html{scroll-padding-top:100px}.site-header{height:var(--header-height)}.site-hea
 /* Shared accent for all routes. */
 :root {
   --accent: #f98d22;
-  --accent-ink: #8d4100;
-  --accent-on: #281500;
   --accent-soft: #fff1e3;
   --accent-line: #f3c397;
   --accent-hover: #ed7e13;
@@ -146,24 +144,24 @@ html{scroll-padding-top:100px}.site-header{height:var(--header-height)}.site-hea
 .site-header nav a[aria-current="page"],
 .hero .explore-link span,
 .arrow-link:hover,
-.back-to-top:hover { color: var(--accent-ink); }
+.back-to-top:hover { color: #000; }
 .site-header nav a[aria-current="page"]::after,
 .about-section-heading::before { border-color: var(--accent); }
 a:focus-visible, button:focus-visible, summary:focus-visible {
-  outline: 2px solid var(--accent-ink);
+  outline: 2px solid #000;
   outline-offset: 3px;
 }
 .filters button[aria-pressed="true"],
 .detail-toolbar .detail-pdf,
 .detail-actions .solid-link {
   background: var(--accent);
-  color: var(--accent-on);
+  color: #000;
 }
 .filters button:not([aria-pressed="true"]):hover,
 .bridge-download,
-.contact-cards a:hover { background: var(--accent-soft); color: var(--accent-ink); }
-.project-status { background: var(--accent-soft); color: var(--accent-ink); }
-.project-card-link:hover h3, .project-card-link:focus-visible h3 { color: var(--accent-ink); }
+.contact-cards a:hover { background: var(--accent-soft); color: #000; }
+.project-status { background: var(--accent-soft); color: #000; }
+.project-card-link:hover h3, .project-card-link:focus-visible h3 { color: #000; }
 
 .thread-stop .thread-dot { background: var(--accent); }
 .thread-knot .thread-dot {
@@ -181,7 +179,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
   background: #fff;
   border: 1px solid var(--accent-line);
   border-radius: 10px;
-  box-shadow: 0 8px 28px #54260015;
+  box-shadow: 0 8px 28px #00000015;
   font-size: 13px;
   line-height: 1.55;
   word-break: keep-all;
@@ -189,7 +187,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
 .thread-start .thread-tip { left: 0; }
 .thread-weave .thread-tip { left: calc(50% - min(140px, 32vw)); }
 .thread-knot .thread-tip { left: auto; right: -16px; }
-.thread-tip strong { display: block; color: var(--accent-ink); font-size: 16px; font-weight: 600; }
+.thread-tip strong { display: block; color: #000; font-size: 16px; font-weight: 600; }
 .thread-tip > span {
   max-width: none;
   margin-top: 4px;
@@ -221,7 +219,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
   height: 30px;
   border-radius: 7px;
   background: var(--accent-soft);
-  color: var(--accent-ink);
+  color: #000;
   font-size: 15px;
   font-weight: 650;
 }
@@ -249,7 +247,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
 }
 .tool-level .skill-meter .filled { background: var(--accent); }
 .tool-level:is([open], :hover, :focus-within) .filled { transform: scaleY(1.6); }
-.tool-level > p { margin: 0; color: var(--accent-ink); font-size: 12px; }
+.tool-level > p { margin: 0; color: #000; font-size: 12px; }
 
 /* The same controls and spacing apply to all project details. */
 .detail-toolbar {
@@ -273,7 +271,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
   padding: 8px 14px;
   border: 1px solid var(--accent-line);
   border-radius: 6px;
-  color: var(--accent-ink);
+  color: #000;
   font-size: 13px;
   font-weight: 550;
   line-height: 1.4;
@@ -285,7 +283,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
 .detail-actions .solid-link:hover { background: var(--accent-hover); }
 .bridge-download { border-color: var(--accent-line); }
 .bridge-download:hover { border-color: var(--accent); }
-.detail-heading .eyebrow { margin-bottom: 8px; color: var(--accent-ink); }
+.detail-heading .eyebrow { margin-bottom: 8px; color: #000; }
 .detail-heading h1, .bridge-article h1 { line-height: 1.28; }
 .detail-subtitle, .bridge-subtitle { margin-top: 7px; line-height: 1.45; }
 .detail-lead { margin-top: 16px; }
@@ -305,8 +303,8 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
   padding-top: 22px;
   border-top: 1px solid var(--line);
 }
-.bridge-section h2 { color: var(--accent-ink); }
-.section-index button[aria-current="location"] { color: var(--accent-ink); }
+.bridge-section h2 { color: #000; }
+.section-index button[aria-current="location"] { color: #000; }
 .section-index button[aria-current="location"]::before { background: var(--accent); }
 .bridge-section h3 { margin-top: 16px; }
 .bridge-section ul { padding-inline-start: 20px; }
