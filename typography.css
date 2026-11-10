@@ -176,8 +176,14 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
   color: #000;
 }
 .filters button:not([aria-pressed="true"]):hover,
-.bridge-download,
-.contact-cards a:hover { background: var(--accent-soft); color: #000; }
+.bridge-download { background: var(--accent-soft); color: #000; }
+.contact-cards a:is(:hover, :focus-visible) {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #000;
+}
+.contact-cards a:is(:hover, :focus-visible) .contact-label { color: #000; }
+.contact-cards a:is(:hover, :focus-visible) .tool-icon { background: rgba(255, 255, 255, .28); }
 .project-status { background: var(--accent-soft); color: #000; }
 .project-card-link:hover h3, .project-card-link:focus-visible h3 { color: #000; }
 
