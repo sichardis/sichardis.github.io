@@ -132,25 +132,43 @@ html{scroll-padding-top:100px}.site-header{height:var(--header-height)}.site-hea
   .attitudes article p { padding-top: 8px; }
 }
 
-/* Accent color, thread callouts, and tool cards. */
+/* Shared accent for all routes. */
 :root {
   --accent: #f98d22;
   --accent-ink: #8d4100;
   --accent-on: #281500;
   --accent-soft: #fff1e3;
   --accent-line: #f3c397;
+  --accent-hover: #ed7e13;
 }
+.site-header .brand:hover,
+.site-header nav a:hover,
 .site-header nav a[aria-current="page"],
-.hero .explore-link:hover,
-.arrow-link:hover { color: var(--accent-ink); }
-.filters button[aria-pressed="true"] { background: var(--accent); color: var(--accent-on); }
+.hero .explore-link span,
+.arrow-link:hover,
+.back-to-top:hover { color: var(--accent-ink); }
+.site-header nav a[aria-current="page"]::after,
+.about-section-heading::before { border-color: var(--accent); }
+a:focus-visible, button:focus-visible, summary:focus-visible {
+  outline: 2px solid var(--accent-ink);
+  outline-offset: 3px;
+}
+.filters button[aria-pressed="true"],
+.detail-toolbar .detail-pdf,
+.detail-actions .solid-link {
+  background: var(--accent);
+  color: var(--accent-on);
+}
+.filters button:not([aria-pressed="true"]):hover,
+.bridge-download,
+.contact-cards a:hover { background: var(--accent-soft); color: var(--accent-ink); }
 .project-status { background: var(--accent-soft); color: var(--accent-ink); }
-.about-section-heading::before { border-color: var(--accent-line); }
+.project-card-link:hover h3, .project-card-link:focus-visible h3 { color: var(--accent-ink); }
 
+.thread-stop .thread-dot { background: var(--accent); }
 .thread-knot .thread-dot {
   width: 10px;
   height: 10px;
-  background: var(--accent);
   box-shadow: 0 0 0 4px #fff, 0 0 0 9px #f98d223d;
 }
 .thread-knot:is(:hover, :focus-visible, [aria-expanded="true"]) .thread-dot {
@@ -262,8 +280,11 @@ html{scroll-padding-top:100px}.site-header{height:var(--header-height)}.site-hea
 }
 .detail-toolbar .back-link { margin: 0; }
 .detail-toolbar a:hover { background: var(--accent-soft); }
-.detail-toolbar .detail-pdf { background: var(--accent); color: var(--accent-on); border-color: var(--accent); }
-.detail-toolbar .detail-pdf:hover { background: #ed7e13; }
+.detail-toolbar .detail-pdf { border-color: var(--accent); }
+.detail-toolbar .detail-pdf:hover,
+.detail-actions .solid-link:hover { background: var(--accent-hover); }
+.bridge-download { border-color: var(--accent-line); }
+.bridge-download:hover { border-color: var(--accent); }
 .detail-heading .eyebrow { margin-bottom: 8px; color: var(--accent-ink); }
 .detail-heading h1, .bridge-article h1 { line-height: 1.28; }
 .detail-subtitle, .bridge-subtitle { margin-top: 7px; line-height: 1.45; }
@@ -286,6 +307,7 @@ html{scroll-padding-top:100px}.site-header{height:var(--header-height)}.site-hea
 }
 .bridge-section h2 { color: var(--accent-ink); }
 .section-index button[aria-current="location"] { color: var(--accent-ink); }
+.section-index button[aria-current="location"]::before { background: var(--accent); }
 .bridge-section h3 { margin-top: 16px; }
 .bridge-section ul { padding-inline-start: 20px; }
 .bridge-section li + li { margin-top: 4px; }
