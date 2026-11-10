@@ -1,6 +1,6 @@
 import { projects as sourceProjects, featuredIds } from './data.js';
 
-import { bridgeMarkup, processMarkup } from './bridge.js';
+import { bridgeMarkup, processMarkup } from './bridge.js?v=20261110-1';
 const projects = sourceProjects.map(p => ({...p, documentType: ['chak','bridge','bluedog'].includes(p.id) ? 'plan' : p.id === 'korail' ? 'report' : 'proposal'}));
 for (const id of ['chak','lotte','bluedog','rocketfresh','kaywon']) {
   const original = projects.find(p => p.id === id);
@@ -27,7 +27,14 @@ const summaries = {
   lotte: '영화 탐색부터 예매 확인까지의 기능과 이용 흐름을 개선하기 위한 제안서',
 };
 
+const featuredSlogans = {
+  chak: '함께 선행을 실천하는 챌린지',
+  bridge: '시니어 커리어 브랜딩 서비스',
+  lotte: '영화 탐색·예매 흐름 개선 제안',
+};
+
 function card(project, featured = false) {
+  const description = featured ? featuredSlogans[project.id] : summaries[project.id];
   const ongoing = project.filter === 'ongoing' || project.status === 'ongoing';
   const image = project.cover
     ? `<img src="${escape(project.cover)}" alt="${escape(project.title)} 프로젝트 표지" loading="lazy" width="800" height="450">`
@@ -41,7 +48,7 @@ function card(project, featured = false) {
   return `<article class="project-card"><a class="project-card-link" href="${projectUrl(project.id)}">
     <div class="project-image">${image}${ongoing ? '<span class="project-status">진행 중</span>' : ''}</div>
     <h3>${escape(title)}</h3>
-    <p class="project-card-description">${escape(summaries[project.id] || project.subtitle)}</p>
+    <p class="project-card-description">${escape(description || project.subtitle)}</p>
     <p class="project-card-meta"><span>${meta}</span>${date ? `<span>${escape(date)}</span>` : ''}</p>
   </a></article>`;
 }
@@ -58,8 +65,12 @@ function renderProjects() {
 function renderDetail(id) {
   const index = projects.findIndex((project) => project.id === id);
   const project = projects[index];
+  const download = $('.detail-pdf');
+  download.hidden = !project?.pdf;
+  if (project?.pdf) download.href = project.pdf;
+  else download.removeAttribute('href');
   if (!project) {
-    $('#detail-content').innerHTML = '<div class="not-found"><h1 id="detail-title">프로젝트를 찾을 수 없습니다.</h1><p>프로젝트 목록에서 작업을 다시 선택해 주세요.</p><a href="#/projects" class="arrow-link">전체 프로젝트 보기 ↗</a></div>';
+    $('#detail-content').innerHTML = '<div class="not-found"><h1 id="detail-title">프로젝트를 찾을 수 없습니다.</h1><p>프로젝트 목록에서 작업을 다시 선택해 주세요.</p></div>';
     return '프로젝트를 찾을 수 없습니다';
   }
   if (id === 'bridge') { $('#detail-content').innerHTML = bridgeMarkup(); return '브릿지 (Bridge)'; }
@@ -127,7 +138,7 @@ function renderRoute({ focus = false } = {}) {
     if (link.dataset.nav === page || (detail && link.dataset.nav === 'projects')) link.setAttribute('aria-current','page');
     else link.removeAttribute('aria-current');
   });
-  let name = page === 'projects' ? '프로젝트' : page === 'about' ? '소개' : '정서영';
+  let name = page === 'projects' ? '프로젝트' : page === 'about' ? '자기소개' : '정서영';
   if (detail) {
     let id;
     try { id = decodeURIComponent(route[1] || ''); } catch { id = ''; }
@@ -193,7 +204,6 @@ $('#detail-content').addEventListener('click', event => {
     target.focus({preventScroll:true}); target.scrollIntoView({behavior:motion()});
   }
   if (event.target.closest('[data-detail-top]')) window.scrollTo({top:0,behavior:motion()});
-  if (event.target.closest('[data-list-return]')) listScroll = listScroll || 0;
 });
 processDialog.querySelector('.process-close').addEventListener('click',()=>processDialog.close());
 processDialog.addEventListener('click',event=>{

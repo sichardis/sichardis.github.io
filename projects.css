@@ -7,4 +7,3 @@
 @media(max-width:480px){.process-grid{grid-template-columns:1fr}.section-index{gap:16px}}
 
 [data-page=projects] .page-intro>.eyebrow{display:none}
-.bridge-page .project-detail>.back-link{display:none}
