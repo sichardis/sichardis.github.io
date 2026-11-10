@@ -225,8 +225,7 @@ $('#detail-content').addEventListener('click', event => {
   if (jump) {
     const target = document.getElementById(jump.dataset.section);
     target.focus({preventScroll:true});
-    target.scrollIntoView({behavior:'instant'});
-    setBridgeSection(target.id);
+    target.scrollIntoView({behavior:motion()});
   }
   if (event.target.closest('[data-detail-top]')) window.scrollTo({top:0,behavior:motion()});
 });
