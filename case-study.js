@@ -64,17 +64,21 @@ export function caseStudyMarkup(project, hero, escape) {
   </div>`;
 }
 
-export function caseProcessMarkup(project, index, escape) {
-  const steps = project.steps;
+export function caseProcessMarkup(project, steps, index, escape) {
   const step = steps[index];
-  const count = steps.length;
+  const media = project.id === 'bridge'
+    ? `<img class="case-process-media" src="./assets/bridge-process-${index + 1}.jpg" alt="브릿지 ${escape(step.title)} 원본 자료" width="1600" height="900">`
+    : processMedia(step, escape, {placeholder:project.processImagePlaceholder});
   return `<h2 id="process-title">${escape(step.title)}</h2>
     <p class="process-summary">${escape(step.summary)}</p>
-    ${processMedia(step, escape, {placeholder:project.processImagePlaceholder})}
-    ${step.sections.map(([title, text]) => `<section class="process-explanation"><h3>${escape(title)}</h3><p>${escape(text)}</p></section>`).join('')}
-    <div class="process-pagination">
-      ${index ? '<button type="button" data-process-prev>〈 이전 단계</button>' : '<span aria-hidden="true"></span>'}
-      <span class="process-page-count" aria-label="전체 ${count}단계 중 ${index + 1}단계">${index + 1} / ${count}</span>
-      <button type="button" data-process-next>${index + 1 === count ? '처음으로 ↻' : '다음 단계 〉'}</button>
-    </div>`;
+    <div class="process-media-row">
+      <button class="process-arrow" type="button" data-process-prev aria-label="이전 단계"${index === 0 ? ' disabled' : ''}>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5-7 7 7 7"/></svg>
+      </button>
+      ${media}
+      <button class="process-arrow" type="button" data-process-next aria-label="${index + 1 === steps.length ? '첫 단계로' : '다음 단계'}">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+      </button>
+    </div>
+    ${step.sections.map(([title, text]) => `<section class="process-explanation"><h3>${escape(title)}</h3><p>${escape(text)}</p></section>`).join('')}`;
 }

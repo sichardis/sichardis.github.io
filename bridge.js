@@ -6,10 +6,6 @@ export const steps = [
   {title:'서비스 정보 구조도 작성',summary:'사용자 유형에 따라 메뉴와 기능의 관계를 정리했습니다.',sections:[['01 사용자 유형별 구조','전문가와 기업의 진입 경로를 구분하고 각 사용자에게 필요한 메뉴를 배치했습니다.'],['02 핵심 기능의 관계','브랜딩, 프로필 생성, 실무 인증과 맞춤 채용이 이어지는 정보 구조를 작성했습니다.']]},
   {title:'서비스 이용 흐름도 작성',summary:'사용자 유형별 이용 단계와 조건에 따른 분기를 구체화했습니다.',sections:[['01 진입과 경력 정리','회원 유형과 프로필 보유 여부에 따라 경로를 나누고 대화와 키워드 확인·수정 단계를 연결했습니다.'],['02 프로필 완성','증빙자료 첨부 여부와 프로필 유형 선택 등 조건에 따른 분기를 정리했습니다.']]},
 ];
-export function processMarkup(index) {
- const step=steps[index];
- return `<h2 id="process-title">${step.title}</h2><p class="process-summary">${step.summary}</p><img src="./assets/bridge-process-${index+1}.jpg" alt="브릿지 ${step.title} 원본 자료" width="1600" height="900">${step.sections.map(([title,body])=>`<section class="process-explanation"><h3>${title}</h3><p>${body}</p></section>`).join('')}<div class="process-pagination">${index > 0 ? '<button type="button" data-process-prev>〈 이전 단계</button>' : '<span aria-hidden="true"></span>'}<span class="process-page-count" aria-label="전체 6단계 중 ${index+1}단계">${index+1} / 6</span><button type="button" data-process-next>${index === steps.length - 1 ? '처음으로 ↻' : '다음 단계 〉'}</button></div>`;
-}
 export function bridgeMarkup(hero) {
  return `<div class="bridge-layout"><nav class="section-index" aria-label="브릿지 상세 목차">${[['summary','요약'],['background','배경·목표'],['process','과정'],['contribution','기여'],['result','결과']].map(([id,label])=>`<button type="button" data-section="bridge-${id}">${label}</button>`).join('')}</nav>
  <article class="bridge-article">

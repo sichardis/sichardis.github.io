@@ -1,7 +1,7 @@
-import { projects as sourceProjects, featuredIds } from './data.js?v=profile-slogans';
-import { bridgeMarkup, processMarkup } from './bridge.js?v=detail-copy';
-import { caseStudies } from './case-studies.js?v=profile-slogans';
-import { caseStudyMarkup, caseProcessMarkup } from './case-study.js?v=process-placeholders';
+import { projects as sourceProjects, featuredIds } from './data.js?v=project-polish';
+import { bridgeMarkup, steps as bridgeSteps } from './bridge.js?v=project-polish';
+import { caseStudies } from './case-studies.js?v=project-polish';
+import { caseStudyMarkup, caseProcessMarkup } from './case-study.js?v=project-polish';
 
 const projects = sourceProjects.map(p => ({...p, documentType: ['chak','bridge','bluedog'].includes(p.id) ? 'plan' : p.id === 'korail' ? 'report' : 'proposal'}));
 for (const id of ['chak','lotte','bluedog','rocketfresh','kaywon']) {
@@ -22,22 +22,22 @@ const projectUrl = (id) => `#/project/${encodeURIComponent(id)}`;
 let activeFilter = 'all';
 
 const summaries = {
-  chak: '일상 속 선행을 발견하는\n선행 챌린지 서비스',
-  bridge: '시니어의 경험을 직무 언어로 잇는\n커리어 브랜딩 서비스',
-  bluedog: '은퇴견과 과천 시민을 잇는\n산책·입양·돌봄 서비스',
-  korail: '예약 승차권을 쉽게 찾도록\n조회 동선을 개선한 보고서',
-  rocketfresh: '목적에 맞는 상품을 찾도록\n장보기 탐색을 개선한 제안서',
-  kaywon: '학사·입시 정보를 찾기 쉽게\n메인페이지를 개선한 제안서',
-  lotte: '특별관을 비교하고 예매하는\n흐름을 개선한 앱 제안서',
-  'chak-storyboard': '개인 미션과 그룹 챌린지의\n참여·인증 흐름을 담은 화면설계',
-  'lotte-storyboard': '영화 검색부터 특별관 비교까지\n예매 흐름을 담은 화면설계',
-  'bluedog-storyboard': '은퇴견 산책·입양·돌봄의\n이용 흐름을 담은 화면설계',
-  'rocketfresh-storyboard': '상품 탐색과 레시피 장보기를\n연결한 반응형 화면설계',
-  'kaywon-storyboard': '학사·입시 정보와 퀵서비스를\n정리한 반응형 화면설계',
+  chak: '일상 속 선행을 발견하는 선행 챌린지 서비스',
+  bridge: '시니어의 직무 맞춤 커리어 브랜딩 서비스',
+  bluedog: '은퇴견과 시민을 잇는 산책·입양·돌봄',
+  korail: '코레일톡 예약 승차권 조회 개선',
+  rocketfresh: '목적별 상품 탐색을 돕는 장보기 UX',
+  kaywon: '학사·입시 정보를 찾기 쉬운 대학 홈페이지',
+  lotte: '특별관 비교를 돕는 영화 예매 UX',
+  'chak-storyboard': '개인·그룹 챌린지 참여와 인증 설계',
+  'lotte-storyboard': '영화 검색·특별관 비교·예매 화면 설계',
+  'bluedog-storyboard': '은퇴견 산책·입양·돌봄 흐름 설계',
+  'rocketfresh-storyboard': '상품 탐색과 레시피 장보기 화면 설계',
+  'kaywon-storyboard': '학사·입시 정보와 퀵서비스 화면 설계',
 };
 
 function card(project, featured = false) {
-  const description = escape(summaries[project.id] || project.subtitle).replace('\n', featured ? ' ' : '<br>');
+  const description = escape(summaries[project.id] || project.subtitle);
   const ongoing = project.filter === 'ongoing' || project.status === 'ongoing';
   const image = project.cover
     ? `<img src="${escape(project.cover)}" alt="${escape(project.title)} 프로젝트 표지" loading="lazy" width="800" height="450">`
@@ -259,12 +259,12 @@ $('#content').addEventListener('click', event => {
 });
 
 function openProcess(index) {
-  const steps = detailProject.steps;
-  const count = steps?.length ?? 6;
+  const steps = detailProject.steps ?? bridgeSteps;
+  const count = steps.length;
   processIndex = Math.max(0, Math.min(count - 1, index));
   const name = detailProject.id === 'bridge' ? '브릿지 · 기획 과정' : `${detailProject.title} · 과정`;
   $('.process-dialog-meta').textContent = `${name} ${String(processIndex+1).padStart(2,'0')} / ${String(count).padStart(2,'0')}`;
-  $('#process-content').innerHTML = steps ? caseProcessMarkup(detailProject, processIndex, escape) : processMarkup(processIndex);
+  $('#process-content').innerHTML = caseProcessMarkup(detailProject, steps, processIndex, escape);
   if (!processDialog.open) processDialog.showModal();
   processDialog.scrollTop = 0;
   $('#process-title').setAttribute('tabindex','-1');
@@ -283,7 +283,7 @@ $('#detail-content').addEventListener('click', event => {
 });
 processDialog.querySelector('.process-close').addEventListener('click',()=>processDialog.close());
 processDialog.addEventListener('click',event=>{
-  if (event.target.closest('[data-process-next]')) openProcess((processIndex+1)%(detailProject.steps?.length ?? 6));
+  if (event.target.closest('[data-process-next]')) openProcess((processIndex+1)%(detailProject.steps ?? bridgeSteps).length);
   if (event.target.closest('[data-process-prev]')) openProcess(Math.max(0,processIndex-1));
   if (event.target === processDialog) {
     const b=processDialog.getBoundingClientRect();
