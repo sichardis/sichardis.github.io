@@ -1,7 +1,10 @@
 /* Shared type scale and controls. Load after the page layouts. */
 :root{--header-height:76px;--type-body:16px;--type-small:13px;--type-heading:30px;font-family:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo",sans-serif;font-size:16px;line-height:1.65;letter-spacing:-.015em;-webkit-font-smoothing:antialiased}
 button,input,select,textarea{font-family:inherit}h1,h2,h3,h4{letter-spacing:-.035em;font-weight:500}h4{margin:0}
-html{scroll-padding-top:100px}.site-header{height:var(--header-height)}.site-header .brand,.site-header .brand span:last-child{font-size:14px!important;letter-spacing:-.01em}.site-header nav a{font-size:14px}.site-header nav{gap:40px}
+/* Keep the page anchored horizontally without creating a second vertical scroller. */
+html, body { overflow-x: clip; }
+html { overscroll-behavior-x: none; scroll-padding-top: 100px; }
+.site-header{height:var(--header-height)}.site-header .brand,.site-header .brand span:last-child{font-size:14px!important;letter-spacing:-.01em}.site-header nav a{font-size:14px}.site-header nav{gap:40px}
 /* Keep the entire hero, including its scroll cue, inside the first viewport. */
 .hero{min-height:calc(100svh - var(--header-height));padding:36px 0 24px;display:grid;grid-template-rows:minmax(0,1fr) auto;row-gap:24px}
 .hero-layout{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:64px;align-items:center}
