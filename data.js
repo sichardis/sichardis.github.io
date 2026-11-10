@@ -63,8 +63,7 @@ export const projects = [
     "question": "작은 선행이 일회성으로 끝나지 않고 자연스럽게 이어질 수 있는 조건을 고민하고 있습니다.",
     "approach": "참여 흐름과 서비스 구조를 팀과 함께 설계하고 있습니다.",
     "outcome": "현재 진행 중인 작업으로, 최종 결과물과 검증 내용은 완성 후 업데이트할 예정입니다.",
-    "cover": "./assets/chak-cover.png",
-    "thumbnail": "./assets/chak-thumbnail.png"
+    "cover": "./assets/chak-thumbnail.png"
   },
   {
     "id": "rocketfresh",

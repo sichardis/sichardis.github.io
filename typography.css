@@ -108,6 +108,7 @@ html{scroll-padding-top:100px}.site-header{height:var(--header-height)}.site-hea
 .bridge-section { margin-top: 32px; }
 .bridge-section h2 { margin-bottom: 6px; }
 .bridge-section h3 { margin-top: 18px; margin-bottom: 4px; }
+.bridge-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 22rem; }
 .bridge-facts dt { margin-bottom: 4px; }
 .about-profile h1 { line-height: 1.4; }
 .about-profile-grid { margin-top: 24px; }
@@ -127,8 +128,8 @@ html{scroll-padding-top:100px}.site-header{height:var(--header-height)}.site-hea
 .record-row { padding: 14px 0; line-height: 1.6; }
 .record-row small { margin-top: 4px; line-height: 1.5; }
 .about-skills p { margin-top: 6px; }
-.ux-columns dd { margin-top: 4px; line-height: 1.5; }
-.contact-cards strong { margin-top: 6px; }
+.contact-label { display: inline-flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.contact-label .tool-icon { width: 30px; color: #000; }
 
 @media (max-width: 1200px) {
   .hero-layout { grid-template-columns: 1fr; gap: 12px; }
@@ -220,8 +221,20 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
 [data-page="projects"] .page-intro > p:last-child { line-height: 1.55; }
 [data-page="projects"] .page-intro > p > span { display: block; word-break: keep-all; }
 
-.tool-columns { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+.tool-columns { grid-template-columns: minmax(0, 1fr); gap: 28px; margin-bottom: 0; }
 .tools-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.tools-grid.ux-methods { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.ux-methods dl {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px 16px;
+  margin-top: 12px;
+}
+.ux-methods dt { font-size: 14px; }
+.ux-methods dd { margin-top: 4px; font-size: 12px; line-height: 1.5; color: var(--muted); }
+@media (max-width: 680px) {
+  .tools-grid.ux-methods { grid-template-columns: minmax(0, 1fr); }
+}
 .tool-card {
   padding: 16px;
   background: #fff;
@@ -352,5 +365,6 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
   .tool-card { padding: 12px; }
   .tool-card h4 { gap: 6px; font-size: 14px; }
   .tool-icon { flex-basis: 24px; height: 24px; }
+  .contact-label .tool-icon { width: 24px; }
   .tool-icon svg, .tool-icon img { width: 18px; height: 18px; }
 }

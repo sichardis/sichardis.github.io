@@ -1,5 +1,5 @@
-import { projects as sourceProjects, featuredIds } from './data.js?v=20261110-2';
-import { bridgeMarkup, processMarkup } from './bridge.js?v=bridge-hero';
+import { projects as sourceProjects, featuredIds } from './data.js?v=profile-polish';
+import { bridgeMarkup, processMarkup } from './bridge.js?v=profile-polish';
 
 const projects = sourceProjects.map(p => ({...p, documentType: ['chak','bridge','bluedog'].includes(p.id) ? 'plan' : p.id === 'korail' ? 'report' : 'proposal'}));
 for (const id of ['chak','lotte','bluedog','rocketfresh','kaywon']) {
@@ -36,9 +36,8 @@ const featuredSlogans = {
 function card(project, featured = false) {
   const description = featured ? featuredSlogans[project.id] : summaries[project.id];
   const ongoing = project.filter === 'ongoing' || project.status === 'ongoing';
-  const thumbnail = project.thumbnail || project.cover;
-  const image = thumbnail
-    ? `<img src="${escape(thumbnail)}" alt="${escape(project.title)} 프로젝트 표지" loading="lazy" width="800" height="450">`
+  const image = project.cover
+    ? `<img src="${escape(project.cover)}" alt="${escape(project.title)} 프로젝트 표지" loading="lazy" width="800" height="450">`
     : `<span class="project-cover-type">${escape(project.word || project.title)}</span>`;
   let title = project.documentType === 'storyboard' ? project.title : project.id === 'chak' ? '착! (Chak!)' : project.id === 'lotte' ? '[롯데시네마] 탐색 및 예매 기능 개선 제안서' : project.title;
   if (!featured) title = ({bluedog:'블루독 (Blue Dog)',korail:'[코레일톡] 기능 분산 구조 및 탐색 혼란 기능 개선 보고서',rocketfresh:'[쿠팡 로켓프레시] 메인페이지 UX 리뉴얼 제안서',kaywon:'[계원예술대학교] 메인페이지 UX 리뉴얼 제안서'})[project.id] || title;

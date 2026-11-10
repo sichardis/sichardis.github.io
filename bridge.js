@@ -14,8 +14,8 @@ export function bridgeMarkup(hero) {
  return `<div class="bridge-layout"><nav class="section-index" aria-label="브릿지 상세 목차">${[['summary','요약'],['background','배경·목표'],['process','과정'],['contribution','기여'],['result','결과']].map(([id,label])=>`<button type="button" data-section="bridge-${id}">${label}</button>`).join('')}</nav>
  <article class="bridge-article">
  <div class="bridge-hero">${hero}</div>
- <section id="bridge-summary" class="bridge-section" tabindex="-1"><h2>요약</h2><p>브릿지는 시니어가 축적한 경험과 강점을 직무에 맞는 표현으로 정리하도록 돕는 서비스 기획 프로젝트입니다.<br>대화를 통한 경험 정리부터 표현의 확인·수정, 커리어 프로필 완성까지의 이용 흐름을 제안했습니다.</p>
- <dl class="bridge-facts"><div><dt>프로젝트 유형</dt><dd>기획서</dd></div><div><dt>팀 구성</dt><dd>3인</dd></div><div><dt>기간</dt><dd>2026.03.03–2026.06.09</dd></div><div><dt>담당 역할</dt><dd>서비스 기획</dd></div></dl>
+ <section id="bridge-summary" class="bridge-section" tabindex="-1"><h2>요약</h2>
+ <dl class="bridge-facts"><div><dt>문서 유형</dt><dd>기획서</dd></div><div><dt>팀 구성</dt><dd>3인</dd></div></dl>
  <h3>수상 내역</h3><p>제32회 커뮤니케이션디자인 국제어워드 디지털미디어디자인 부문 특별상</p><h3>주요 수행 과업</h3><p>환경 및 경쟁 서비스 분석, 설문조사 결과 분석, 핵심 문제 정의, 서비스 방향 수립, 사용자 여정 지도 작성, 정보 구조도 작성, 서비스 이용 흐름도 작성</p></section>
  <section id="bridge-background" class="bridge-section" tabindex="-1"><h2>배경·목표</h2><h3 class="bridge-goal">시니어의 경험을 직무 언어로 정리합니다.</h3><p>데스크리서치와 온라인 설문조사를 바탕으로, 경력보유자가 자신의 경험을 이력서와 프로필로 정리하는 과정의 어려움을 살핀 후, 재취업을 준비하는 시니어가 경력과 강점을 직무에 맞는 표현으로 정리하도록 돕는 것을 서비스의 핵심 과제로 설정했습니다.<br>사용자가 대화로 경험을 설명하고, 정리된 내용을 확인·수정한 뒤 커리어 프로필을 완성하는 서비스의 흐름을 설계했습니다.</p></section>
  <section id="bridge-process" class="bridge-section" tabindex="-1"><h2>과정</h2><p>이미지를 클릭해 브릿지의 주요 과정을 확인해 보세요.</p><div class="process-grid">${steps.map((step,i)=>`<button type="button" class="process-card" data-process="${i}" aria-label="${String(i+1).padStart(2,'0')} ${step.title} 상세 보기"><img src="./assets/bridge-process-${i+1}.jpg" alt="${step.title}" loading="lazy" width="1600" height="900"><span>${String(i+1).padStart(2,'0')} ${step.title}</span></button>`).join('')}</div><a class="bridge-download" href="./assets/bridge.pdf" download>브릿지(Bridge) 기획서 전체 보기 · PDF <span aria-hidden="true">↓</span></a></section>
