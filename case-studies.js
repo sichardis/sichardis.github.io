@@ -337,7 +337,8 @@ export const caseStudies = {
             "03 문제 정의 · 상품과 혜택 찾기",
             "신선식품과 장보기 목적이 드러나는 탐색 구조를 핵심 과제로 둔다.\n정보 우선순위를 조정하고 상황별 필터·추천을 연결한다."
           ]
-        ]
+        ],
+        "image": "rocketfresh-proposal-01.jpg"
       },
       {
         "title": "경쟁 서비스 분석·차별화 방향 수립",
@@ -355,7 +356,8 @@ export const caseStudies = {
             "03 차별화 · 목적별 장보기와 레시피",
             "자주 찾는 분류와 테마를 상단에 두고 상황별 필터를 제안한다.\n레시피에서 필요한 재료 확인과 장바구니 담기로 연결한다."
           ]
-        ]
+        ],
+        "image": "rocketfresh-proposal-02.jpg"
       },
       {
         "title": "사용자 정의·페르소나 작성",
@@ -373,7 +375,8 @@ export const caseStudies = {
             "03 1인 가구 · 필요한 양과 간편 조리",
             "23세 대학생 최현우를 장보기 시간이 부족한 인물로 설정한다.\n소포장·1~2인분·짧은 조리 시간·레시피 추천을 요구로 둔다."
           ]
-        ]
+        ],
+        "image": "rocketfresh-proposal-03.jpg"
       },
       {
         "title": "탐색 문제 분석·개선 과제 정리",
@@ -391,7 +394,8 @@ export const caseStudies = {
             "03 개선 과제 · 목적별 진입과 연결",
             "카테고리·테마를 상단에 두고 할인 정보와 상품 목록을 묶는다.\n레시피 검색과 재료 확인으로 메뉴에서 장보기에 연결한다."
           ]
-        ]
+        ],
+        "image": "rocketfresh-proposal-04.jpg"
       },
       {
         "title": "서비스 정보 구조도 작성",
@@ -409,7 +413,8 @@ export const caseStudies = {
             "03 생활 목적 · 리빙·데일리와 건강·케어",
             "생활·욕실·주방·바디케어를 리빙·데일리로 묶는다.\n건강식품·유아식·반려동물 상품은 건강·케어로 재분류한다."
           ]
-        ]
+        ],
+        "image": "rocketfresh-proposal-05.jpg"
       },
       {
         "title": "주요 기능 이용 흐름 정리",
@@ -427,9 +432,17 @@ export const caseStudies = {
             "03 레시피 장보기 · 메뉴에서 재료까지",
             "메뉴 검색 후 재료·가격 확인과 한 번에 담기로 이어지도록 제안한다.\n관련 레시피로 같은 재료를 활용한 다른 메뉴도 탐색하도록 한다."
           ]
-        ]
+        ],
+        "image": "rocketfresh-proposal-06.jpg"
       }
-    ]
+    ],
+    "pdfLabel": "쿠팡 로켓프레시 메인페이지 UX 리뉴얼 제안서 전체 보기",
+    "pdfParts": {
+      "folder": "./assets/rocketfresh-proposal-pdf",
+      "count": 11,
+      "size": 64577738,
+      "filename": "[쿠팡 로켓프레시] 메인페이지 UX 리뉴얼 제안서.pdf"
+    }
   },
   "kaywon": {
     "title": "[계원예술대학교] 메인페이지 UX 리뉴얼 제안서",
@@ -476,7 +489,8 @@ export const caseStudies = {
             "03 문제 정의 · 필요한 정보까지 빠르게 닿기",
             "학사·공지 확인과 입학 정보 접근의 요구를 구분한다.\n사용자별 필요 정보를 쉽게 찾는 구조를 개선 목표로 정한다."
           ]
-        ]
+        ],
+        "image": "kaywon-proposal-01.jpg"
       },
       {
         "title": "대학 웹사이트 비교·개선 방향 수립",
@@ -494,7 +508,8 @@ export const caseStudies = {
             "03 방향 수립 · 맞춤 탐색과 작품 콘텐츠",
             "SWOT 분석을 바탕으로 퀵서비스와 작품 아카이브를 제안한다.\n콘텐츠를 섹션별로 나누고 자주 쓰는 기능을 앞에 배치한다."
           ]
-        ]
+        ],
+        "image": "kaywon-proposal-02.jpg"
       },
       {
         "title": "사용자 유형 정의·요구 정리",
@@ -512,7 +527,8 @@ export const caseStudies = {
             "03 요구 정리 · 빠른 확인과 학교생활 이해",
             "재학생의 빠른 학사 정보 확인과 맞춤 정보 요구를 정리한다.\n입시생이 원하는 입학 정보와 캠퍼스·학생 활동 정보를 구분한다."
           ]
-        ]
+        ],
+        "image": "kaywon-proposal-03.jpg"
       },
       {
         "title": "퀵서비스·콘텐츠 구성 방향 수립",
@@ -530,7 +546,8 @@ export const caseStudies = {
             "03 학교 콘텐츠 · 작품과 공식 채널 연결",
             "학생 작품·졸업전시를 보여 주는 포트폴리오 영역을 제안한다.\n공식 SNS를 커뮤니티로 모아 학교 활동과 소식을 탐색하게 한다."
           ]
-        ]
+        ],
+        "image": "kaywon-proposal-04.jpg"
       },
       {
         "title": "서비스 정보 구조도 작성",
@@ -548,7 +565,8 @@ export const caseStudies = {
             "03 사용자별 바로가기 · 목적별 기능 묶음",
             "재학생·입학생·교직원별 퀵서비스 메뉴를 구분한다.\n학사 시스템과 입학 안내, 내부 지원 기능을 목적별로 묶는다."
           ]
-        ]
+        ],
+        "image": "kaywon-proposal-05.jpg"
       },
       {
         "title": "기존안·개선안 비교",
@@ -566,9 +584,12 @@ export const caseStudies = {
             "03 정체성 보완 · 학생 작품 영역 추가",
             "학생 작품·졸업전시를 소개하는 메인페이지 영역을 제안한다.\n입학·학사 정보와 함께 학교의 교육과 활동을 살피도록 구성한다."
           ]
-        ]
+        ],
+        "image": "kaywon-proposal-06.jpg"
       }
-    ]
+    ],
+    "pdfLabel": "계원예술대학교 메인페이지 UX 리뉴얼 제안서 전체 보기",
+    "pdf": "./assets/kaywon-proposal.pdf"
   },
   "bluedog-storyboard": {
     "title": "블루독 (Blue Dog) 화면설계서",

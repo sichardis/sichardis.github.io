@@ -1,6 +1,6 @@
 import { projects as sourceProjects, featuredIds } from './data.js?v=detail-copy';
 import { bridgeMarkup, processMarkup } from './bridge.js?v=detail-copy';
-import { caseStudies } from './case-studies.js?v=process-placeholders';
+import { caseStudies } from './case-studies.js?v=proposal-pdfs';
 import { caseStudyMarkup, caseProcessMarkup } from './case-study.js?v=process-placeholders';
 
 const projects = sourceProjects.map(p => ({...p, documentType: ['chak','bridge','bluedog'].includes(p.id) ? 'plan' : p.id === 'korail' ? 'report' : 'proposal'}));
