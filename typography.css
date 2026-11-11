@@ -140,7 +140,7 @@ body:has(.case-study-page) { --bridge-footer-min-height: 300px; }
 @media (max-width: 400px) { .bridge-layout { --bridge-scroll-margin: 82px; } }
 @media (max-width: 680px) { body:has(.case-study-page) { --bridge-footer-min-height: 220px; } }
 
-.case-copy p + p { margin-top: 5px; }
+.case-copy p + p { margin-top: 3px; }
 .bridge-section p,
 #process-content .process-explanation p {
   white-space: pre-line;
@@ -242,10 +242,10 @@ body:has(.case-study-page) { --bridge-footer-min-height: 300px; }
 .detail-facts dd { margin-top: 4px; }
 .detail-story { padding: 28px 0; }
 .bridge-section { margin-top: 32px; }
-.bridge-section h2 { margin-bottom: 6px; }
-.bridge-section h3 { margin-top: 18px; margin-bottom: 4px; }
-.bridge-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 22rem; }
-.bridge-facts dt { margin-bottom: 4px; }
+.bridge-section h2 { margin-bottom: 4px; line-height: 1.4; }
+.bridge-section h3 { margin-top: 16px; margin-bottom: 1px; line-height: 1.4; }
+.bridge-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 22rem; margin-top: 16px; }
+.bridge-facts dt { margin-bottom: 2px; line-height: 1.4; }
 .about-profile h1 { line-height: 1.4; }
 .about-records .record-heading { display: flex; align-items: center; gap: 8px; }
 .attitude-rows .attitude-marker {
@@ -558,14 +558,14 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
 [data-pdf-parts]:disabled { opacity: .7; }
 .detail-heading .eyebrow { margin-bottom: 8px; color: #000; }
 .detail-heading h1, .bridge-article h1 { line-height: 1.28; }
-.detail-subtitle, .bridge-subtitle { margin-top: 7px; line-height: 1.45; }
-.detail-lead { margin-top: 16px; }
+.detail-subtitle, .bridge-subtitle { margin-top: 4px; line-height: 1.45; }
+.detail-lead { margin-top: 12px; }
 @media (max-width: 480px) {
   .detail-lead { font-size: clamp(12px, 3.3vw, 15px); }
 }
 .detail-story p, .bridge-section p, .bridge-section ul { max-width: 50rem; }
 .detail-facts { margin: 24px 0; padding-block: 16px; }
-.detail-facts dt { margin-bottom: 3px; }
+.detail-facts dt { margin-bottom: 2px; line-height: 1.4; }
 .detail-facts dd { margin: 0; line-height: 1.5; }
 .detail-cover { margin-top: 0; }
 .storyboard-cover { outline: 1px solid var(--line); outline-offset: -1px; }
@@ -583,9 +583,10 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
 .bridge-section h2 { color: #000; }
 .section-index button[aria-current="location"] { color: #000; }
 .section-index button[aria-current="location"]::before { background: var(--accent); }
-.bridge-section h3 { margin-top: 16px; }
+.bridge-section .bridge-goal { margin-bottom: 4px; }
+.bridge-section p, .bridge-section li { line-height: 1.55; }
 .bridge-section ul { padding-inline-start: 20px; }
-.bridge-section li + li { margin-top: 4px; }
+.bridge-section li + li { margin-top: 2px; }
 
 @media (max-width: 800px) {
   .tools-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
