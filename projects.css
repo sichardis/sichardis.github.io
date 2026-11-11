@@ -23,7 +23,7 @@
   transition: opacity var(--hover-color-timing);
 }
 .process-card:has(> img):is(:hover, :focus-visible)::after {
-  opacity: .2;
+  opacity: .1;
 }
 .bridge-download{display:flex;justify-content:space-between;gap:20px;align-items:center;margin-top:20px;background:#ededed;padding:22px;font-size:20px}.bridge-section ul{padding-left:26px;margin:0}.bridge-ending>.back-to-top-wrap{padding:150px 0}.case-study-page~.site-footer{margin-top:0}
 #process-dialog{width:min(1480px,calc(100% - 64px));max-height:88svh;border-radius:0;padding:80px 120px;overscroll-behavior:contain}.process-close{position:sticky;top:-60px;display:block;margin:-52px -80px 20px auto;background:#fff;font-size:38px;padding:4px 12px;z-index:1}#process-title{font-size:30px;font-weight:500;line-height:1.4}.process-summary{font-size:18px;line-height:1.8;margin:16px 0 30px}.process-explanation{margin-top:44px}.process-explanation h3{font-size:20px;line-height:1.6;font-weight:500}.process-explanation p{font-size:18px;line-height:1.9;margin-top:10px}body:has(#process-dialog[open]){overflow:hidden}
