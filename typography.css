@@ -233,15 +233,27 @@ body:has(.case-study-page) { --bridge-footer-min-height: 300px; }
 .about-profile h1 { line-height: 1.4; }
 .about-records .record-heading { display: flex; align-items: center; gap: 8px; }
 .attitude-rows .attitude-marker {
-  display: flex;
-  align-items: center;
+  display: grid;
+  place-items: center;
+  width: 22px;
   height: 26px;
   padding-top: 0;
 }
-.attitude-marker svg { display: none; width: 22px; height: 22px; color: var(--accent); }
+.attitude-marker > span,
+.attitude-marker > svg { grid-area: 1 / 1; }
+.attitude-marker > svg {
+  width: 22px;
+  height: 22px;
+  color: var(--accent);
+  opacity: 0;
+}
 @media (hover: hover) {
-  .attitude-rows article:hover .attitude-marker > span { display: none; }
-  .attitude-rows article:hover .attitude-marker svg { display: block; }
+  .attitude-rows article:hover .attitude-marker > span { opacity: 0; }
+  .attitude-rows article:hover .attitude-marker > svg { opacity: 1; }
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .attitude-marker > span,
+  .attitude-marker > svg { transition: opacity 240ms ease-in-out; }
 }
 .about-profile-grid {
   grid-template-areas: "portraits copy" "portraits documents";
