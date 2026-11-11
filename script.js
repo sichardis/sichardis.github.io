@@ -262,7 +262,8 @@ function openProcess(index) {
   const count = steps.length;
   processIndex = Math.max(0, Math.min(count - 1, index));
   const name = detailProject.id === 'bridge' ? '브릿지 · 기획 과정' : `${detailProject.title} · 과정`;
-  $('.process-dialog-meta').textContent = `${name} ${String(processIndex+1).padStart(2,'0')} / ${String(count).padStart(2,'0')}`;
+  $('.process-dialog-meta').textContent = name;
+  $('.process-dialog-step').textContent = `${String(processIndex + 1).padStart(2, '0')} / ${String(count).padStart(2, '0')}`;
   $('#process-content').innerHTML = caseProcessMarkup(detailProject, steps, processIndex, escape);
   if (!processDialog.open) processDialog.showModal();
   processDialog.scrollTop = 0;

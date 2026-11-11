@@ -51,23 +51,37 @@ html {
 .section-index button[aria-current="location"]{color:#222;font-weight:600}
 .section-index button[aria-current="location"]:before{opacity:1}
 .bridge-subtitle{margin-top:6px}.bridge-cover{margin-top:20px}.bridge-section h2{margin-bottom:8px}.bridge-section h3{margin-top:24px;margin-bottom:6px}.bridge-section .bridge-goal{margin:0 0 8px}.bridge-facts{margin:28px 0 20px}.bridge-section{margin-top:40px}
-#process-dialog{width:min(1120px,calc(100% - 64px));padding:0;max-height:88svh;border:1px solid #e6e6e6;scrollbar-width:thin;scrollbar-color:#d5d5d5 transparent;scrollbar-gutter:stable;overscroll-behavior:contain}
+#process-dialog{width:min(1120px,calc(100% - 64px));height:88svh;max-height:none;padding:0;border:1px solid #e6e6e6;scrollbar-width:thin;scrollbar-color:#d5d5d5 transparent;scrollbar-gutter:stable;overscroll-behavior:contain}
 #process-dialog::-webkit-scrollbar{width:5px;height:5px}
 #process-dialog::-webkit-scrollbar-track{background:transparent}
 #process-dialog::-webkit-scrollbar-thumb{background:#d5d5d5;border-radius:10px}
 #process-dialog::-webkit-scrollbar-thumb:hover{background:#bcbcbc}
 .process-dialog-toolbar{position:sticky;top:0;z-index:3;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:12px 22px;background:#fff;border-bottom:1px solid #eee}
-.process-dialog-meta{font-size:12px;line-height:1.5;letter-spacing:.02em;color:#8a8a8a}
-#process-dialog .process-close{position:static;display:grid;place-items:center;margin:0;padding:0;width:32px;height:32px;font-size:25px;line-height:1;background:transparent;color:#555}
+.process-dialog-meta,
+.process-dialog-step {
+  font-size: 12px;
+  line-height: 1.5;
+  letter-spacing: .02em;
+  color: #8a8a8a;
+  white-space: nowrap;
+}
+.process-dialog-meta {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.process-dialog-step { font-variant-numeric: tabular-nums; }
+#process-dialog .process-close{position:static;display:grid;place-items:center;margin:0;padding:0;flex:0 0 32px;width:32px;height:32px;font-size:25px;line-height:1;background:transparent;color:#555}
 #process-content{padding:30px 56px 36px}
 #process-title{margin:0;font-size:24px;font-weight:500;line-height:1.45;letter-spacing:-.03em}
-#process-content .process-summary{margin:10px 0 20px;font-size:15px;line-height:1.6;color:#666;max-width:880px}
+#process-content .process-summary{min-height:2lh;margin:10px 0 20px;font-size:15px;line-height:1.6;color:#666;max-width:880px}
 .process-media-row {
   display: grid;
   grid-template-columns: 44px minmax(0, 1fr) 44px;
   align-items: center;
   gap: 8px;
-  margin-inline: -48px;
+  margin-inline: -52px;
 }
 .process-arrow {
   display: grid;
@@ -100,7 +114,12 @@ html {
 #process-content .process-explanation h3{margin:0 0 6px;font-size:16px;font-weight:500;line-height:1.6}
 #process-content .process-explanation p{margin:0;font-size:14px;line-height:1.65;color:#666}
 
-@media(max-width:800px){.section-index{gap:14px}.section-index button{padding-left:12px}.section-index button:before{left:1px;width:4px;height:4px}#process-dialog{width:calc(100% - 24px);max-height:90svh}.process-dialog-toolbar{padding:8px 12px}.process-dialog-meta{font-size:11px}#process-content{padding:22px 20px 24px}#process-title{font-size:21px}#process-content .process-summary{margin:8px 0 16px;font-size:14px}#process-content .process-explanation{margin-top:22px}#process-content .process-explanation h3{font-size:15px;margin-bottom:6px}#process-content .process-explanation p{font-size:14px}}
+@media(max-width:800px){.section-index{gap:14px}.section-index button{padding-left:12px}.section-index button:before{left:1px;width:4px;height:4px}#process-dialog{width:calc(100% - 24px);height:90svh}.process-dialog-toolbar{padding:8px 12px;gap:12px}.process-dialog-meta,.process-dialog-step{font-size:11px}#process-content{padding:22px 20px 24px}#process-title{font-size:21px}#process-content .process-summary{min-height:3lh;margin:8px 0 16px;font-size:14px}#process-content .process-explanation{margin-top:22px}#process-content .process-explanation h3{font-size:15px;margin-bottom:6px}#process-content .process-explanation p{font-size:14px}}
+/* Reserve space for longer titles and summaries before the fixed image row. */
+@media (max-width: 420px) {
+  #process-title { min-height: 2lh; }
+  #process-content .process-summary { min-height: 4lh; }
+}
 body:has(.case-study-page) { --bridge-footer-min-height: 300px; }
 .case-study-page ~ .site-footer { min-height: var(--bridge-footer-min-height); }
 .bridge-layout { --bridge-scroll-margin: 24px; }
