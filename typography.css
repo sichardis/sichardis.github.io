@@ -17,7 +17,7 @@ html {
 .hero .explore-link{position:relative;top:10px;justify-self:center;align-self:end;flex-direction:row;gap:6px;margin:0;padding:8px 20px;font-size:14px;line-height:1.5;font-weight:400}
 .hero .explore-link span{font-size:20px}
 .document-links,.hero .document-links,.about-profile .document-links{gap:10px;margin-top:26px;flex-direction:row;flex-wrap:wrap;align-items:center;max-width:none}
-.document-button,.hero .document-button,.about-profile .document-button{flex:0 1 auto;min-width:0;min-height:40px;padding:9px 15px;font-size:13px;font-weight:400;line-height:1.5;letter-spacing:-.01em;white-space:nowrap;border:1px solid #dcdcdc;border-radius: var(--box-radius);background:#fff;box-shadow:none;justify-content:center;gap:10px;transition:background-color var(--box-hover-duration),border-color var(--box-hover-duration)}
+.document-button,.hero .document-button,.about-profile .document-button{flex:0 1 auto;min-width:0;min-height:40px;padding:9px 15px;font-size:13px;font-weight:400;line-height:1.5;letter-spacing:-.01em;white-space:nowrap;border:1px solid #dcdcdc;border-radius: var(--box-radius);background:#fff;box-shadow:none;justify-content:center;gap:10px}
 .document-button:is(:hover,:focus-visible),
 .hero .document-button:is(:hover,:focus-visible),
 .about-profile .document-button:is(:hover,:focus-visible) {
@@ -46,7 +46,7 @@ html {
 .thread-dot{width:6px;height:6px;box-shadow:0 0 0 5px rgba(255,255,255,.9);background:#4a4944}.thread-tip>span{background:rgba(255,255,255,.97)}
 @media(max-width:800px){.section-index{background:rgba(255,255,255,.97)}.hero-visual.thread-scene{max-width:520px}.thread-dot{box-shadow:0 0 0 4px rgba(255,255,255,.92)}}
 /* Bridge reading rhythm, current section, and process dialog. */
-.section-index button{position:relative;padding-left:16px;color:#8a8a8a;font-weight:400;transition:color .15s}
+.section-index button{position:relative;padding-left:16px;color:#8a8a8a;font-weight:400}
 .section-index button:before{content:"";position:absolute;left:2px;top:50%;width:5px;height:5px;border-radius:50%;background:currentColor;transform:translateY(-50%);opacity:0}
 .section-index button[aria-current="location"]{color:#222;font-weight:600}
 .section-index button[aria-current="location"]:before{opacity:1}
@@ -55,7 +55,6 @@ html {
 #process-dialog::-webkit-scrollbar{width:5px;height:5px}
 #process-dialog::-webkit-scrollbar-track{background:transparent}
 #process-dialog::-webkit-scrollbar-thumb{background:#d5d5d5;border-radius:10px}
-#process-dialog::-webkit-scrollbar-thumb:hover{background:#bcbcbc}
 .process-dialog-toolbar{position:sticky;top:0;z-index:3;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:12px 22px;background:#fff;border-bottom:1px solid #eee}
 .process-dialog-meta,
 .process-dialog-step {
@@ -334,10 +333,10 @@ body:has(.case-study-page) { --bridge-footer-min-height: 300px; }
   .attitudes article p { padding-top: 8px; }
 }
 
-/* Shared accent for all routes. */
+/* Shared accent and hover color timing for all routes. */
 :root {
   --box-radius: 6px;
-  --box-hover-duration: 150ms;
+  --hover-color-timing: 150ms ease 30ms;
   --accent: #f98d22;
   --accent-soft: #fff1e3;
   --accent-line: #f3c397;
@@ -377,15 +376,16 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
 }
 .process-card { overflow: visible; }
 
-.contact-cards a {
-  transition: background-color var(--box-hover-duration), border-color var(--box-hover-duration);
-}
-.contact-cards .tool-icon {
-  transition: background-color var(--box-hover-duration);
-}
-.contact-cards a:is(:hover, :focus-visible),
-.contact-cards a:is(:hover, :focus-visible) .tool-icon {
-  transition-delay: 30ms;
+:where(a, button, summary),
+.document-button,
+.document-button::after,
+.process-card .case-process-placeholder,
+.contact-cards :is(.contact-label, .tool-icon),
+.project-card-link h3 {
+  transition:
+    color var(--hover-color-timing),
+    background-color var(--hover-color-timing),
+    border-color var(--hover-color-timing);
 }
 .contact-cards a:is(:hover, :focus-visible) {
   background: var(--accent);
@@ -398,6 +398,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
 .project-card-link:hover h3, .project-card-link:focus-visible h3 { color: #000; }
 
 .thread-stop .thread-dot {
+  transition: box-shadow var(--hover-color-timing);
   width: 8px;
   height: 8px;
   background: var(--accent);

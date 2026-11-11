@@ -31,7 +31,7 @@ export const caseStudies = {
     "steps": [
       {
         "title": "사용자 요구 분석·문제 정의",
-        "summary": "은퇴견 보호와 시민 참여 장벽 분석",
+        "summary": "시민의 은퇴견 돌봄 참여 장벽을 살폈습니다.",
         "sections": [
           [
             "01 데스크 리서치 - 지역 자원과 시민 참여의 단절",
@@ -50,7 +50,7 @@ export const caseStudies = {
       },
       {
         "title": "경쟁 서비스 분석·차별화 방향 수립",
-        "summary": "안전 지원과 지속 참여로 차별화",
+        "summary": "안전 지원을 차별화 방향으로 삼았습니다.",
         "sections": [
           [
             "01 경쟁 서비스 분석 - 기록·추적·매칭 기능의 비교",
@@ -69,7 +69,7 @@ export const caseStudies = {
       },
       {
         "title": "사용자 정의·페르소나 작성",
-        "summary": "시민과 운영 파트너의 페르소나 구체화",
+        "summary": "시민과 운영 파트너의 요구를 구분했습니다.",
         "sections": [
           [
             "01 사용자 구분 - 참여 시민과 운영·협업 파트너",
@@ -88,7 +88,7 @@ export const caseStudies = {
       },
       {
         "title": "사용자 여정 지도 작성",
-        "summary": "이용 단계별 어려움과 지원 요소 정리",
+        "summary": "이용 단계별 어려움과 지원책을 정리했습니다.",
         "sections": [
           [
             "01 이용 단계 정리 - 이용 전부터 이후까지의 예상 흐름",
@@ -107,7 +107,7 @@ export const caseStudies = {
       },
       {
         "title": "서비스 정보 구조도 작성",
-        "summary": "핵심 메뉴와 하위 기능 구조 정리",
+        "summary": "핵심 메뉴와 하위 기능의 관계를 정리했습니다.",
         "sections": [
           [
             "01 핵심 메뉴 구성 - 이용 목적에 따라 서비스 연결",
@@ -126,7 +126,7 @@ export const caseStudies = {
       },
       {
         "title": "서비스 이용 흐름도 작성",
-        "summary": "입양·활동 예약·계정 관리 흐름 정리",
+        "summary": "입양·활동 예약·계정 관리 흐름을 설계했습니다.",
         "sections": [
           [
             "01 앱 진입 - 회원 상태와 정보 입력에 따른 분기",
@@ -177,7 +177,7 @@ export const caseStudies = {
     "steps": [
       {
         "title": "사용성 평가·문제 정의",
-        "summary": "예약 내역 탐색 혼란과 기능 분산 분석",
+        "summary": "예약 내역을 찾기 어려운 이유를 분석했습니다.",
         "sections": [
           [
             "01 기존 서비스 분석 · 조회와 좌석 선택",
@@ -196,7 +196,7 @@ export const caseStudies = {
       },
       {
         "title": "경쟁 서비스 분석·개선 방향 수립",
-        "summary": "예약 기능 통합과 탐색 개선 방향 비교",
+        "summary": "예약 기능을 모으는 방안을 비교했습니다.",
         "sections": [
           [
             "01 벤치마킹 · 예약 정보 제공 방식",
@@ -215,7 +215,7 @@ export const caseStudies = {
       },
       {
         "title": "사용자 정의·평가 대상 설정",
-        "summary": "사용자 경험별 평가 대상과 조건 설정",
+        "summary": "이용 경험에 따라 평가 대상을 구분했습니다.",
         "sections": [
           [
             "01 서비스 이용자 · 간헐적인 예매",
@@ -234,7 +234,7 @@ export const caseStudies = {
       },
       {
         "title": "서비스 이용 경로 분석",
-        "summary": "예약 내역의 탐색 경로와 반복 구간 비교",
+        "summary": "예약 내역을 반복해서 찾는 구간을 파악했습니다.",
         "sections": [
           [
             "01 기존 경로 · 전체 메뉴로의 재탐색",
@@ -253,7 +253,7 @@ export const caseStudies = {
       },
       {
         "title": "서비스 정보 구조도 작성",
-        "summary": "나의 티켓 중심으로 예약 기능 재구성",
+        "summary": "예약 기능을 나의 티켓에 모았습니다.",
         "sections": [
           [
             "01 기존 구조 · 예약 정보의 분산",
@@ -272,7 +272,7 @@ export const caseStudies = {
       },
       {
         "title": "서비스 이용 흐름도 작성",
-        "summary": "로그인부터 예약 내역 조회까지 설계",
+        "summary": "로그인부터 예약 내역 조회까지 설계했습니다.",
         "sections": [
           [
             "01 접근 방식 · 탭과 사이드 메뉴",
@@ -323,7 +323,7 @@ export const caseStudies = {
     "steps": [
       {
         "title": "사용자 요구 분석·문제 정의",
-        "summary": "설문과 화면 분석으로 탐색 불편 파악",
+        "summary": "설문과 화면 분석으로 탐색 불편을 파악했습니다.",
         "sections": [
           [
             "01 기존 서비스 분석 · 긴 프로모션 화면",
@@ -342,7 +342,7 @@ export const caseStudies = {
       },
       {
         "title": "경쟁 서비스 분석·차별화 방향 수립",
-        "summary": "경쟁 사례를 토대로 목적별 추천 제안",
+        "summary": "경쟁 사례를 참고해 목적별 추천을 제안했습니다.",
         "sections": [
           [
             "01 경쟁 서비스 · 배송과 상품 탐색",
@@ -361,7 +361,7 @@ export const caseStudies = {
       },
       {
         "title": "사용자 정의·페르소나 작성",
-        "summary": "가족과 1인 가구의 장보기 요구 정의",
+        "summary": "가족과 1인 가구의 장보기 요구를 살폈습니다.",
         "sections": [
           [
             "01 사용자 정의 · 반복·일회성 장보기",
@@ -380,7 +380,7 @@ export const caseStudies = {
       },
       {
         "title": "탐색 문제 분석·개선 과제 정리",
-        "summary": "장보기 진입과 상품 탐색의 불편 분석",
+        "summary": "장보기 진입과 탐색의 장벽을 살폈습니다.",
         "sections": [
           [
             "01 진입의 어려움 · 긴 화면과 우선순위",
@@ -399,7 +399,7 @@ export const caseStudies = {
       },
       {
         "title": "서비스 정보 구조도 작성",
-        "summary": "신선식품과 구매 목적별 카테고리 재구성",
+        "summary": "신선식품과 구매 목적별로 분류했습니다.",
         "sections": [
           [
             "01 기존 구조 · 혼합된 상품군과 깊이",
@@ -418,7 +418,7 @@ export const caseStudies = {
       },
       {
         "title": "주요 기능 이용 흐름 정리",
-        "summary": "할인·필터·레시피 장보기 흐름 정리",
+        "summary": "필터·할인·레시피의 이용 흐름을 설계했습니다.",
         "sections": [
           [
             "01 탐색 시작 · 카테고리와 상황별 조건",
@@ -475,7 +475,7 @@ export const caseStudies = {
     "steps": [
       {
         "title": "사용자 요구 분석·문제 정의",
-        "summary": "재학생과 입시생의 정보 탐색 불편 분석",
+        "summary": "재학생과 입시생의 정보 탐색 불편을 살폈습니다.",
         "sections": [
           [
             "01 기존 홈페이지 조사 · 탐색을 어렵게 하는 구성",
@@ -494,7 +494,7 @@ export const caseStudies = {
       },
       {
         "title": "대학 웹사이트 비교·개선 방향 수립",
-        "summary": "대학별 정보 제공 방식과 탐색 편의 비교",
+        "summary": "대학별 정보 탐색 방식을 비교했습니다.",
         "sections": [
           [
             "01 타 대학 조사 · 정보 제공 방식 비교",
@@ -513,7 +513,7 @@ export const caseStudies = {
       },
       {
         "title": "사용자 유형 정의·요구 정리",
-        "summary": "방문 목적별 사용자와 정보 요구 정의",
+        "summary": "방문 목적별로 필요한 정보를 정리했습니다.",
         "sections": [
           [
             "01 주 사용자 · 재학생과 입시생",
@@ -532,7 +532,7 @@ export const caseStudies = {
       },
       {
         "title": "퀵서비스·콘텐츠 구성 방향 수립",
-        "summary": "자주 찾는 기능과 학교 콘텐츠 배치 제안",
+        "summary": "주요 기능과 콘텐츠 배치를 제안했습니다.",
         "sections": [
           [
             "01 퀵서비스 · 사용자별 바로가기",
@@ -551,7 +551,7 @@ export const caseStudies = {
       },
       {
         "title": "서비스 정보 구조도 작성",
-        "summary": "기존 메뉴와 사용자별 바로가기 연결",
+        "summary": "기존 메뉴와 사용자별 바로가기를 연결했습니다.",
         "sections": [
           [
             "01 기존 구조 · 메뉴 계층과 연결 확인",
@@ -570,7 +570,7 @@ export const caseStudies = {
       },
       {
         "title": "기존안·개선안 비교",
-        "summary": "개선 전후 정보 접근성과 콘텐츠 비교",
+        "summary": "개선 전후의 정보 접근성을 비교했습니다.",
         "sections": [
           [
             "01 빠른 접근 · 퀵서비스 위치와 분류",
@@ -622,7 +622,7 @@ export const caseStudies = {
     "steps": [
       {
         "title": "서비스 정보 구조도 작성",
-        "summary": "모바일 진입 단계와 하위 메뉴 구조 정의",
+        "summary": "모바일 진입 단계와 하위 메뉴를 연결했습니다.",
         "sections": [
           [
             "01 서비스 진입 · 가입·로그인과 온보딩",
@@ -641,7 +641,7 @@ export const caseStudies = {
       },
       {
         "title": "서비스 이용 흐름도 작성",
-        "summary": "입양·예약·계정 관리의 순서와 분기 정리",
+        "summary": "입양·예약·계정 관리의 분기를 정리했습니다.",
         "sections": [
           [
             "01 진입·프로필 · 조건별 가입과 입력",
@@ -660,7 +660,7 @@ export const caseStudies = {
       },
       {
         "title": "공통 UI·모바일 화면 기준 정의",
-        "summary": "모바일 화면과 공통 내비게이션 기준 정의",
+        "summary": "모바일 화면과 공통 메뉴의 동작을 정의했습니다.",
         "sections": [
           [
             "01 제작 범위 · 모바일 공통 기준",
@@ -679,7 +679,7 @@ export const caseStudies = {
       },
       {
         "title": "주요 화면 구성·정보 위계 설계",
-        "summary": "홈·입양·커뮤니티 정보의 우선순위 설계",
+        "summary": "홈·입양·커뮤니티의 정보 순서를 정했습니다.",
         "sections": [
           [
             "01 하우스 · 상태 요약과 세부 콘텐츠",
@@ -698,7 +698,7 @@ export const caseStudies = {
       },
       {
         "title": "입력·예약 절차와 상태 정의",
-        "summary": "입력 제한과 예약 버튼 활성 조건 정의",
+        "summary": "입력값에 따른 예약 버튼 상태를 정했습니다.",
         "sections": [
           [
             "01 입양 신청 · 필수 입력과 활성화",
@@ -717,7 +717,7 @@ export const caseStudies = {
       },
       {
         "title": "화면 이동·팝업·상호작용 정의",
-        "summary": "확인 팝업과 편집·게임 동작 정의",
+        "summary": "확인 팝업과 편집·게임 동작을 구분했습니다.",
         "sections": [
           [
             "01 팝업 제어 · 작성과 최종 확인",
@@ -778,7 +778,7 @@ export const caseStudies = {
     "steps": [
       {
         "title": "공통 UI·화면 식별 기준 정의",
-        "summary": "화면 ID와 조작 표기의 공통 기준 정의",
+        "summary": "화면 ID와 조작 표기의 기준을 정했습니다.",
         "sections": [
           [
             "01 화면 구분 · 기기별 식별 체계",
@@ -796,7 +796,7 @@ export const caseStudies = {
       },
       {
         "title": "PC·태블릿·모바일 레이아웃 설계",
-        "summary": "기기별 탐색·구매 화면 배치 설계",
+        "summary": "기기별 탐색·구매 화면을 설계했습니다.",
         "sections": [
           [
             "01 PC · 검색과 본문 영역 구분",
@@ -814,7 +814,7 @@ export const caseStudies = {
       },
       {
         "title": "검색·카테고리·필터 동작 정의",
-        "summary": "검색·분류 선택이 목록에 반영되는 방식",
+        "summary": "검색과 분류 선택을 상품 목록에 반영했습니다.",
         "sections": [
           [
             "01 검색 진입 · 키워드와 카테고리",
@@ -832,7 +832,7 @@ export const caseStudies = {
       },
       {
         "title": "테마·상품 목록의 탐색 구조 설계",
-        "summary": "목적별 테마와 할인·상품 정렬 연결",
+        "summary": "목적별 테마와 할인·상품 정렬을 연결했습니다.",
         "sections": [
           [
             "01 추천 테마 · 목적별 장보기",
@@ -850,7 +850,7 @@ export const caseStudies = {
       },
       {
         "title": "레시피 검색·장바구니 연결 설계",
-        "summary": "레시피 검색에서 재료 담기까지 설계",
+        "summary": "레시피 검색부터 재료 담기까지 설계했습니다.",
         "sections": [
           [
             "01 메뉴 탐색 · 레시피와 상품 연결",
@@ -868,7 +868,7 @@ export const caseStudies = {
       },
       {
         "title": "배너·사이드바·화면 이동 정의",
-        "summary": "배너 전환과 메뉴·푸터 이동 경로 정의",
+        "summary": "배너 전환과 메뉴·푸터의 이동을 정의했습니다.",
         "sections": [
           [
             "01 배너 전환 · 콘텐츠와 구매 연결",
@@ -925,7 +925,7 @@ export const caseStudies = {
     "steps": [
       {
         "title": "정보 구조·공통 기준 정리",
-        "summary": "기기별 화면 작성 기준과 메뉴 관계 정리",
+        "summary": "기기별 화면 기준과 메뉴 관계를 정리했습니다.",
         "sections": [
           [
             "01 정보 구조 · 메뉴와 바로가기",
@@ -943,7 +943,7 @@ export const caseStudies = {
       },
       {
         "title": "상단 메뉴·이동 경로 설계",
-        "summary": "상단 메뉴 펼침과 보조 기능 이동 설계",
+        "summary": "상단 메뉴의 펼침과 이동 동작을 설계했습니다.",
         "sections": [
           [
             "01 상단 구성 · 기본 메뉴와 보조 기능",
@@ -961,7 +961,7 @@ export const caseStudies = {
       },
       {
         "title": "사용자별 퀵서비스·즐겨찾기 설계",
-        "summary": "사용자별 바로가기와 즐겨찾기 동작 정의",
+        "summary": "바로가기와 즐겨찾기의 동작을 정의했습니다.",
         "sections": [
           [
             "01 유형 전환 · 필요한 메뉴 노출",
@@ -979,7 +979,7 @@ export const caseStudies = {
       },
       {
         "title": "캘린더·콘텐츠 이용 동작 정의",
-        "summary": "공지·일정·뉴스·작품의 이동 경로 정리",
+        "summary": "공지·일정·뉴스·작품의 이동 경로를 정했습니다.",
         "sections": [
           [
             "01 공지·뉴스 · 목록과 상세 연결",
@@ -997,7 +997,7 @@ export const caseStudies = {
       },
       {
         "title": "모바일 화면·탐색 동작 정의",
-        "summary": "모바일 메뉴 펼침과 콘텐츠 탐색 정의",
+        "summary": "모바일 메뉴와 콘텐츠 탐색을 설계했습니다.",
         "sections": [
           [
             "01 메뉴 탐색 · 전체 메뉴와 하위 항목",
@@ -1015,7 +1015,7 @@ export const caseStudies = {
       },
       {
         "title": "태블릿 화면·패널 동작 정의",
-        "summary": "태블릿 메인 화면과 보조 패널 동작 정의",
+        "summary": "태블릿 화면과 보조 패널의 동작을 정의했습니다.",
         "sections": [
           [
             "01 메인 화면 · 상단 기능과 이동",
@@ -1063,7 +1063,7 @@ export const caseStudies = {
     "steps": [
       {
         "title": "문제 정의와 서비스 방향",
-        "summary": "선행을 쉽게 시작하고 기록·공감으로 연결",
+        "summary": "작은 선행이 기록과 공감으로 이어지게 했습니다.",
         "sections": [
           [
             "01 첫 참여",
@@ -1077,7 +1077,7 @@ export const caseStudies = {
       },
       {
         "title": "오늘의 미션과 직접 기록",
-        "summary": "제안 미션 참여와 직접 기록 흐름 설계",
+        "summary": "미션 참여와 직접 기록의 흐름을 설계했습니다.",
         "sections": [
           [
             "01 미션 확인",
@@ -1092,7 +1092,7 @@ export const caseStudies = {
       },
       {
         "title": "그룹·파트너 챌린지",
-        "summary": "그룹 목표와 함께한 활동을 보여주는 설계",
+        "summary": "그룹 목표와 함께한 활동을 볼 수 있게 했습니다.",
         "sections": [
           [
             "01 그룹 목표",
@@ -1107,7 +1107,7 @@ export const caseStudies = {
       },
       {
         "title": "서비스 정보 구조 정리",
-        "summary": "오늘 착·우리 착·모두 착·나의 착 구성",
+        "summary": "오늘 착·우리 착·모두 착·나의 착을 구분했습니다.",
         "sections": [
           [
             "01 주요 메뉴",
@@ -1122,7 +1122,7 @@ export const caseStudies = {
       },
       {
         "title": "실천부터 인증까지의 흐름",
-        "summary": "회원 상태와 미션 수락 여부에 따른 분기",
+        "summary": "회원·수락 상태별로 흐름을 나눴습니다.",
         "sections": [
           [
             "01 서비스 진입",
@@ -1137,7 +1137,7 @@ export const caseStudies = {
       },
       {
         "title": "웹앱 MVP 이용 결과 분석",
-        "summary": "웹앱의 초기 인증·공감 기록 분석",
+        "summary": "웹앱의 초기 인증과 공감 기록을 살폈습니다.",
         "sections": [
           [
             "01 참여 유형",
@@ -1191,7 +1191,7 @@ export const caseStudies = {
     "steps": [
       {
         "title": "정보 구조·메뉴 연결",
-        "summary": "개인 미션·그룹·선행 피드·기록 연결",
+        "summary": "미션·그룹·피드·기록을 연결했습니다.",
         "sections": [
           [
             "01 개인·그룹 참여",
@@ -1206,7 +1206,7 @@ export const caseStudies = {
       },
       {
         "title": "공통 UI·모바일 레이아웃",
-        "summary": "모바일 공통 영역과 버튼·아이콘 기준",
+        "summary": "모바일 공통 UI와 버튼 기준을 정했습니다.",
         "sections": [
           [
             "01 기본 화면 구성",
@@ -1221,7 +1221,7 @@ export const caseStudies = {
       },
       {
         "title": "미션 탐색·수락 상태",
-        "summary": "오늘 착의 미션 확인과 참여 화면 설계",
+        "summary": "오늘 착에서 미션 확인과 참여를 연결했습니다.",
         "sections": [
           [
             "01 미션 상세",
@@ -1236,7 +1236,7 @@ export const caseStudies = {
       },
       {
         "title": "선행 인증·기록 화면",
-        "summary": "선행 기록 작성부터 저장 확인까지 설계",
+        "summary": "선행 기록의 작성과 저장 확인을 설계했습니다.",
         "sections": [
           [
             "01 기록 입력",
@@ -1251,7 +1251,7 @@ export const caseStudies = {
       },
       {
         "title": "그룹 챌린지·진행 상태",
-        "summary": "그룹 목표·진행률·개인 참여 화면 구성",
+        "summary": "그룹 목표와 참여 현황을 보여줍니다.",
         "sections": [
           [
             "01 그룹 챌린지",
@@ -1266,7 +1266,7 @@ export const caseStudies = {
       },
       {
         "title": "파트너 챌린지·참여 흐름",
-        "summary": "파트너 챌린지의 참여 조건과 기록 확인",
+        "summary": "참여 조건과 활동 기록을 정리했습니다.",
         "sections": [
           [
             "01 참여 정보",
@@ -1312,7 +1312,7 @@ export const caseStudies = {
     "steps": [
       {
         "title": "기존 앱·탐색 문제 분석",
-        "summary": "기존 앱의 영화 탐색·예매 불편 분석",
+        "summary": "영화 탐색과 예매의 불편을 살폈습니다.",
         "sections": [
           [
             "01 기존 화면 확인",
@@ -1327,7 +1327,7 @@ export const caseStudies = {
       },
       {
         "title": "사용성 평가·핵심 문제 정의",
-        "summary": "사용성 평가로 반복 탐색 구간 파악",
+        "summary": "사용성 평가로 반복 탐색 구간을 파악했습니다.",
         "sections": [
           [
             "01 평가 과업",
@@ -1342,7 +1342,7 @@ export const caseStudies = {
       },
       {
         "title": "경쟁 서비스·개선 방향 비교",
-        "summary": "예매 서비스의 검색·상영 포맷 안내 비교",
+        "summary": "예매 서비스의 검색과 포맷 안내를 비교했습니다.",
         "sections": [
           [
             "01 비교 기준",
@@ -1357,7 +1357,7 @@ export const caseStudies = {
       },
       {
         "title": "요구사항·우선순위 정리",
-        "summary": "관람 목적별 탐색·비교를 우선 과제로 선정",
+        "summary": "관람 목적별 탐색과 비교를 우선했습니다.",
         "sections": [
           [
             "01 기능 우선순위",
@@ -1372,7 +1372,7 @@ export const caseStudies = {
       },
       {
         "title": "서비스 구조·예매 흐름 설계",
-        "summary": "검색·특별관 탐색에서 예매까지 연결",
+        "summary": "검색과 특별관 탐색을 예매로 연결했습니다.",
         "sections": [
           [
             "01 복수 진입점",
@@ -1387,7 +1387,7 @@ export const caseStudies = {
       },
       {
         "title": "프로토타입·검증 과업 설계",
-        "summary": "기능별 시안과 사용성 평가 과업 정리",
+        "summary": "시안을 비교해 평가 과업을 정했습니다.",
         "sections": [
           [
             "01 설계 대조",
@@ -1434,7 +1434,7 @@ export const caseStudies = {
     "steps": [
       {
         "title": "개선 정보 구조·화면 식별",
-        "summary": "홈·검색·스페셜관·예매 정보 구조 정리",
+        "summary": "홈·검색·스페셜관·예매의 구조를 정리했습니다.",
         "sections": [
           [
             "01 핵심 영역",
@@ -1449,7 +1449,7 @@ export const caseStudies = {
       },
       {
         "title": "탐색·예매 통합 흐름",
-        "summary": "탐색 시작점마다 예매 조건 선택으로 연결",
+        "summary": "탐색 경로를 예매 조건에 연결했습니다.",
         "sections": [
           [
             "01 다양한 진입",
@@ -1464,7 +1464,7 @@ export const caseStudies = {
       },
       {
         "title": "통합 검색·관람 목적별 탐색",
-        "summary": "영화·극장·지역·이벤트 통합 검색 구성",
+        "summary": "영화·극장·지역·이벤트를 함께 검색합니다.",
         "sections": [
           [
             "01 검색 결과",
@@ -1479,7 +1479,7 @@ export const caseStudies = {
       },
       {
         "title": "특별관 비교·상세 안내",
-        "summary": "예매 중 특별관 특징과 두 포맷 비교",
+        "summary": "예매 중 특별관 포맷을 비교할 수 있습니다.",
         "sections": [
           [
             "01 특별관 정보",
@@ -1494,7 +1494,7 @@ export const caseStudies = {
       },
       {
         "title": "영화관·회차 비교와 조건 유지",
-        "summary": "지역별 극장과 복수 회차 비교 설계",
+        "summary": "지역별 극장과 회차를 비교할 수 있습니다.",
         "sections": [
           [
             "01 극장 비교",
@@ -1509,7 +1509,7 @@ export const caseStudies = {
       },
       {
         "title": "예외 상태·프로토타입 대조",
-        "summary": "시안과 기능 정의를 비교해 예외 상태 점검",
+        "summary": "시안을 대조해 예외 상태를 점검했습니다.",
         "sections": [
           [
             "01 예외 상태",

@@ -1,6 +1,6 @@
 import { projects as sourceProjects, featuredIds } from './data.js?v=project-polish';
-import { bridgeMarkup, steps as bridgeSteps } from './bridge.js?v=process-summary';
-import { caseStudies } from './case-studies.js?v=process-summary';
+import { bridgeMarkup, steps as bridgeSteps } from './bridge.js?v=complete-process-sentences';
+import { caseStudies } from './case-studies.js?v=complete-process-sentences';
 import { caseStudyMarkup, caseProcessMarkup } from './case-study.js?v=rounded-controls';
 
 const projects = sourceProjects.map(p => ({...p, documentType: ['chak','bridge','bluedog'].includes(p.id) ? 'plan' : p.id === 'korail' ? 'report' : 'proposal'}));
