@@ -577,7 +577,6 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
 .bridge-section + .bridge-section {
   margin-top: 30px;
   padding-top: 22px;
-  border-top: 1px solid var(--line);
 }
 .bridge-section > h2 {
   width: fit-content;
