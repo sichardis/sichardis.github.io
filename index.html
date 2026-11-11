@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="./home.css">
   <link rel="stylesheet" href="./projects.css?v=project-polish">
   <link rel="stylesheet" href="./about.css?v=profile-slogans">
-  <link rel="stylesheet" href="./typography.css?v=team-photos">
+  <link rel="stylesheet" href="./typography.css?v=thread-draw">
   <script type="module" src="./script.js?v=team-photos"></script>
 </head>
 <body>
@@ -35,7 +35,37 @@
           <h1 id="hero-title">실마리를 찾아 근거로 매듭짓는 정서영입니다.</h1>
           <div class="hero-visual thread-scene" aria-label="실마리에서 매듭까지, 세 지점에서 기획 과정을 확인하세요">
             <div class="thread-artwork">
-              <img class="hero-rope" src="./assets/thread-rope-hero.png" alt="부드러운 곡선으로 이어져 하나의 매듭을 이루는 입체 로프" width="1280" height="853" fetchpriority="high">
+              <svg class="hero-rope" width="1690" height="480" viewBox="0 0 1690 480" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="hero-rope-title">
+                <title id="hero-rope-title">부드러운 곡선을 그리며 하나의 매듭으로 이어지는 주황색 실</title>
+                <defs>
+                  <linearGradient id="hero-rope-gradient" x1="30" y1="239" x2="1662" y2="239" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#FF8600" stop-opacity="0"/>
+                    <stop offset="0.5" stop-color="#FF8600"/>
+                    <stop offset="0.918269" stop-color="#FF8600" stop-opacity="0.39"/>
+                    <stop offset="1" stop-color="#FF8600" stop-opacity="0"/>
+                  </linearGradient>
+                </defs>
+                <path class="thread-stroke" pathLength="1" stroke="url(#hero-rope-gradient)" stroke-width="30" stroke-linecap="round" stroke-linejoin="round"
+                  d="M30 445
+                    C168 427 262 385 339 294
+                    C417 202 479 154 580 159
+                    C681 153 749 195 831 221
+                    C893.173 241.115 940.299 252.034 985.371 230.828
+                    C989.595 228.84 993.801 226.571 998 224
+                    C1032.3 203.04 1064.58 171.994 1096.38 144.956
+                    C1114.65 129.424 1132.76 115.216 1151 105
+                    C1190 83 1227 107 1245 141
+                    C1253.28 156.748 1256.34 173.23 1255.28 189.524
+                    C1251.07 253.933 1182.44 315.404 1117 317
+                    C1052.4 318.988 1005.58 275.538 985.371 230.828
+                    C985.246 230.552 985.123 230.276 985 230
+                    C959 172 996 133 1043 135
+                    C1061.24 135.598 1078.86 139.505 1096.38 144.956
+                    C1137.46 157.732 1178.04 178.99 1225 186
+                    C1235.36 188.212 1245.44 189.34 1255.28 189.524
+                    C1329.92 190.918 1390.62 137.946 1456 92
+                    C1516 49 1586 33 1662 33"/>
+              </svg>
               <button class="thread-stop thread-start" type="button" aria-label="실마리를 찾고" aria-expanded="false" aria-controls="thread-tip-1"><span class="thread-dot" aria-hidden="true"></span><span class="thread-tip" id="thread-tip-1"><strong>실마리를 찾고</strong><span>사용자의 상황과 작은 불편을 관찰해 해결해야 할 질문을 찾습니다.</span></span></button>
               <button class="thread-stop thread-weave" type="button" aria-label="실을 엮어서" aria-expanded="false" aria-controls="thread-tip-2"><span class="thread-dot" aria-hidden="true"></span><span class="thread-tip" id="thread-tip-2"><strong>실을 엮어서</strong><span>서로 다른 의견과 근거를 비교해 기획의 방향과 흐름을 정리합니다.</span></span></button>
               <button class="thread-stop thread-knot" type="button" aria-label="매듭 짓습니다" aria-expanded="false" aria-controls="thread-tip-3"><span class="thread-dot" aria-hidden="true"></span><span class="thread-tip" id="thread-tip-3"><strong>매듭 짓습니다</strong><span>핵심 과제의 우선순위를 정하고 선택한 이유를 기획으로 구체화합니다.</span></span></button>

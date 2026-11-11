@@ -42,10 +42,9 @@ html {
 
 /* Canvas and the research-led tactile thread illustration. */
 :root{--canvas:#FFFFFF;--band:var(--canvas);background:var(--canvas)}body,main{background:var(--canvas)}.site-header{background:rgba(255,255,255,.94)}.featured-section,.site-footer{background:var(--canvas)}
-.hero-visual.thread-scene{aspect-ratio:3/2;background:transparent;max-width:min(960px,calc((100svh - 260px)*1.5))}.hero-rope{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:contain;mix-blend-mode:multiply}
-.thread-start{left:14%;top:60%}.thread-weave{left:44%;top:49%}.thread-knot{left:67%;top:49%}.thread-dot{width:6px;height:6px;box-shadow:0 0 0 5px rgba(255,255,255,.9);background:#4a4944}.thread-tip>span{background:rgba(255,255,255,.97)}
+.hero-visual.thread-scene{aspect-ratio:3/2;background:transparent;max-width:min(960px,calc((100svh - 260px)*1.5))}
+.thread-dot{width:6px;height:6px;box-shadow:0 0 0 5px rgba(255,255,255,.9);background:#4a4944}.thread-tip>span{background:rgba(255,255,255,.97)}
 @media(max-width:800px){.section-index{background:rgba(255,255,255,.97)}.hero-visual.thread-scene{max-width:520px}.thread-knot .thread-tip{right:-10px}.thread-dot{box-shadow:0 0 0 4px rgba(255,255,255,.92)}}
-.thread-start{top:63%}.thread-knot{left:64%;top:46%}
 /* Bridge reading rhythm, current section, and process dialog. */
 .section-index button{position:relative;padding-left:16px;color:#8a8a8a;font-weight:400;transition:color .15s}
 .section-index button:before{content:"";position:absolute;left:2px;top:50%;width:5px;height:5px;border-radius:50%;background:currentColor;transform:translateY(-50%);opacity:0}
@@ -178,6 +177,32 @@ body:has(.case-study-page) { --bridge-footer-min-height: 300px; }
 /* Position the interactive stops against the original image proportions. */
 .thread-artwork { position: relative; width: 100%; pointer-events: none; }
 .thread-artwork .thread-stop { pointer-events: auto; }
+.thread-artwork .hero-rope { height: auto; }
+.thread-artwork .thread-start { left: 20.06%; top: 61.25%; }
+.thread-artwork .thread-weave { left: 49.17%; top: 46.04%; }
+.thread-artwork .thread-knot { left: 64.87%; top: 30.2%; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .thread-stroke {
+    stroke-dasharray: 1 1;
+    animation: draw-thread 2.6s cubic-bezier(.35, 0, .35, 1);
+  }
+  .thread-dot { animation: reveal-thread-stop .25s ease-out backwards; }
+  .thread-start .thread-dot { animation-delay: .65s; }
+  .thread-weave .thread-dot { animation-delay: 1.15s; }
+  .thread-knot .thread-dot { animation-delay: 1.45s; }
+  .thread-stop:focus-visible .thread-dot { animation: none; }
+
+  @keyframes draw-thread {
+    from { stroke-dashoffset: 1; }
+    to { stroke-dashoffset: 0; }
+  }
+
+  @keyframes reveal-thread-stop {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+}
 .featured-section { padding-top: 48px; }
 .section-description { margin-top: 4px; line-height: 1.5; }
 .project-grid { margin-top: 28px; }
