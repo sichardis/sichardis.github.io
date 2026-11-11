@@ -242,7 +242,6 @@ body:has(.case-study-page) { --bridge-footer-min-height: 300px; }
 .detail-facts dd { margin-top: 4px; }
 .detail-story { padding: 28px 0; }
 .bridge-section { margin-top: 32px; }
-.bridge-section h2 { margin-bottom: 4px; line-height: 1.4; }
 .bridge-section h3 { margin-top: 16px; margin-bottom: 1px; line-height: 1.4; }
 .bridge-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 22rem; margin-top: 16px; }
 .bridge-facts dt { margin-bottom: 2px; line-height: 1.4; }
@@ -580,7 +579,15 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
   padding-top: 22px;
   border-top: 1px solid var(--line);
 }
-.bridge-section h2 { color: #000; }
+.bridge-section > h2 {
+  width: fit-content;
+  margin-bottom: 4px;
+  padding: 4px 10px;
+  border: 1px solid var(--accent-line);
+  border-radius: var(--box-radius);
+  color: #000;
+  line-height: 1.4;
+}
 .section-index button[aria-current="location"] { color: #000; }
 .section-index button[aria-current="location"]::before { background: var(--accent); }
 .bridge-section .bridge-goal { margin-bottom: 4px; }
