@@ -105,6 +105,7 @@ export const projects = [
   },
   {
     "id": "lotte",
+    "hidden": true,
     "status": "ongoing",
     "title": "롯데시네마",
     "subtitle": "탐색 및 예매 기능 개선 제안",
@@ -116,4 +117,4 @@ export const projects = [
     "pending": true
   }
 ];
-export const featuredIds = ["chak", "bridge", "lotte"];
+export const featuredIds = ["chak", "bridge", "korail"];

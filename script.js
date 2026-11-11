@@ -1,16 +1,17 @@
-import { projects as sourceProjects, featuredIds } from './data.js?v=optimized-images';
+import { projects as sourceProjects, featuredIds } from './data.js?v=featured-korail';
 import { bridgeMarkup, steps as bridgeSteps } from './bridge.js?v=optimized-images';
 import { caseStudies } from './case-studies.js?v=optimized-images';
 import { caseStudyMarkup, caseProcessMarkup } from './case-study.js?v=optimized-images';
 
-const projects = sourceProjects.map(p => ({...p, documentType: ['chak','bridge','bluedog'].includes(p.id) ? 'plan' : p.id === 'korail' ? 'report' : 'proposal'}));
+const allProjects = sourceProjects.map(p => ({...p, documentType: ['chak','bridge','bluedog'].includes(p.id) ? 'plan' : p.id === 'korail' ? 'report' : 'proposal'}));
 for (const id of ['chak','lotte','bluedog','rocketfresh','kaywon']) {
-  const original = projects.find(p => p.id === id);
+  const original = allProjects.find(p => p.id === id);
   const storyboardId = id + '-storyboard';
   const storyboard = caseStudies[storyboardId];
-  projects.push({...original, id:storyboardId, cover:storyboard?.cover ?? original.cover, coverThumb:storyboard?.coverThumb ?? original.coverThumb, title: `[${original.title}] 화면설계서`, subtitle: '화면 구성과 기능, 이용 단계별 연결을 정리한 설계서', documentType:'storyboard', pdf:null, detail:null, role:'화면설계서', pending:true, lead:'화면별 목적과 기능, 이용 단계별 연결을 정리한 문서입니다. 상세 자료는 준비 중입니다.', question:'', approach:'', outcome:''});
+  allProjects.push({...original, id:storyboardId, cover:storyboard?.cover ?? original.cover, coverThumb:storyboard?.coverThumb ?? original.coverThumb, title: `[${original.title}] 화면설계서`, subtitle: '화면 구성과 기능, 이용 단계별 연결을 정리한 설계서', documentType:'storyboard', pdf:null, detail:null, role:'화면설계서', pending:true, lead:'화면별 목적과 기능, 이용 단계별 연결을 정리한 문서입니다. 상세 자료는 준비 중입니다.', question:'', approach:'', outcome:''});
 }
-const documentOrder = ['chak','bridge','bluedog','korail','lotte','rocketfresh','kaywon','chak-storyboard','lotte-storyboard','bluedog-storyboard','rocketfresh-storyboard','kaywon-storyboard'];
+const projects = allProjects.filter(project => !project.hidden);
+const documentOrder = ['chak','bridge','korail','bluedog','lotte','rocketfresh','kaywon','chak-storyboard','lotte-storyboard','bluedog-storyboard','rocketfresh-storyboard','kaywon-storyboard'];
 projects.sort((a,b)=>documentOrder.indexOf(a.id)-documentOrder.indexOf(b.id));
 const filters = [['all','전체'],['featured','대표'],['plan','기획서'],['report','보고서'],['proposal','제안서'],['storyboard','화면설계서']];
 let listScroll = 0;
@@ -44,10 +45,22 @@ function card(project, {featured = false, priority = 'auto'} = {}) {
     : `<span class="project-cover-type">${escape(project.word || project.title)}</span>`;
   let title = project.documentType === 'storyboard' ? project.title : project.id === 'chak' ? '착! (Chak!)' : project.id === 'lotte' ? '[롯데시네마] 탐색 및 예매 기능 개선 제안서' : project.title;
   if (!featured) title = ({bluedog:'블루독 (Blue Dog)',korail:'[코레일톡] 기능 분산 구조 및 탐색 혼란 기능 개선 보고서',rocketfresh:'[쿠팡 로켓프레시] 메인페이지 UX 리뉴얼 제안서',kaywon:'[계원예술대학교] 메인페이지 UX 리뉴얼 제안서'})[project.id] || title;
-  let meta = !featured ? `${featuredIds.includes(project.id) ? '대표 | ' : ''}${filters.find(([id])=>id===project.documentType)?.[1] || ''}` : featured ? `대표 | ${project.id === 'lotte' ? '제안서' : '기획서'}` : escape(project.role || project.type);
-  if (project.id === 'bridge') meta = '대표 | 기획서 | 커뮤니케이션디자인 공모전 특별상';
-  const sourceId = project.id.replace('-storyboard','');
-  const date = featured ? (project.id === 'chak' ? '2026.09–12 · 진행 중' : project.id === 'bridge' ? '2026.03–06' : '2026.09–12 · 진행 중') : ['bridge','bluedog','korail'].includes(sourceId) ? '2026.03–06' : sourceId === 'lotte' || sourceId === 'chak' || sourceId === 'kaywon' ? '2026.09–12' : sourceId === 'rocketfresh' ? '2025.09–12' : project.id === 'chak' ? '2026.09–12 · 진행 중' : project.id === 'bridge' ? '2026.03–06' : project.id === 'lotte' ? '2026.09–12' : project.year || '';
+  const documentLabel = filters.find(([id]) => id === project.documentType)?.[1] || '';
+  const meta = project.id === 'bridge'
+    ? '대표 | 기획서 | 커뮤니케이션디자인 공모전 특별상'
+    : `${featuredIds.includes(project.id) ? '대표 | ' : ''}${documentLabel}`;
+  const sourceId = project.id.replace('-storyboard', '');
+  const period = {
+    chak: '2026.09–12',
+    bridge: '2026.03–06',
+    bluedog: '2026.03–06',
+    korail: '2026.03–06',
+    lotte: '2026.09–12',
+    rocketfresh: '2025.09–12',
+    kaywon: '2026.09–12',
+  }[sourceId] || project.year || '';
+  const ongoing = project.filter === 'ongoing' || project.status === 'ongoing';
+  const date = featured && ongoing ? `${period} · 진행 중` : period;
   return `<article class="project-card"><a class="project-card-link" href="${projectUrl(project.id)}">
     <div class="project-image">${image}</div>
     <h3>${escape(title)}</h3>
