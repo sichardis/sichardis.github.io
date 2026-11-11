@@ -87,11 +87,8 @@ export function caseStudyMarkup(project, hero, escape) {
       <section id="${sectionId('contribution')}" class="bridge-section" tabindex="-1">
         <h2>기여</h2><ul>${project.contributions.map(item => `<li>${escape(item)}</li>`).join('')}</ul>
       </section>
-      ${hasTeamPhotos ? result : ''}
-      <div class="bridge-ending">
-        ${hasTeamPhotos ? teamPhotosMarkup(project.id, project.teamPhotos, escape) : result}
-        <div class="back-to-top-wrap"><button class="back-to-top" type="button" data-detail-top>상단으로 <span aria-hidden="true">↑</span></button></div>
-      </div>
+      ${result}
+      ${hasTeamPhotos ? teamPhotosMarkup(project.id, project.teamPhotos, escape) : ''}
     </article>
   </div>`;
 }

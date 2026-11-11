@@ -86,23 +86,7 @@
 .attitudes { grid-template-columns: 80px repeat(3,minmax(0,1fr)); }
 .attitudes article { display: flex; flex-direction: column; }
 .attitudes article p { margin-top: auto; padding-top: 72px; }
-.back-to-top-wrap {
-  display: flex;
-  justify-content: center;
-  padding: 144px 0 130px;
-}
-.back-to-top {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  background: transparent;
-  padding: 14px 32px;
-  color: #555;
-  font-size: 22px;
-}
-.back-to-top span { font-size: 26px; transition: transform .2s; }
-.back-to-top:hover span { transform: translateY(-4px); }
+
 @media (max-width: 1600px) {
   .hero { min-height: 900px; }
   .hero-layout { grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: 48px; }
@@ -129,7 +113,6 @@
   .attitudes-label { grid-column: 1/-1; }
   .attitudes-label br { display: none; }
   .attitudes article p { padding-top: 36px; }
-  .back-to-top-wrap { padding: 100px 0; }
 }
 @media (max-width: 800px) {
   .hero { min-height: 0; padding-top: 40px; }
@@ -150,8 +133,6 @@
   .profile-facts .email-fact { grid-column: 2; }
   .attitudes h3 { font-size: 14px; }
   .attitudes article p { font-size: 13px; }
-  .back-to-top-wrap { padding: 64px 0; }
-  .back-to-top { font-size: 16px; }
 }
 @media (max-width: 540px) {
   .profile-facts { grid-template-columns: 1fr; }

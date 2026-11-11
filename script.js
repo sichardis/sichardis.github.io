@@ -1,7 +1,7 @@
 import { projects as sourceProjects, featuredIds } from './data.js?v=project-awards';
-import { bridgeMarkup, steps as bridgeSteps } from './bridge.js?v=chak-materials';
+import { bridgeMarkup, steps as bridgeSteps } from './bridge.js?v=compact-footer';
 import { caseStudies } from './case-studies.js?v=chak-materials';
-import { caseStudyMarkup, caseProcessMarkup } from './case-study.js?v=chak-materials';
+import { caseStudyMarkup, caseProcessMarkup } from './case-study.js?v=compact-footer';
 
 const allProjects = sourceProjects.map(p => ({...p, documentType: ['chak','bridge','bluedog'].includes(p.id) ? 'plan' : p.id === 'korail' ? 'report' : 'proposal'}));
 for (const id of ['chak','lotte','bluedog','rocketfresh','kaywon']) {
@@ -136,6 +136,13 @@ function queueDetailIndexUpdate() {
     for (const section of sections) {
       if (section.getBoundingClientRect().top <= threshold) current = section;
     }
+    // Near the footer, scrolling can stop before the requested heading reaches the top.
+    if (window.scrollY > 0 && Math.ceil(window.scrollY + window.innerHeight) >= document.documentElement.scrollHeight) {
+      const focused = document.activeElement;
+      const focusedTop = focused.getBoundingClientRect().top;
+      current = sections.includes(focused) && focusedTop >= header && focusedTop < window.innerHeight
+        ? focused : sections.at(-1);
+    }
     setDetailSection(current.id);
   });
 }
@@ -208,10 +215,6 @@ $('.explore-link').addEventListener('click', (event) => {
   event.preventDefault();
   scrollToFeatured();
 });
-document.querySelectorAll('.back-to-top').forEach(button => button.addEventListener('click', () => {
-  window.scrollTo({top:0,behavior:motion()});
-  $('.site-header .brand').focus({preventScroll:true});
-}));
 document.querySelectorAll('a[href="#/projects"]').forEach((link) => {
   link.addEventListener('click', () => {
     if (link.classList.contains('back-link')) return;
@@ -295,8 +298,8 @@ $('#detail-content').addEventListener('click', event => {
     const target = document.getElementById(jump.dataset.section);
     target.focus({preventScroll:true});
     target.scrollIntoView({behavior:motion()});
+    queueDetailIndexUpdate();
   }
-  if (event.target.closest('[data-detail-top]')) window.scrollTo({top:0,behavior:motion()});
 });
 processDialog.querySelector('.process-close').addEventListener('click',()=>processDialog.close());
 processDialog.addEventListener('click',event=>{

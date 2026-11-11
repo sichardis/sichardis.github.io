@@ -1,4 +1,4 @@
-import { awardMarkup, detailIndexButtons, teamPhotosMarkup } from './case-study.js?v=chak-materials';
+import { awardMarkup, detailIndexButtons, teamPhotosMarkup } from './case-study.js?v=compact-footer';
 
 export const steps = [
   {title:'사용자 요구 분석·문제 정의',summary:'시니어의 경력 정리 부담을 살폈습니다.',sections:[['01 데스크 리서치 · 경험을 드러내기 어려운 구직 환경','시니어의 노동 참여와 디지털 구직 환경을 조사했습니다.\n복잡한 절차와 메뉴가 서비스 이용의 장벽이 될 수 있음을 파악하고, 경력 표현과 디지털 문서 작성의 부담에 주목했습니다.'],['02 사용자 설문 · 경력을 정리하고 표현하는 데 필요한 지원','50~60대 은퇴·재취업 관심자와 30~40대 경력보유자를 대상으로 온라인 설문을 진행했습니다.\n경력 정리의 어려움과 직무 언어 변환·프로필 생성에 대한 지원 요구를 확인했습니다.'],['03 문제 정의 · 경험을 채용 시장의 언어로 연결하기 어렵다','핵심 문제를 축적된 경험을 직무와 역량의 언어로 정리하고 전달하기 어렵다는 점으로 정의했습니다.\n이를 바탕으로 경험에서 강점을 찾고, 지원 직무에 맞는 프로필로 구성하도록 돕는 방향을 설정했습니다.']]},
@@ -19,8 +19,6 @@ export function bridgeMarkup(hero, award, escape) {
  <section id="bridge-process" class="bridge-section" tabindex="-1"><h2>과정</h2><p>이미지를 클릭해 브릿지의 주요 과정을 확인해 보세요.</p><div class="process-grid">${steps.map((step,i)=>`<button type="button" class="process-card" data-process="${i}" aria-label="${String(i+1).padStart(2,'0')} ${step.title} 상세 보기"><img src="./assets/optimized/process/bridge-process-${i+1}.webp" alt="${step.title}" width="768" height="432" loading="lazy" decoding="async"><span>${String(i+1).padStart(2,'0')} ${step.title}</span></button>`).join('')}</div><a class="bridge-download" href="./assets/bridge.pdf" download>브릿지(Bridge) 기획서 전체 보기 · PDF <span aria-hidden="true">↓</span></a></section>
  <section id="bridge-contribution" class="bridge-section" tabindex="-1"><h2>기여</h2><ul><li>조사 결과를 바탕으로 핵심 문제와 서비스 방향을 정했습니다.</li><li>사용자 요구와 서비스 목표에 따라 기능의 우선순위를 정했습니다.</li><li>사용자 여정 지도·정보 구조도·이용 흐름도를 작성했습니다.</li><li>화면별 목적과 필수 정보를 공유하고 검토 의견을 정리했습니다.</li></ul></section>
  <section id="bridge-result" class="bridge-section" tabindex="-1"><h2>결과</h2><p>경력 정리에 자동화를 활용하고 표현의 최종 결정권은 이용자에게 두는 서비스 원칙을 도출했습니다.<br>이를 통해 시니어의 경력 정리 부담을 줄이고,<br>기업이 지원자의 경험과 강점을 직무에 맞춰 이해하도록 도울 것으로 기대합니다.</p></section>
- <div class="bridge-ending">
  ${teamPhotosMarkup('bridge')}
- <div class="back-to-top-wrap"><button class="back-to-top" type="button" data-detail-top>상단으로 <span aria-hidden="true">↑</span></button></div>
- </div></article></div>`;
+ </article></div>`;
 }

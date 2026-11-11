@@ -28,7 +28,7 @@ html {
 }
 .document-button:is(:hover,:focus-visible)::after { color: #000; }
 .document-button:after{content:'↓';font-size:13px;color:#888}
-.featured-section h2,.profile-portrait h2{font-size:30px;font-weight:500;line-height:1.4}.section-description{font-size:16px;margin-top:8px}.project-card h3{font-size:17px;font-weight:500;line-height:1.55;margin-top:16px}.project-card-description{font-size:14px;line-height:1.6;margin-top:8px;min-height:0}.project-card-meta{font-size:12px;line-height:1.7}.project-status{font-size:11px;padding:5px 9px}.arrow-link{font-size:15px;gap:10px}.arrow-link span{font-size:22px}.profile-slogan{font-size:28px;font-weight:500;line-height:1.5}.profile-intro{font-size:16px;line-height:1.65}.profile-facts>div{font-size:15px}.profile-facts dt{font-size:13px}.profile-facts dd small{font-size:12px}.attitudes h3{font-size:14px}.attitudes article p{font-size:13px;padding-top:40px}.attitudes-label{font-size:12px}.back-to-top{flex-direction:row;gap:6px;font-size:14px}.back-to-top span{font-size:20px}
+.featured-section h2,.profile-portrait h2{font-size:30px;font-weight:500;line-height:1.4}.section-description{font-size:16px;margin-top:8px}.project-card h3{font-size:17px;font-weight:500;line-height:1.55;margin-top:16px}.project-card-description{font-size:14px;line-height:1.6;margin-top:8px;min-height:0}.project-card-meta{font-size:12px;line-height:1.7}.project-status{font-size:11px;padding:5px 9px}.arrow-link{font-size:15px;gap:10px}.arrow-link span{font-size:22px}.profile-slogan{font-size:28px;font-weight:500;line-height:1.5}.profile-intro{font-size:16px;line-height:1.65}.profile-facts>div{font-size:15px}.profile-facts dt{font-size:13px}.profile-facts dd small{font-size:12px}.attitudes h3{font-size:14px}.attitudes article p{font-size:13px;padding-top:40px}.attitudes-label{font-size:12px}
 .footer-grid .brand,.footer-grid .brand span:last-child{font-size:15px}.footer-grid h2,.footer-grid>div a{font-size:13px}.footer-grid h2{margin-bottom:16px}.footer-grid>div a{margin-top:12px}
 /* Project catalog and all document detail routes. */
 [data-page=projects] .page-intro{padding-top:54px;padding-bottom:76px}[data-page=projects] .page-intro h1,.page-intro h1{font-size:32px;font-weight:500;line-height:1.4}[data-page=projects] .page-intro>p:last-child,.page-intro>p:last-child{font-size:16px;line-height:1.65;margin-top:18px}.filters{gap:8px}.filters button{font-size:13px;padding:8px 14px;line-height:1.5}.filters button[aria-pressed=true]{background:#333;color:#fff}.work-grid{row-gap:48px}.work-grid .project-card-meta{padding-top:18px}
@@ -118,17 +118,9 @@ html {
   #process-title { min-height: 2lh; }
   #process-content .process-summary { font-size: 13px; }
 }
-body:has(.case-study-page) { --bridge-footer-min-height: 300px; }
-.case-study-page ~ .site-footer { min-height: var(--bridge-footer-min-height); }
 .bridge-layout { --bridge-scroll-margin: 24px; }
 .bridge-section { scroll-margin-top: var(--bridge-scroll-margin); }
 
-/* Leave enough space for the last heading to reach the same position as the others. */
-.bridge-ending {
-  margin-top: 44px;
-  min-height: calc(100dvh - var(--page-scroll-padding) - var(--bridge-scroll-margin) - var(--bridge-footer-min-height));
-}
-.bridge-ending .bridge-section { margin-top: 0; }
 .team-photo-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -139,7 +131,6 @@ body:has(.case-study-page) { --bridge-footer-min-height: 300px; }
 .team-photo-grid img { display: block; width: 100%; height: auto; }
 @media (max-width: 800px) { .bridge-layout { --bridge-scroll-margin: 64px; } }
 @media (max-width: 400px) { .bridge-layout { --bridge-scroll-margin: 82px; } }
-@media (max-width: 680px) { body:has(.case-study-page) { --bridge-footer-min-height: 220px; } }
 
 .case-copy p + p { margin-top: 3px; }
 .bridge-section p,
@@ -353,8 +344,7 @@ body:has(.case-study-page) { --bridge-footer-min-height: 300px; }
 .site-header nav a:hover,
 .site-header nav a[aria-current="page"],
 .hero .explore-link span,
-.arrow-link:hover,
-.back-to-top:hover { color: #000; }
+.arrow-link:hover { color: #000; }
 .site-header nav a[aria-current="page"]::after,
 .about-section-heading::before { border-color: var(--accent); }
 a:focus-visible, button:focus-visible, summary:focus-visible {
