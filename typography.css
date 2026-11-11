@@ -75,7 +75,7 @@ html {
 #process-dialog .process-close{position:static;display:grid;place-items:center;margin:0;padding:0;flex:0 0 32px;width:32px;height:32px;font-size:25px;line-height:1;background:transparent;color:#555}
 #process-content{padding:30px 56px 36px}
 #process-title{margin:0;font-size:24px;font-weight:500;line-height:1.45;letter-spacing:-.03em}
-#process-content .process-summary{min-height:2lh;margin:10px 0 20px;font-size:15px;line-height:1.6;color:#666;max-width:880px}
+#process-content .process-summary{margin:10px 0 20px;font-size:15px;line-height:1.6;color:#666;max-width:880px}
 .process-media-row {
   display: grid;
   grid-template-columns: 44px minmax(0, 1fr) 44px;
@@ -91,7 +91,6 @@ html {
   border-radius: var(--box-radius);
   background: transparent;
 }
-.process-arrow:hover:not(:disabled) { background: var(--accent-soft); }
 .process-arrow:disabled { opacity: .3; }
 .process-arrow svg {
   width: 20px;
@@ -114,11 +113,11 @@ html {
 #process-content .process-explanation h3{margin:0 0 6px;font-size:16px;font-weight:500;line-height:1.6}
 #process-content .process-explanation p{margin:0;font-size:14px;line-height:1.65;color:#666}
 
-@media(max-width:800px){.section-index{gap:14px}.section-index button{padding-left:12px}.section-index button:before{left:1px;width:4px;height:4px}#process-dialog{width:calc(100% - 24px);height:90svh}.process-dialog-toolbar{padding:8px 12px;gap:12px}.process-dialog-meta,.process-dialog-step{font-size:11px}#process-content{padding:22px 20px 24px}#process-title{font-size:21px}#process-content .process-summary{min-height:3lh;margin:8px 0 16px;font-size:14px}#process-content .process-explanation{margin-top:22px}#process-content .process-explanation h3{font-size:15px;margin-bottom:6px}#process-content .process-explanation p{font-size:14px}}
-/* Reserve space for longer titles and summaries before the fixed image row. */
+@media(max-width:800px){.section-index{gap:14px}.section-index button{padding-left:12px}.section-index button:before{left:1px;width:4px;height:4px}#process-dialog{width:calc(100% - 24px);height:90svh}.process-dialog-toolbar{padding:8px 12px;gap:12px}.process-dialog-meta,.process-dialog-step{font-size:11px}#process-content{padding:22px 20px 24px}#process-title{font-size:21px}#process-content .process-summary{margin:8px 0 16px;font-size:14px}#process-content .process-explanation{margin-top:22px}#process-content .process-explanation h3{font-size:15px;margin-bottom:6px}#process-content .process-explanation p{font-size:14px}}
+/* Keep the image row aligned when a title wraps on narrow screens. */
 @media (max-width: 420px) {
   #process-title { min-height: 2lh; }
-  #process-content .process-summary { min-height: 4lh; }
+  #process-content .process-summary { font-size: 13px; }
 }
 body:has(.case-study-page) { --bridge-footer-min-height: 300px; }
 .case-study-page ~ .site-footer { min-height: var(--bridge-footer-min-height); }
@@ -144,7 +143,6 @@ body:has(.case-study-page) { --bridge-footer-min-height: 300px; }
 
 .case-copy p + p { margin-top: 5px; }
 .bridge-section p,
-#process-content .process-summary,
 #process-content .process-explanation p {
   white-space: pre-line;
 }
