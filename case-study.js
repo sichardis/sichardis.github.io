@@ -14,6 +14,13 @@ export function detailIndexButtons(projectId) {
     `<button type="button" data-section="${projectId}-${key}">${label}</button>`).join('');
 }
 
+export function awardMarkup(award, escape) {
+  if (!award) return '';
+  return `<h3 class="project-award-heading">
+    <span class="tool-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3h8v6a4 4 0 0 1-8 0V3Zm0 2H4v2a3 3 0 0 0 4 3m8-5h4v2a3 3 0 0 1-4 3m-4 3v5m-5 3h10m-9 0v-3h8v3"/></svg></span>수상 내역
+  </h3><p>${escape(award.title)}</p>`;
+}
+
 export function teamPhotosMarkup(projectId) {
   return `<section id="${projectId}-team-photos" class="bridge-section" tabindex="-1">
     <h2>${teamPhotosLabel}</h2>
@@ -60,6 +67,7 @@ export function caseStudyMarkup(project, hero, escape) {
           <div><dt>문서 유형</dt><dd>${escape(project.documentLabel)}</dd></div>
           <div><dt>팀 구성</dt><dd>${escape(project.team)}</dd></div>
         </dl>
+        ${awardMarkup(project.award, escape)}
         <h3>주요 수행 과업</h3><p>${escape(project.tasks)}</p>
       </section>
       <section id="${sectionId('background')}" class="bridge-section case-copy" tabindex="-1">

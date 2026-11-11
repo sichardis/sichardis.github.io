@@ -2,6 +2,10 @@
 export const projects = [
   {
     "id": "bridge",
+    "award": {
+      "title": "제32회 커뮤니케이션디자인 국제어워드 디지털미디어디자인 부문 특별상",
+      "shortTitle": "커뮤니케이션디자인 공모전 특별상"
+    },
     "title": "브릿지 (Bridge)",
     "subtitle": "시니어의 경험을 직무 언어로 번역하는 커리어 브랜딩 서비스",
     "year": "2026",
@@ -54,6 +58,9 @@ export const projects = [
   },
   {
     "id": "chak",
+    "award": {
+      "title": "캡스톤 디자인 학과 우수작 선정"
+    },
     "title": "착!",
     "subtitle": "일상 속 선행을 발견하는 선행 챌린지 서비스",
     "year": "2026",
