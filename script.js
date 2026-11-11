@@ -1,13 +1,14 @@
-import { projects as sourceProjects, featuredIds } from './data.js?v=project-polish';
-import { bridgeMarkup, steps as bridgeSteps } from './bridge.js?v=complete-process-sentences';
-import { caseStudies } from './case-studies.js?v=complete-process-sentences';
-import { caseStudyMarkup, caseProcessMarkup } from './case-study.js?v=rounded-controls';
+import { projects as sourceProjects, featuredIds } from './data.js?v=optimized-images';
+import { bridgeMarkup, steps as bridgeSteps } from './bridge.js?v=optimized-images';
+import { caseStudies } from './case-studies.js?v=optimized-images';
+import { caseStudyMarkup, caseProcessMarkup } from './case-study.js?v=optimized-images';
 
 const projects = sourceProjects.map(p => ({...p, documentType: ['chak','bridge','bluedog'].includes(p.id) ? 'plan' : p.id === 'korail' ? 'report' : 'proposal'}));
 for (const id of ['chak','lotte','bluedog','rocketfresh','kaywon']) {
   const original = projects.find(p => p.id === id);
   const storyboardId = id + '-storyboard';
-  projects.push({...original, id:storyboardId, cover:caseStudies[storyboardId]?.cover ?? original.cover, title: `[${original.title}] 화면설계서`, subtitle: '화면 구성과 기능, 이용 단계별 연결을 정리한 설계서', documentType:'storyboard', pdf:null, detail:null, role:'화면설계서', pending:true, lead:'화면별 목적과 기능, 이용 단계별 연결을 정리한 문서입니다. 상세 자료는 준비 중입니다.', question:'', approach:'', outcome:''});
+  const storyboard = caseStudies[storyboardId];
+  projects.push({...original, id:storyboardId, cover:storyboard?.cover ?? original.cover, coverThumb:storyboard?.coverThumb ?? original.coverThumb, title: `[${original.title}] 화면설계서`, subtitle: '화면 구성과 기능, 이용 단계별 연결을 정리한 설계서', documentType:'storyboard', pdf:null, detail:null, role:'화면설계서', pending:true, lead:'화면별 목적과 기능, 이용 단계별 연결을 정리한 문서입니다. 상세 자료는 준비 중입니다.', question:'', approach:'', outcome:''});
 }
 const documentOrder = ['chak','bridge','bluedog','korail','lotte','rocketfresh','kaywon','chak-storyboard','lotte-storyboard','bluedog-storyboard','rocketfresh-storyboard','kaywon-storyboard'];
 projects.sort((a,b)=>documentOrder.indexOf(a.id)-documentOrder.indexOf(b.id));
@@ -36,10 +37,10 @@ const summaries = {
   'kaywon-storyboard': '학사·입시 정보와 퀵서비스 화면 설계',
 };
 
-function card(project, featured = false) {
+function card(project, {featured = false, priority = 'auto'} = {}) {
   const description = escape(summaries[project.id] || project.subtitle);
   const image = project.cover
-    ? `<img src="${escape(project.cover)}" alt="${escape(project.title)} 프로젝트 표지" loading="lazy" width="800" height="450">`
+    ? `<img src="${escape(project.coverThumb || project.cover)}" alt="${escape(project.title)} 프로젝트 표지" width="768" height="432" loading="lazy" decoding="async" fetchpriority="${priority}">`
     : `<span class="project-cover-type">${escape(project.word || project.title)}</span>`;
   let title = project.documentType === 'storyboard' ? project.title : project.id === 'chak' ? '착! (Chak!)' : project.id === 'lotte' ? '[롯데시네마] 탐색 및 예매 기능 개선 제안서' : project.title;
   if (!featured) title = ({bluedog:'블루독 (Blue Dog)',korail:'[코레일톡] 기능 분산 구조 및 탐색 혼란 기능 개선 보고서',rocketfresh:'[쿠팡 로켓프레시] 메인페이지 UX 리뉴얼 제안서',kaywon:'[계원예술대학교] 메인페이지 UX 리뉴얼 제안서'})[project.id] || title;
@@ -57,10 +58,10 @@ function card(project, featured = false) {
 
 function renderProjects() {
   const featured = featuredIds.map((id) => projects.find((project) => project.id === id)).filter(Boolean);
-  $('#featured-grid').innerHTML = featured.map((project) => card(project, true)).join('');
+  $('#featured-grid').innerHTML = featured.map((project, index) => card(project, {featured: true, priority: index === 0 ? 'high' : 'auto'})).join('');
   const visible = projects.filter(p => activeFilter === 'all' || (activeFilter === 'featured' ? featuredIds.includes(p.id) : p.documentType === activeFilter));
   $('.filters').innerHTML = filters.map(([id,label])=>`<button type="button" data-filter="${id}" aria-pressed="${id===activeFilter}">${label} ${projects.filter(p=>id==='all'||(id==='featured'?featuredIds.includes(p.id):p.documentType===id)).length}</button>`).join('');
-  $('#work-grid').innerHTML = visible.map((project) => card(project)).join('');
+  $('#work-grid').innerHTML = visible.map((project, index) => card(project, {priority: index === 0 ? 'high' : 'auto'})).join('');
   $('#project-count').textContent = `${activeFilter === 'all' ? '전체' : '해당'} ${visible.length}개`;
 }
 
@@ -70,7 +71,7 @@ function detailHero(project) {
     <div class="detail-heading"><p class="eyebrow">${escape([project.year,project.type].filter(Boolean).join(' / '))}</p><h1 id="detail-title">${escape(project.title)}</h1><p class="detail-subtitle">${escape(project.subtitle)}</p></div>
     <p class="detail-lead">${escape(project.lead)}</p>
     <dl class="detail-facts">${project.role ? `<div><dt>담당 역할</dt><dd>${escape(project.role)}</dd></div>` : ''}<div><dt>프로젝트 유형</dt><dd>${escape(project.type)}</dd></div>${project.year ? `<div><dt>기간</dt><dd>${project.id === 'chak' ? '2026.09–12 · 진행 중' : escape(project.period || project.year)}</dd></div>` : ''}</dl>
-    ${project.cover ? `<img class="${coverClass}" src="${escape(project.cover)}" alt="${escape(project.title)} 프로젝트 표지" width="1280" height="720">` : ''}`;
+    ${project.cover ? `<img class="${coverClass}" src="${escape(project.cover)}" alt="${escape(project.title)} 프로젝트 표지" width="1920" height="1080" fetchpriority="high" decoding="async">` : ''}`;
 }
 
 function renderDetail(id) {

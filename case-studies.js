@@ -46,7 +46,8 @@ export const caseStudies = {
             "핵심 문제를 ‘은퇴견에 대한 관심을 안전하고 지속적인 돌봄 참여로 연결하기 어렵다’로 정의했습니다.\n성향에 맞는 매칭과 사전 교육, 상태 정보와 활동 보상을 연결하는 방향을 설정했습니다."
           ]
         ],
-        "image": "bluedog-region.jpg"
+        "image": "bluedog-region.jpg",
+        "thumbnail": "./assets/optimized/process/bluedog-region.webp"
       },
       {
         "title": "경쟁 서비스 분석·차별화 방향 수립",
@@ -65,7 +66,8 @@ export const caseStudies = {
             "은퇴견의 건강·활동 정보와 사전 교육으로 시민이 안심하고 교감하는 경험을 제안했습니다.\n산책 기록·명예 배지·지역 리워드로 일회성 참여를 지속적인 돌봄 관계로 확장하고자 했습니다."
           ]
         ],
-        "image": "bluedog-positioning.jpg"
+        "image": "bluedog-positioning.jpg",
+        "thumbnail": "./assets/optimized/process/bluedog-positioning.webp"
       },
       {
         "title": "사용자 정의·페르소나 작성",
@@ -84,7 +86,8 @@ export const caseStudies = {
             "김지은은 간편한 산책 봉사와 교감, 박진우는 건강 데이터와 맞춤 돌봄을 목표로 설정했습니다.\n맞춤 매칭·사전 교육·활동 기록과 컨디션 확인·돌봄 안내를 각 페르소나의 요구로 정리했습니다."
           ]
         ],
-        "image": "bluedog-users.jpg"
+        "image": "bluedog-users.jpg",
+        "thumbnail": "./assets/optimized/process/bluedog-users.webp"
       },
       {
         "title": "사용자 여정 지도 작성",
@@ -103,7 +106,8 @@ export const caseStudies = {
             "예상 장벽에 맞춰 안전 가이드·교육·기록 확인과 건강 관리 지원의 방향을 정리했습니다.\n입양·봉사·훈련 이후에도 활동 기록과 보상, 누적 정보로 이용을 이어가도록 구상했습니다."
           ]
         ],
-        "image": "bluedog-journey.jpg"
+        "image": "bluedog-journey.jpg",
+        "thumbnail": "./assets/optimized/process/bluedog-journey.webp"
       },
       {
         "title": "서비스 정보 구조도 작성",
@@ -122,7 +126,8 @@ export const caseStudies = {
             "로그인·회원가입·비회원의 진입 방식과 온보딩·개인 정보 입력의 관계를 구분했습니다.\n핵심 메뉴와 하위 기능을 1~3 Depth로 나눠 탐색과 정보 확인의 위계를 정리했습니다."
           ]
         ],
-        "image": "bluedog-ia.jpg"
+        "image": "bluedog-ia.jpg",
+        "thumbnail": "./assets/optimized/process/bluedog-ia.webp"
       },
       {
         "title": "서비스 이용 흐름도 작성",
@@ -141,7 +146,8 @@ export const caseStudies = {
             "산책·어질리티는 날짜·시간·은퇴견 선택 후 최종 확인하고 예약·수정하는 흐름으로 정리했습니다.\n계정 영역은 프로필 수정·저장·취소와 돌봄견 정보 입력·등록, 활동 내역 확인을 구분했습니다."
           ]
         ],
-        "image": "bluedog-flow.jpg"
+        "image": "bluedog-flow.jpg",
+        "thumbnail": "./assets/optimized/process/bluedog-flow.webp"
       }
     ],
     "pdfLabel": "블루독 (Blue Dog) 기획서 전체 보기"
@@ -192,7 +198,8 @@ export const caseStudies = {
             "평가 결과로 개선 대상을 예약 승차권 조회로 좁힌다.\n분산된 기능과 명칭을 정돈하는 개선 방향을 설정한다."
           ]
         ],
-        "image": "korail-problem.jpg"
+        "image": "korail-problem.jpg",
+        "thumbnail": "./assets/optimized/process/korail-problem.webp"
       },
       {
         "title": "경쟁 서비스 분석·개선 방향 수립",
@@ -211,7 +218,8 @@ export const caseStudies = {
             "예약·구입 내역과 장바구니를 나의 티켓에 연결한다.\n버튼 명칭과 역할을 맞추고 결제까지의 경로를 단순화한다."
           ]
         ],
-        "image": "korail-benchmark.jpg"
+        "image": "korail-benchmark.jpg",
+        "thumbnail": "./assets/optimized/process/korail-benchmark.webp"
       },
       {
         "title": "사용자 정의·평가 대상 설정",
@@ -230,7 +238,8 @@ export const caseStudies = {
             "두 차례 평가에 각각 5명이 참여한 구성을 표시한다.\n숙련도별 탐색 반응과 수행 기록·사후 발언을 살핀다."
           ]
         ],
-        "image": "korail-test.jpg"
+        "image": "korail-test.jpg",
+        "thumbnail": "./assets/optimized/process/korail-test.webp"
       },
       {
         "title": "서비스 이용 경로 분석",
@@ -249,7 +258,8 @@ export const caseStudies = {
             "홈과 사이드 메뉴에서 예약 내역으로 이어지는 경로를 정리한다.\n2차 평가의 이동 경로로 반복 탐색과 화면 연결을 검토한다."
           ]
         ],
-        "image": "korail-routes.jpg"
+        "image": "korail-routes.jpg",
+        "thumbnail": "./assets/optimized/process/korail-routes.webp"
       },
       {
         "title": "서비스 정보 구조도 작성",
@@ -268,7 +278,8 @@ export const caseStudies = {
             "사이드 메뉴의 중복 예약 조회 항목을 나의 티켓으로 연결한다.\n메뉴와 제공 정보를 맞춰 예약 상태를 찾을 위치를 정리한다."
           ]
         ],
-        "image": "korail-tabs.jpg"
+        "image": "korail-tabs.jpg",
+        "thumbnail": "./assets/optimized/process/korail-tabs.webp"
       },
       {
         "title": "서비스 이용 흐름도 작성",
@@ -287,7 +298,8 @@ export const caseStudies = {
             "승차권 카드의 결제하기·예약변경·예약취소 동작을 정리한다.\n취소 확인 대화상자와 결제 정보·금액 확인 단계로 연결한다."
           ]
         ],
-        "image": "korail-ticket.jpg"
+        "image": "korail-ticket.jpg",
+        "thumbnail": "./assets/optimized/process/korail-ticket.webp"
       }
     ],
     "pdfLabel": "코레일톡 기능 개선 보고서 전체 보기"
@@ -338,7 +350,8 @@ export const caseStudies = {
             "신선식품과 장보기 목적이 드러나는 탐색 구조를 핵심 과제로 둔다.\n정보 우선순위를 조정하고 상황별 필터·추천을 연결한다."
           ]
         ],
-        "image": "rocketfresh-proposal-01.jpg"
+        "image": "rocketfresh-proposal-01.jpg",
+        "thumbnail": "./assets/optimized/process/rocketfresh-proposal-01.webp"
       },
       {
         "title": "경쟁 서비스 분석·차별화 방향 수립",
@@ -357,7 +370,8 @@ export const caseStudies = {
             "자주 찾는 분류와 테마를 상단에 두고 상황별 필터를 제안한다.\n레시피에서 필요한 재료 확인과 장바구니 담기로 연결한다."
           ]
         ],
-        "image": "rocketfresh-proposal-02.jpg"
+        "image": "rocketfresh-proposal-02.jpg",
+        "thumbnail": "./assets/optimized/process/rocketfresh-proposal-02.webp"
       },
       {
         "title": "사용자 정의·페르소나 작성",
@@ -376,7 +390,8 @@ export const caseStudies = {
             "23세 대학생 최현우를 장보기 시간이 부족한 인물로 설정한다.\n소포장·1~2인분·짧은 조리 시간·레시피 추천을 요구로 둔다."
           ]
         ],
-        "image": "rocketfresh-proposal-03.jpg"
+        "image": "rocketfresh-proposal-03.jpg",
+        "thumbnail": "./assets/optimized/process/rocketfresh-proposal-03.webp"
       },
       {
         "title": "탐색 문제 분석·개선 과제 정리",
@@ -395,7 +410,8 @@ export const caseStudies = {
             "카테고리·테마를 상단에 두고 할인 정보와 상품 목록을 묶는다.\n레시피 검색과 재료 확인으로 메뉴에서 장보기에 연결한다."
           ]
         ],
-        "image": "rocketfresh-proposal-04.jpg"
+        "image": "rocketfresh-proposal-04.jpg",
+        "thumbnail": "./assets/optimized/process/rocketfresh-proposal-04.webp"
       },
       {
         "title": "서비스 정보 구조도 작성",
@@ -414,7 +430,8 @@ export const caseStudies = {
             "생활·욕실·주방·바디케어를 리빙·데일리로 묶는다.\n건강식품·유아식·반려동물 상품은 건강·케어로 재분류한다."
           ]
         ],
-        "image": "rocketfresh-proposal-05.jpg"
+        "image": "rocketfresh-proposal-05.jpg",
+        "thumbnail": "./assets/optimized/process/rocketfresh-proposal-05.webp"
       },
       {
         "title": "주요 기능 이용 흐름 정리",
@@ -433,7 +450,8 @@ export const caseStudies = {
             "메뉴 검색 후 재료·가격 확인과 한 번에 담기로 이어지도록 제안한다.\n관련 레시피로 같은 재료를 활용한 다른 메뉴도 탐색하도록 한다."
           ]
         ],
-        "image": "rocketfresh-proposal-06.jpg"
+        "image": "rocketfresh-proposal-06.jpg",
+        "thumbnail": "./assets/optimized/process/rocketfresh-proposal-06.webp"
       }
     ],
     "pdfLabel": "쿠팡 로켓프레시 메인페이지 UX 리뉴얼 제안서 전체 보기",
@@ -490,7 +508,8 @@ export const caseStudies = {
             "학사·공지 확인과 입학 정보 접근의 요구를 구분한다.\n사용자별 필요 정보를 쉽게 찾는 구조를 개선 목표로 정한다."
           ]
         ],
-        "image": "kaywon-proposal-01.jpg"
+        "image": "kaywon-proposal-01.jpg",
+        "thumbnail": "./assets/optimized/process/kaywon-proposal-01.webp"
       },
       {
         "title": "대학 웹사이트 비교·개선 방향 수립",
@@ -509,7 +528,8 @@ export const caseStudies = {
             "SWOT 분석을 바탕으로 퀵서비스와 작품 아카이브를 제안한다.\n콘텐츠를 섹션별로 나누고 자주 쓰는 기능을 앞에 배치한다."
           ]
         ],
-        "image": "kaywon-proposal-02.jpg"
+        "image": "kaywon-proposal-02.jpg",
+        "thumbnail": "./assets/optimized/process/kaywon-proposal-02.webp"
       },
       {
         "title": "사용자 유형 정의·요구 정리",
@@ -528,7 +548,8 @@ export const caseStudies = {
             "재학생의 빠른 학사 정보 확인과 맞춤 정보 요구를 정리한다.\n입시생이 원하는 입학 정보와 캠퍼스·학생 활동 정보를 구분한다."
           ]
         ],
-        "image": "kaywon-proposal-03.jpg"
+        "image": "kaywon-proposal-03.jpg",
+        "thumbnail": "./assets/optimized/process/kaywon-proposal-03.webp"
       },
       {
         "title": "퀵서비스·콘텐츠 구성 방향 수립",
@@ -547,7 +568,8 @@ export const caseStudies = {
             "학생 작품·졸업전시를 보여 주는 포트폴리오 영역을 제안한다.\n공식 SNS를 커뮤니티로 모아 학교 활동과 소식을 탐색하게 한다."
           ]
         ],
-        "image": "kaywon-proposal-04.jpg"
+        "image": "kaywon-proposal-04.jpg",
+        "thumbnail": "./assets/optimized/process/kaywon-proposal-04.webp"
       },
       {
         "title": "서비스 정보 구조도 작성",
@@ -566,7 +588,8 @@ export const caseStudies = {
             "재학생·입학생·교직원별 퀵서비스 메뉴를 구분한다.\n학사 시스템과 입학 안내, 내부 지원 기능을 목적별로 묶는다."
           ]
         ],
-        "image": "kaywon-proposal-05.jpg"
+        "image": "kaywon-proposal-05.jpg",
+        "thumbnail": "./assets/optimized/process/kaywon-proposal-05.webp"
       },
       {
         "title": "기존안·개선안 비교",
@@ -585,7 +608,8 @@ export const caseStudies = {
             "학생 작품·졸업전시를 소개하는 메인페이지 영역을 제안한다.\n입학·학사 정보와 함께 학교의 교육과 활동을 살피도록 구성한다."
           ]
         ],
-        "image": "kaywon-proposal-06.jpg"
+        "image": "kaywon-proposal-06.jpg",
+        "thumbnail": "./assets/optimized/process/kaywon-proposal-06.webp"
       }
     ],
     "pdfLabel": "계원예술대학교 메인페이지 UX 리뉴얼 제안서 전체 보기",
@@ -637,7 +661,8 @@ export const caseStudies = {
             "보호자·돌봄견 프로필과 활동·지갑·설정을 배치한다.\n프로필 수정과 건강·긴급 정보, 배지·토큰의 연결을 정리한다."
           ]
         ],
-        "image": "bluedog-ia.jpg"
+        "image": "bluedog-ia.jpg",
+        "thumbnail": "./assets/optimized/process/bluedog-ia.webp"
       },
       {
         "title": "서비스 이용 흐름도 작성",
@@ -656,7 +681,8 @@ export const caseStudies = {
             "산책·어질리티 예약은 날짜·시간·은퇴견 선택 후 확인하게 한다.\n프로필 수정·취소·저장과 은퇴견 등록의 관리 흐름을 구분한다."
           ]
         ],
-        "image": "bluedog-flow.jpg"
+        "image": "bluedog-flow.jpg",
+        "thumbnail": "./assets/optimized/process/bluedog-flow.webp"
       },
       {
         "title": "공통 UI·모바일 화면 기준 정의",
@@ -675,7 +701,8 @@ export const caseStudies = {
             "하우스·패밀리독·플레이독·위드독·마이독으로 구성한다.\n하단에 고정하고 현재 선택한 메뉴를 강조하도록 정의한다."
           ]
         ],
-        "image": "bluedog-ui.jpg"
+        "image": "bluedog-ui.jpg",
+        "thumbnail": "./assets/optimized/process/bluedog-ui.webp"
       },
       {
         "title": "주요 화면 구성·정보 위계 설계",
@@ -694,7 +721,8 @@ export const caseStudies = {
             "챌린지·공지·게시판을 구분하고 상세·참여 화면으로 연결한다.\n프로필·활동 요약·이용권·이용 내역으로 개인 활동을 구성한다."
           ]
         ],
-        "image": "bluedog-home.jpg"
+        "image": "bluedog-home.jpg",
+        "thumbnail": "./assets/optimized/process/bluedog-home.webp"
       },
       {
         "title": "입력·예약 절차와 상태 정의",
@@ -713,7 +741,8 @@ export const caseStudies = {
             "산책 메모는 200자, 사진은 3장으로 제한하고 조건을 명시한다.\n커뮤니티 제목과 본문을 모두 입력해야 등록하도록 정의한다."
           ]
         ],
-        "image": "bluedog-reservation.jpg"
+        "image": "bluedog-reservation.jpg",
+        "thumbnail": "./assets/optimized/process/bluedog-reservation.webp"
       },
       {
         "title": "화면 이동·팝업·상호작용 정의",
@@ -732,10 +761,12 @@ export const caseStudies = {
             "프로필 이미지 선택 바텀시트와 저장한 변경의 반영을 정의한다.\n게임 아이템·산책 상호작용·레벨업 팝업의 실행 조건을 정리한다."
           ]
         ],
-        "image": "bluedog-states.jpg"
+        "image": "bluedog-states.jpg",
+        "thumbnail": "./assets/optimized/process/bluedog-states.webp"
       }
     ],
-    "cover": "./assets/case-studies/bluedog-storyboard-cover.png",
+    "coverThumb": "./assets/optimized/cards/bluedog-storyboard.webp",
+    "cover": "./assets/optimized/covers/bluedog-storyboard.webp",
     "pdf": "./assets/bluedog.pdf",
     "pdfLabel": "블루독 원본 PDF 보기 · 화면설계 15–19쪽"
   },
@@ -747,7 +778,8 @@ export const caseStudies = {
       "size": 21721671,
       "filename": "[쿠팡 로켓프레시_PC_모바일] 화면설계서.pdf"
     },
-    "cover": "./assets/case-studies/rocketfresh-storyboard-cover.png",
+    "coverThumb": "./assets/optimized/cards/rocketfresh-storyboard.webp",
+    "cover": "./assets/optimized/covers/rocketfresh-storyboard.webp",
     "title": "쿠팡 로켓프레시 화면설계서",
     "subtitle": "장보기 탐색과 구매 연결을 구체화한 반응형 화면설계서",
     "year": "2025",
@@ -894,7 +926,8 @@ export const caseStudies = {
       "size": 14849541,
       "filename": "[계원예술대학교_PC_모바일] 화면설계서.pdf"
     },
-    "cover": "./assets/case-studies/kaywon-storyboard-cover.png",
+    "coverThumb": "./assets/optimized/cards/kaywon-storyboard.webp",
+    "cover": "./assets/optimized/covers/kaywon-storyboard.webp",
     "title": "계원예술대학교 메인페이지 화면설계서",
     "subtitle": "사용자별 퀵서비스와 기기별 탐색 방식을 구체화한 화면설계",
     "year": "2025",
@@ -1154,7 +1187,8 @@ export const caseStudies = {
   },
   "chak-storyboard": {
     "processImagePlaceholder": "이미지 준비 중",
-    "cover": "./assets/case-studies/chak-storyboard-cover.png",
+    "coverThumb": "./assets/optimized/cards/chak-storyboard.webp",
+    "cover": "./assets/optimized/covers/chak-storyboard.webp",
     "pdfParts": {
       "folder": "./assets/chak-storyboard-v0.7",
       "count": 8,
@@ -1404,7 +1438,8 @@ export const caseStudies = {
   },
   "lotte-storyboard": {
     "processImagePlaceholder": "이미지 준비 중",
-    "cover": "./assets/case-studies/lotte-storyboard-cover.png",
+    "coverThumb": "./assets/optimized/cards/lotte-storyboard.webp",
+    "cover": "./assets/optimized/covers/lotte-storyboard.webp",
     "title": "롯데시네마 탐색·예매 화면설계서",
     "subtitle": "영화 검색부터 특별관·회차 비교까지의 화면과 동작",
     "year": "2026",

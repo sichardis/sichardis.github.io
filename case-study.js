@@ -29,7 +29,9 @@ function processMedia(step, escape, {loading = 'eager', placeholder = ''} = {}) 
   if (placeholder || !step.image) {
     return `<div class="case-process-media case-process-placeholder" role="img" aria-label="${escape(placeholder || '이미지 자료 준비 중')}">${escape(placeholder)}</div>`;
   }
-  return `<img class="case-process-media" src="./assets/case-studies/${escape(step.image)}" alt="${escape(step.title)} 자료" width="1600" height="900" loading="${loading}">`;
+  const thumbnail = loading === 'lazy' && step.thumbnail;
+  const src = thumbnail || `./assets/case-studies/${step.image}`;
+  return `<img class="case-process-media" src="${escape(src)}" alt="${escape(step.title)} 자료" width="${thumbnail ? 768 : 1600}" height="${thumbnail ? 432 : 900}" loading="${loading}" decoding="async">`;
 }
 
 export function caseStudyMarkup(project, hero, escape) {
@@ -85,7 +87,7 @@ export function caseStudyMarkup(project, hero, escape) {
 export function caseProcessMarkup(project, steps, index, escape) {
   const step = steps[index];
   const media = project.id === 'bridge'
-    ? `<img class="case-process-media" src="./assets/bridge-process-${index + 1}.jpg" alt="브릿지 ${escape(step.title)} 원본 자료" width="1600" height="900">`
+    ? `<img class="case-process-media" src="./assets/bridge-process-${index + 1}.jpg" alt="브릿지 ${escape(step.title)} 원본 자료" width="1600" height="900" decoding="async">`
     : processMedia(step, escape, {placeholder:project.processImagePlaceholder});
   return `<h2 id="process-title">${escape(step.title)}</h2>
     <p class="process-summary">${escape(step.summary)}</p>
