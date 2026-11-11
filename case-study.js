@@ -9,8 +9,9 @@ const sectionLabels = [
   ['team-photos', teamPhotosLabel],
 ];
 
-export function detailIndexButtons(projectId) {
-  return sectionLabels.map(([key, label]) =>
+export function detailIndexButtons(projectId, hasTeamPhotos = true) {
+  const labels = hasTeamPhotos ? sectionLabels : sectionLabels.slice(0, -1);
+  return labels.map(([key, label]) =>
     `<button type="button" data-section="${projectId}-${key}">${label}</button>`).join('');
 }
 
@@ -21,13 +22,13 @@ export function awardMarkup(award, escape) {
   </h3><p>${escape(award.title)}</p>`;
 }
 
-export function teamPhotosMarkup(projectId) {
+export function teamPhotosMarkup(projectId, photos, escape) {
   return `<section id="${projectId}-team-photos" class="bridge-section" tabindex="-1">
     <h2>${teamPhotosLabel}</h2>
     <div class="team-photo-grid">
-      <div class="team-photo-placeholder" lang="en">Image</div>
-      <div class="team-photo-placeholder" lang="en">Image</div>
-      <div class="team-photo-placeholder" lang="en">Image</div>
+      ${photos
+        ? photos.map(({src, alt}) => `<img src="${escape(src)}" alt="${escape(alt)}" width="1050" height="700" loading="lazy" decoding="async">`).join('')
+        : '<div class="team-photo-placeholder" lang="en">Image</div>'.repeat(3)}
     </div>
   </section>`;
 }
@@ -42,6 +43,7 @@ function processMedia(step, escape, {loading = 'eager', placeholder = ''} = {}) 
 }
 
 export function caseStudyMarkup(project, hero, escape) {
+  const hasTeamPhotos = project.documentType !== 'storyboard';
   const sectionId = key => `${project.id}-${key}`;
   const cards = project.steps.map((step, i) => {
     const label = `${String(i + 1).padStart(2, '0')} ${escape(step.title)}`;
@@ -53,12 +55,16 @@ export function caseStudyMarkup(project, hero, escape) {
   const download = project.pdfParts
     ? `<button class="bridge-download" type="button" data-pdf-parts><span>${downloadLabel}</span><span aria-hidden="true">↓</span></button>`
     : project.pdf
-      ? `<a class="bridge-download" href="${escape(project.pdf)}" download>${downloadLabel} <span aria-hidden="true">↓</span></a>`
+      ? `<a class="bridge-download" href="${escape(project.pdf)}" download="${escape(project.pdfFilename)}">${downloadLabel} <span aria-hidden="true">↓</span></a>`
       : '';
   const paragraphs = items => items.map(item => `<p>${escape(item)}</p>`).join('');
 
+  const result = `<section id="${sectionId('result')}" class="bridge-section case-copy" tabindex="-1">
+    <h2>결과</h2>${paragraphs(project.results)}
+  </section>`;
+
   return `<div class="bridge-layout">
-    <nav class="section-index" aria-label="${escape(project.title)} 상세 목차">${detailIndexButtons(project.id)}</nav>
+    <nav class="section-index" aria-label="${escape(project.title)} 상세 목차">${detailIndexButtons(project.id, hasTeamPhotos)}</nav>
     <article class="bridge-article">
       <div class="bridge-hero">${hero}</div>
       <section id="${sectionId('summary')}" class="bridge-section" tabindex="-1">
@@ -81,11 +87,9 @@ export function caseStudyMarkup(project, hero, escape) {
       <section id="${sectionId('contribution')}" class="bridge-section" tabindex="-1">
         <h2>기여</h2><ul>${project.contributions.map(item => `<li>${escape(item)}</li>`).join('')}</ul>
       </section>
-      <section id="${sectionId('result')}" class="bridge-section case-copy" tabindex="-1">
-        <h2>결과</h2>${paragraphs(project.results)}
-      </section>
+      ${hasTeamPhotos ? result : ''}
       <div class="bridge-ending">
-        ${teamPhotosMarkup(project.id)}
+        ${hasTeamPhotos ? teamPhotosMarkup(project.id, project.teamPhotos, escape) : result}
         <div class="back-to-top-wrap"><button class="back-to-top" type="button" data-detail-top>상단으로 <span aria-hidden="true">↑</span></button></div>
       </div>
     </article>

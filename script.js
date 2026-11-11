@@ -1,7 +1,7 @@
 import { projects as sourceProjects, featuredIds } from './data.js?v=project-awards';
-import { bridgeMarkup, steps as bridgeSteps } from './bridge.js?v=project-awards';
-import { caseStudies } from './case-studies.js?v=optimized-images';
-import { caseStudyMarkup, caseProcessMarkup } from './case-study.js?v=project-awards';
+import { bridgeMarkup, steps as bridgeSteps } from './bridge.js?v=chak-materials';
+import { caseStudies } from './case-studies.js?v=chak-materials';
+import { caseStudyMarkup, caseProcessMarkup } from './case-study.js?v=chak-materials';
 
 const allProjects = sourceProjects.map(p => ({...p, documentType: ['chak','bridge','bluedog'].includes(p.id) ? 'plan' : p.id === 'korail' ? 'report' : 'proposal'}));
 for (const id of ['chak','lotte','bluedog','rocketfresh','kaywon']) {
@@ -96,6 +96,7 @@ function renderDetail(id) {
   const download = $('.detail-toolbar a.detail-pdf');
   $('.detail-toolbar [data-pdf-parts]').hidden = !project?.pdfParts;
   download.hidden = !project?.pdf;
+  download.download = project?.pdfFilename || '';
   if (project?.pdf) download.href = project.pdf;
   else download.removeAttribute('href');
   if (!project) {

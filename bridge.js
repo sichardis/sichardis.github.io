@@ -1,4 +1,4 @@
-import { awardMarkup, detailIndexButtons, teamPhotosMarkup } from './case-study.js?v=project-awards';
+import { awardMarkup, detailIndexButtons, teamPhotosMarkup } from './case-study.js?v=chak-materials';
 
 export const steps = [
   {title:'사용자 요구 분석·문제 정의',summary:'시니어의 경력 정리 부담을 살폈습니다.',sections:[['01 데스크 리서치 · 경험을 드러내기 어려운 구직 환경','시니어의 노동 참여와 디지털 구직 환경을 조사했습니다.\n복잡한 절차와 메뉴가 서비스 이용의 장벽이 될 수 있음을 파악하고, 경력 표현과 디지털 문서 작성의 부담에 주목했습니다.'],['02 사용자 설문 · 경력을 정리하고 표현하는 데 필요한 지원','50~60대 은퇴·재취업 관심자와 30~40대 경력보유자를 대상으로 온라인 설문을 진행했습니다.\n경력 정리의 어려움과 직무 언어 변환·프로필 생성에 대한 지원 요구를 확인했습니다.'],['03 문제 정의 · 경험을 채용 시장의 언어로 연결하기 어렵다','핵심 문제를 축적된 경험을 직무와 역량의 언어로 정리하고 전달하기 어렵다는 점으로 정의했습니다.\n이를 바탕으로 경험에서 강점을 찾고, 지원 직무에 맞는 프로필로 구성하도록 돕는 방향을 설정했습니다.']]},
