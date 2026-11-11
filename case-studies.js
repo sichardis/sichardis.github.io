@@ -740,6 +740,13 @@ export const caseStudies = {
     "pdfLabel": "블루독 원본 PDF 보기 · 화면설계 15–19쪽"
   },
   "rocketfresh-storyboard": {
+    "pdfLabel": "쿠팡 로켓프레시 화면설계서 전체 보기",
+    "pdfParts": {
+      "folder": "./assets/rocketfresh-storyboard-pdf",
+      "count": 4,
+      "size": 21721671,
+      "filename": "[쿠팡 로켓프레시_PC_모바일] 화면설계서.pdf"
+    },
     "cover": "./assets/case-studies/rocketfresh-storyboard-cover.png",
     "title": "쿠팡 로켓프레시 화면설계서",
     "subtitle": "장보기 탐색과 구매 연결을 구체화한 반응형 화면설계서",
@@ -880,6 +887,13 @@ export const caseStudies = {
     ]
   },
   "kaywon-storyboard": {
+    "pdfLabel": "계원예술대학교 화면설계서 전체 보기",
+    "pdfParts": {
+      "folder": "./assets/kaywon-storyboard-pdf",
+      "count": 3,
+      "size": 14849541,
+      "filename": "[계원예술대학교_PC_모바일] 화면설계서.pdf"
+    },
     "cover": "./assets/case-studies/kaywon-storyboard-cover.png",
     "title": "계원예술대학교 메인페이지 화면설계서",
     "subtitle": "사용자별 퀵서비스와 기기별 탐색 방식을 구체화한 화면설계",

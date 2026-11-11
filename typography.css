@@ -14,10 +14,10 @@ html {
 .hero-layout{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:64px;align-items:center}
 .hero h1{font-size:clamp(28px,1.9vw,36px);line-height:1.55;letter-spacing:-.04em;font-weight:500}
 .hero-visual.thread-scene{width:100%;max-width:min(960px,calc((100svh - 260px)*1.6045));justify-self:center}
-.hero .explore-link{position:relative;top:10px;justify-self:center;align-self:end;flex-direction:column;gap:2px;margin:0;padding:8px 20px;font-size:14px;line-height:1.5;font-weight:400}
+.hero .explore-link{position:relative;top:10px;justify-self:center;align-self:end;flex-direction:row;gap:6px;margin:0;padding:8px 20px;font-size:14px;line-height:1.5;font-weight:400}
 .hero .explore-link span{font-size:20px}
 .document-links,.hero .document-links,.about-profile .document-links{gap:10px;margin-top:26px;flex-direction:row;flex-wrap:wrap;align-items:center;max-width:none}
-.document-button,.hero .document-button,.about-profile .document-button{flex:0 1 auto;min-width:0;min-height:40px;padding:9px 15px;font-size:13px;font-weight:400;line-height:1.5;letter-spacing:-.01em;white-space:nowrap;border:1px solid #dcdcdc;border-radius:3px;background:#fff;box-shadow:none;justify-content:center;gap:10px;transition:background .15s,border-color .15s}
+.document-button,.hero .document-button,.about-profile .document-button{flex:0 1 auto;min-width:0;min-height:40px;padding:9px 15px;font-size:13px;font-weight:400;line-height:1.5;letter-spacing:-.01em;white-space:nowrap;border:1px solid #dcdcdc;border-radius: var(--box-radius);background:#fff;box-shadow:none;justify-content:center;gap:10px;transition:background-color var(--box-hover-duration),border-color var(--box-hover-duration)}
 .document-button:is(:hover,:focus-visible),
 .hero .document-button:is(:hover,:focus-visible),
 .about-profile .document-button:is(:hover,:focus-visible) {
@@ -28,7 +28,7 @@ html {
 }
 .document-button:is(:hover,:focus-visible)::after { color: #000; }
 .document-button:after{content:'↓';font-size:13px;color:#888}
-.featured-section h2,.profile-portrait h2{font-size:30px;font-weight:500;line-height:1.4}.section-description{font-size:16px;margin-top:8px}.project-card h3{font-size:17px;font-weight:500;line-height:1.55;margin-top:16px}.project-card-description{font-size:14px;line-height:1.6;margin-top:8px;min-height:0}.project-card-meta{font-size:12px;line-height:1.7}.project-status{font-size:11px;padding:5px 9px}.arrow-link{font-size:15px;gap:10px}.arrow-link span{font-size:22px}.profile-slogan{font-size:28px;font-weight:500;line-height:1.5}.profile-intro{font-size:16px;line-height:1.65}.profile-facts>div{font-size:15px}.profile-facts dt{font-size:13px}.profile-facts dd small{font-size:12px}.attitudes h3{font-size:14px}.attitudes article p{font-size:13px;padding-top:40px}.attitudes-label{font-size:12px}.back-to-top{font-size:14px}.back-to-top span{font-size:20px}
+.featured-section h2,.profile-portrait h2{font-size:30px;font-weight:500;line-height:1.4}.section-description{font-size:16px;margin-top:8px}.project-card h3{font-size:17px;font-weight:500;line-height:1.55;margin-top:16px}.project-card-description{font-size:14px;line-height:1.6;margin-top:8px;min-height:0}.project-card-meta{font-size:12px;line-height:1.7}.project-status{font-size:11px;padding:5px 9px}.arrow-link{font-size:15px;gap:10px}.arrow-link span{font-size:22px}.profile-slogan{font-size:28px;font-weight:500;line-height:1.5}.profile-intro{font-size:16px;line-height:1.65}.profile-facts>div{font-size:15px}.profile-facts dt{font-size:13px}.profile-facts dd small{font-size:12px}.attitudes h3{font-size:14px}.attitudes article p{font-size:13px;padding-top:40px}.attitudes-label{font-size:12px}.back-to-top{flex-direction:row;gap:6px;font-size:14px}.back-to-top span{font-size:20px}
 .footer-grid .brand,.footer-grid .brand span:last-child{font-size:15px}.footer-grid h2,.footer-grid>div a{font-size:13px}.footer-grid h2{margin-bottom:16px}.footer-grid>div a{margin-top:12px}
 /* Project catalog and all document detail routes. */
 [data-page=projects] .page-intro{padding-top:54px;padding-bottom:76px}[data-page=projects] .page-intro h1,.page-intro h1{font-size:32px;font-weight:500;line-height:1.4}[data-page=projects] .page-intro>p:last-child,.page-intro>p:last-child{font-size:16px;line-height:1.65;margin-top:18px}.filters{gap:8px}.filters button{font-size:13px;padding:8px 14px;line-height:1.5}.filters button[aria-pressed=true]{background:#333;color:#fff}.work-grid{row-gap:48px}.work-grid .project-card-meta{padding-top:18px}
@@ -74,7 +74,7 @@ html {
   place-items: center;
   min-height: 44px;
   padding: 0;
-  border-radius: 4px;
+  border-radius: var(--box-radius);
   background: transparent;
 }
 .process-arrow:hover:not(:disabled) { background: var(--accent-soft); }
@@ -319,6 +319,8 @@ body:has(.case-study-page) { --bridge-footer-min-height: 300px; }
 
 /* Shared accent for all routes. */
 :root {
+  --box-radius: 6px;
+  --box-hover-duration: 150ms;
   --accent: #f98d22;
   --accent-soft: #fff1e3;
   --accent-line: #f3c397;
@@ -344,6 +346,30 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
 }
 .filters button:not([aria-pressed="true"]):hover,
 .bridge-download { background: var(--accent-soft); color: #000; }
+.filters button,
+.project-status,
+.process-card,
+.bridge-download,
+.solid-link,
+.download-link,
+.contact-cards a,
+.ability-grid article,
+.ux-columns article,
+#process-dialog {
+  border-radius: var(--box-radius);
+}
+.process-card { overflow: visible; }
+
+.contact-cards a {
+  transition: background-color var(--box-hover-duration), border-color var(--box-hover-duration);
+}
+.contact-cards .tool-icon {
+  transition: background-color var(--box-hover-duration);
+}
+.contact-cards a:is(:hover, :focus-visible),
+.contact-cards a:is(:hover, :focus-visible) .tool-icon {
+  transition-delay: 30ms;
+}
 .contact-cards a:is(:hover, :focus-visible) {
   background: var(--accent);
   border-color: var(--accent);
@@ -372,7 +398,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
   padding: 14px 16px;
   background: #fff;
   border: 1px solid var(--accent-line);
-  border-radius: 10px;
+  border-radius: var(--box-radius);
   box-shadow: 0 8px 28px #00000015;
   font-size: 13px;
   line-height: 1.55;
@@ -422,7 +448,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
   padding: 16px;
   background: #fff;
   border-color: var(--accent-line);
-  border-radius: 10px;
+  border-radius: var(--box-radius);
 }
 .tool-card h4 { display: flex; align-items: center; gap: 8px; }
 .tool-icon {
@@ -430,7 +456,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
   place-items: center;
   flex: 0 0 30px;
   height: 30px;
-  border-radius: 7px;
+  border-radius: var(--box-radius);
   background: var(--accent-soft);
   color: #000;
   font-size: 15px;
@@ -445,7 +471,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
   width: fit-content;
   max-width: 100%;
   list-style: none;
-  border-radius: 4px;
+  border-radius: var(--box-radius);
   cursor: pointer;
 }
 .tool-level summary::-webkit-details-marker { display: none; }
@@ -454,7 +480,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
   width: 15px;
   height: 5px;
   border: 0;
-  border-radius: 5px;
+  border-radius: var(--box-radius);
   background: var(--accent-soft);
 }
 .tool-level .skill-meter .filled {
@@ -497,7 +523,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
   margin: 0;
   padding: 8px 14px;
   border: 1px solid var(--accent-line);
-  border-radius: 6px;
+  border-radius: var(--box-radius);
   color: #000;
   font-size: 13px;
   font-weight: 550;

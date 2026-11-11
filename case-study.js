@@ -76,7 +76,7 @@ export function caseStudyMarkup(project, hero, escape) {
       </section>
       <div class="bridge-ending">
         ${teamPhotosMarkup(project.id)}
-        <div class="back-to-top-wrap"><button class="back-to-top" type="button" data-detail-top>상단으로 ↑</button></div>
+        <div class="back-to-top-wrap"><button class="back-to-top" type="button" data-detail-top>상단으로 <span aria-hidden="true">↑</span></button></div>
       </div>
     </article>
   </div>`;
