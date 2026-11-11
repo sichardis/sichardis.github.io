@@ -38,7 +38,6 @@ const summaries = {
 
 function card(project, featured = false) {
   const description = escape(summaries[project.id] || project.subtitle);
-  const ongoing = project.filter === 'ongoing' || project.status === 'ongoing';
   const image = project.cover
     ? `<img src="${escape(project.cover)}" alt="${escape(project.title)} 프로젝트 표지" loading="lazy" width="800" height="450">`
     : `<span class="project-cover-type">${escape(project.word || project.title)}</span>`;
@@ -49,7 +48,7 @@ function card(project, featured = false) {
   const sourceId = project.id.replace('-storyboard','');
   const date = featured ? (project.id === 'chak' ? '2026.09–12 · 진행 중' : project.id === 'bridge' ? '2026.03–06' : '2026.09–12 · 진행 중') : ['bridge','bluedog','korail'].includes(sourceId) ? '2026.03–06' : sourceId === 'lotte' || sourceId === 'chak' || sourceId === 'kaywon' ? '2026.09–12' : sourceId === 'rocketfresh' ? '2025.09–12' : project.id === 'chak' ? '2026.09–12 · 진행 중' : project.id === 'bridge' ? '2026.03–06' : project.id === 'lotte' ? '2026.09–12' : project.year || '';
   return `<article class="project-card"><a class="project-card-link" href="${projectUrl(project.id)}">
-    <div class="project-image">${image}${ongoing ? '<span class="project-status">진행 중</span>' : ''}</div>
+    <div class="project-image">${image}</div>
     <h3>${escape(title)}</h3>
     <p class="project-card-description">${description}</p>
     <p class="project-card-meta"><span>${meta}</span>${date ? `<span>${escape(date)}</span>` : ''}</p>
