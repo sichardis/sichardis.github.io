@@ -182,8 +182,8 @@ body:has(.case-study-page) { --bridge-footer-min-height: 300px; }
 }
 .thread-artwork .hero-rope { height: auto; }
 .thread-artwork .thread-start { left: 15%; --thread-y: .7725; }
-.thread-artwork .thread-weave { left: 50%; --thread-y: .4696; }
-.thread-artwork .thread-knot { left: 85%; --thread-y: .2207; }
+.thread-artwork .thread-weave { left: 40%; --thread-y: .3492; }
+.thread-artwork .thread-knot { left: 64.875%; --thread-y: .30199; }
 
 @media (prefers-reduced-motion: no-preference) {
   .thread-stroke {
@@ -192,8 +192,8 @@ body:has(.case-study-page) { --bridge-footer-min-height: 300px; }
   }
   .thread-dot { animation: reveal-thread-stop .25s ease-out backwards; }
   .thread-start .thread-dot { animation-delay: .45s; }
-  .thread-weave .thread-dot { animation-delay: .85s; }
-  .thread-knot .thread-dot { animation-delay: 1.85s; }
+  .thread-weave .thread-dot { animation-delay: .75s; }
+  .thread-knot .thread-dot { animation-delay: 1s; }
   .thread-stop:focus-visible .thread-dot { animation: none; }
 
   @keyframes draw-thread {
@@ -378,14 +378,15 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
   line-height: 1.55;
   word-break: keep-all;
 }
-@media (max-width: 680px) {
+@media (max-width: 1200px) {
   .thread-artwork { container-type: inline-size; }
   /* Keep the tooltip above the SVG so it never covers another stop. */
   .thread-stop .thread-tip {
     bottom: calc(30px + 100cqw * (480 / 1690) * var(--thread-y));
   }
+}
+@media (max-width: 680px) {
   .thread-start .thread-tip { translate: 0 0; }
-  .thread-knot .thread-tip { translate: -100% 0; }
 }
 .thread-tip strong { display: block; color: #000; font-size: 16px; font-weight: 600; }
 .thread-tip > span {
