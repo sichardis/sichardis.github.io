@@ -1,9 +1,19 @@
 import { projects as sourceProjects, featuredIds } from './data.js?v=project-awards';
-import { bridgeMarkup, steps as bridgeSteps } from './bridge.js?v=compact-footer';
-import { caseStudies } from './case-studies.js?v=chak-materials';
+import { bridgeMarkup, steps as bridgeSteps } from './bridge.js?v=profile-pdf-names';
+import { caseStudies } from './case-studies.js?v=profile-pdf-names';
 import { caseStudyMarkup, caseProcessMarkup } from './case-study.js?v=compact-footer';
 
-const allProjects = sourceProjects.map(p => ({...p, documentType: ['chak','bridge','bluedog'].includes(p.id) ? 'plan' : p.id === 'korail' ? 'report' : 'proposal'}));
+const pdfProjectNames = {
+  chak: '착!(Chak!)',
+  bluedog: '블루독 (Blue Dog)',
+  rocketfresh: '쿠팡 로켓프레시',
+  kaywon: '계원예술대학교',
+};
+const allProjects = sourceProjects.map(p => ({
+  ...p,
+  pdfProjectName: pdfProjectNames[p.id] ?? p.title,
+  documentType: ['chak','bridge','bluedog'].includes(p.id) ? 'plan' : p.id === 'korail' ? 'report' : 'proposal',
+}));
 for (const id of ['chak','lotte','bluedog','rocketfresh','kaywon']) {
   const original = allProjects.find(p => p.id === id);
   const storyboardId = id + '-storyboard';
@@ -91,7 +101,12 @@ function detailHero(project) {
 
 function renderDetail(id) {
   const baseProject = projects.find((project) => project.id === id);
-  const project = baseProject && {...baseProject, ...caseStudies[id]};
+  const pdfTitleSuffix = baseProject?.documentType === 'storyboard' ? ' 화면설계서' : '';
+  const project = baseProject && {
+    ...baseProject,
+    ...caseStudies[id],
+    pdfFilename: `${baseProject.pdfProjectName}${pdfTitleSuffix}_정서영.pdf`,
+  };
   detailProject = project;
   const download = $('.detail-toolbar a.detail-pdf');
   $('.detail-toolbar [data-pdf-parts]').hidden = !project?.pdfParts;
@@ -104,7 +119,7 @@ function renderDetail(id) {
     return '프로젝트를 찾을 수 없습니다';
   }
   if (id === 'bridge') {
-    $('#detail-content').innerHTML = bridgeMarkup(detailHero(project), project.award, escape);
+    $('#detail-content').innerHTML = bridgeMarkup(detailHero(project), project, escape);
     return project.title;
   }
   $('#detail-content').innerHTML = caseStudyMarkup(project, detailHero(project), escape);
@@ -232,7 +247,7 @@ document.querySelectorAll('a[href="#/"], a[href="#/about"]').forEach((link) => {
 const processDialog = $('#process-dialog');
 let pdfPending = false;
 
-async function downloadPdfParts({folder, count, size, filename}) {
+async function downloadPdfParts({folder, count, size}, filename) {
   if (pdfPending) return;
   pdfPending = true;
   const controls = [...document.querySelectorAll('[data-pdf-parts]')];
@@ -273,7 +288,7 @@ async function downloadPdfParts({folder, count, size, filename}) {
 
 $('#content').addEventListener('click', event => {
   if (event.target.closest('[data-pdf-parts]') && detailProject?.pdfParts) {
-    downloadPdfParts(detailProject.pdfParts);
+    downloadPdfParts(detailProject.pdfParts, detailProject.pdfFilename);
   }
 });
 

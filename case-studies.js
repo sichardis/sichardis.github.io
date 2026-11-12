@@ -458,8 +458,7 @@ export const caseStudies = {
     "pdfParts": {
       "folder": "./assets/rocketfresh-proposal-pdf",
       "count": 11,
-      "size": 64577738,
-      "filename": "[쿠팡 로켓프레시] 메인페이지 UX 리뉴얼 제안서.pdf"
+      "size": 64577738
     }
   },
   "kaywon": {
@@ -775,8 +774,7 @@ export const caseStudies = {
     "pdfParts": {
       "folder": "./assets/rocketfresh-storyboard-pdf",
       "count": 4,
-      "size": 21721671,
-      "filename": "[쿠팡 로켓프레시_PC_모바일] 화면설계서.pdf"
+      "size": 21721671
     },
     "coverThumb": "./assets/optimized/cards/rocketfresh-storyboard.webp",
     "cover": "./assets/optimized/covers/rocketfresh-storyboard.webp",
@@ -923,8 +921,7 @@ export const caseStudies = {
     "pdfParts": {
       "folder": "./assets/kaywon-storyboard-pdf",
       "count": 3,
-      "size": 14849541,
-      "filename": "[계원예술대학교_PC_모바일] 화면설계서.pdf"
+      "size": 14849541
     },
     "coverThumb": "./assets/optimized/cards/kaywon-storyboard.webp",
     "cover": "./assets/optimized/covers/kaywon-storyboard.webp",
@@ -1191,7 +1188,6 @@ export const caseStudies = {
       }
     ],
     "pdf": "./assets/chak-plan.pdf",
-    "pdfFilename": "착!_정서영.pdf",
     "pdfLabel": "착! 기획서 전체 보기",
     "teamPhotos": [
       {
@@ -1215,8 +1211,7 @@ export const caseStudies = {
     "pdfParts": {
       "folder": "./assets/chak-storyboard-v0.7",
       "count": 8,
-      "size": 47916904,
-      "filename": "착! 화면설계서 v0.7.pdf"
+      "size": 47916904
     },
     "pdfLabel": "착! (Chak!) 화면설계서 전체 보기",
     "title": "착! (Chak!) 화면설계서",
