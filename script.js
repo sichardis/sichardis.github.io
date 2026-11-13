@@ -1,7 +1,7 @@
 import { projects as sourceProjects, featuredIds } from './data.js?v=project-awards';
-import { bridgeMarkup, steps as bridgeSteps } from './bridge.js?v=profile-pdf-names';
-import { caseStudies } from './case-studies.js?v=profile-pdf-names';
-import { caseStudyMarkup, caseProcessMarkup } from './case-study.js?v=compact-footer';
+import { bridgeMarkup, steps as bridgeSteps } from './bridge.js?v=sharp-process-images';
+import { caseStudies } from './case-studies.js?v=sharp-process-images';
+import { caseStudyMarkup, caseProcessMarkup } from './case-study.js?v=sharp-process-images';
 
 const pdfProjectNames = {
   chak: '착!(Chak!)',

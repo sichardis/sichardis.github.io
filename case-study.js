@@ -37,9 +37,8 @@ function processMedia(step, escape, {loading = 'eager', placeholder = ''} = {}) 
   if (placeholder || !step.image) {
     return `<div class="case-process-media case-process-placeholder" role="img" aria-label="${escape(placeholder || '이미지 자료 준비 중')}">${escape(placeholder)}</div>`;
   }
-  const thumbnail = loading === 'lazy' && step.thumbnail;
-  const src = thumbnail || `./assets/case-studies/${step.image}`;
-  return `<img class="case-process-media" src="${escape(src)}" alt="${escape(step.title)} 자료" width="${thumbnail ? 768 : 1600}" height="${thumbnail ? 432 : 900}" loading="${loading}" decoding="async">`;
+  const src = `./assets/case-studies/${step.image}`;
+  return `<img class="case-process-media" src="${escape(src)}" alt="${escape(step.title)} 자료" width="1600" height="900" loading="${loading}" decoding="async">`;
 }
 
 export function caseStudyMarkup(project, hero, escape) {
