@@ -3,7 +3,7 @@ export const caseStudies = {
   "bridge": {
     "teamPhotos": [
       {
-        "src": "./assets/optimized/bridge-team-1.webp",
+        "src": "./assets/optimized/bridge-team-1.webp?v=img-0973",
         "alt": "브릿지의 내 정보 화면을 소개하는 발표 현장"
       },
       {
