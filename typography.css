@@ -43,8 +43,8 @@ html {
 /* Canvas and the research-led tactile thread illustration. */
 :root{--canvas:#FFFFFF;--band:var(--canvas);background:var(--canvas)}body,main{background:var(--canvas)}.site-header{background:rgba(255,255,255,.8)}.featured-section,.site-footer{background:var(--canvas)}
 .hero-visual.thread-scene{aspect-ratio:3/2;background:transparent;max-width:min(960px,calc((100svh - 260px)*1.5))}
-.thread-dot{width:6px;height:6px;box-shadow:0 0 0 5px rgba(255,255,255,.9);background:#4a4944}.thread-tip>span{background:rgba(255,255,255,.97)}
-@media(max-width:800px){.section-index{background:rgba(255,255,255,.97)}.hero-visual.thread-scene{max-width:520px}.thread-dot{box-shadow:0 0 0 4px rgba(255,255,255,.92)}}
+.thread-tip>span{background:rgba(255,255,255,.97)}
+@media(max-width:800px){.section-index{background:rgba(255,255,255,.97)}.hero-visual.thread-scene{max-width:520px}}
 /* Bridge reading rhythm, current section, and process dialog. */
 .section-index button{position:relative;padding-left:16px;color:#8a8a8a;font-weight:400}
 .section-index button:before{content:"";position:absolute;left:2px;top:50%;width:5px;height:5px;border-radius:50%;background:currentColor;transform:translateY(-50%);opacity:0}
@@ -198,11 +198,11 @@ html {
     stroke-dasharray: 1 1;
     animation: draw-thread 2.6s cubic-bezier(.35, 0, .35, 1);
   }
-  .thread-dot { animation: reveal-thread-stop .25s ease-out backwards; }
-  .thread-start .thread-dot { animation-delay: .45s; }
-  .thread-weave .thread-dot { animation-delay: .75s; }
-  .thread-knot .thread-dot { animation-delay: 1s; }
-  .thread-stop:focus-visible .thread-dot { animation: none; }
+  .thread-icon { animation: reveal-thread-stop .25s ease-out backwards; }
+  .thread-start .thread-icon { animation-delay: .45s; }
+  .thread-weave .thread-icon { animation-delay: .75s; }
+  .thread-knot .thread-icon { animation-delay: 1s; }
+  .thread-stop:focus-visible .thread-icon { animation: none; }
 
   @keyframes draw-thread {
     from { stroke-dashoffset: 1; }
@@ -394,15 +394,18 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
 .project-status { background: var(--accent-soft); color: #000; }
 .project-card-link:hover h3, .project-card-link:focus-visible h3 { color: #000; }
 
-.thread-stop .thread-dot {
+.thread-stop .thread-icon {
   transition: box-shadow var(--hover-color-timing);
-  width: 8px;
-  height: 8px;
-  background: var(--accent);
-  box-shadow: 0 0 0 3px #fff;
+  width: 32px;
+  height: 32px;
+  margin: auto;
+  padding: 4px;
+  border: 1px solid var(--accent-line);
+  border-radius: 50%;
+  background: #fff;
 }
-.thread-stop:is(:focus-visible, [aria-expanded="true"]) .thread-dot {
-  box-shadow: 0 0 0 3px #fff, 0 0 0 7px #f98d2252;
+.thread-stop:is(:focus-visible, [aria-expanded="true"]) .thread-icon {
+  box-shadow: 0 0 0 4px #f98d2252;
 }
 .thread-playback {
   position: absolute;
