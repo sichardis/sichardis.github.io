@@ -1,6 +1,36 @@
 // 상세 페이지의 문서별 콘텐츠와 과정 자료.
 export const caseStudies = {
+  "bridge": {
+    "teamPhotos": [
+      {
+        "src": "./assets/optimized/bridge-team-1.webp",
+        "alt": "브릿지의 내 정보 화면을 소개하는 발표 현장"
+      },
+      {
+        "src": "./assets/optimized/bridge-team-2.webp",
+        "alt": "브릿지의 주 사용자와 부 사용자를 소개하는 발표 현장"
+      },
+      {
+        "src": "./assets/optimized/bridge-team-3.webp",
+        "alt": "브릿지 팀이 받은 커뮤니케이션디자인 국제어워드 특별상 상장"
+      }
+    ]
+  },
   "bluedog": {
+    "teamPhotos": [
+      {
+        "src": "./assets/optimized/bluedog-team-1.webp",
+        "alt": "과천 공원에 걸린 반려견 산책 예절 안내 현수막"
+      },
+      {
+        "src": "./assets/optimized/bluedog-team-2.webp",
+        "alt": "실내에서 개들을 만나 쓰다듬는 블루독 팀원들"
+      },
+      {
+        "src": "./assets/optimized/bluedog-team-3.webp",
+        "alt": "잔디가 있는 테라스 입구에 서 있는 두 마리의 개"
+      }
+    ],
     "title": "블루독 (Blue Dog)",
     "subtitle": "은퇴견과 과천 시민을 산책·입양·돌봄으로 연결하는 지역 상생 서비스",
     "year": "2026",

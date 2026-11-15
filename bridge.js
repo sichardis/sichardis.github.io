@@ -19,6 +19,6 @@ export function bridgeMarkup(hero, project, escape) {
  <section id="bridge-process" class="bridge-section" tabindex="-1"><h2>과정</h2><p>이미지를 클릭해 브릿지의 주요 과정을 확인해 보세요.</p><div class="process-grid">${steps.map((step,i)=>`<button type="button" class="process-card" data-process="${i}" aria-label="${String(i+1).padStart(2,'0')} ${step.title} 상세 보기"><img src="./assets/bridge-process-${i+1}.jpg" alt="${step.title}" width="1600" height="900" loading="lazy" decoding="async"><span>${String(i+1).padStart(2,'0')} ${step.title}</span></button>`).join('')}</div><a class="bridge-download" href="${escape(project.pdf)}" download="${escape(project.pdfFilename)}">브릿지(Bridge) 기획서 전체 보기 · PDF <span aria-hidden="true">↓</span></a></section>
  <section id="bridge-contribution" class="bridge-section" tabindex="-1"><h2>기여</h2><ul><li>조사 결과를 바탕으로 핵심 문제와 서비스 방향을 정했습니다.</li><li>사용자 요구와 서비스 목표에 따라 기능의 우선순위를 정했습니다.</li><li>사용자 여정 지도·정보 구조도·이용 흐름도를 작성했습니다.</li><li>화면별 목적과 필수 정보를 공유하고 검토 의견을 정리했습니다.</li></ul></section>
  <section id="bridge-result" class="bridge-section" tabindex="-1"><h2>결과</h2><p>경력 정리에 자동화를 활용하고 표현의 최종 결정권은 이용자에게 두는 서비스 원칙을 도출했습니다.<br>이를 통해 시니어의 경력 정리 부담을 줄이고,<br>기업이 지원자의 경험과 강점을 직무에 맞춰 이해하도록 도울 것으로 기대합니다.</p></section>
- ${teamPhotosMarkup('bridge')}
+ ${teamPhotosMarkup(project.id, project.teamPhotos, escape)}
  </article></div>`;
 }
