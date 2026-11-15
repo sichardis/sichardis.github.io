@@ -182,7 +182,7 @@ html {
   min-height: 0;
   max-width: 1100px;
 }
-/* Position the interactive stops against the original image proportions. */
+/* Position the three stops against the original image proportions. */
 .thread-artwork { position: relative; width: 100%; pointer-events: none; }
 .thread-artwork .thread-stop {
   top: calc(var(--thread-y) * 100%);
@@ -401,9 +401,22 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
   background: var(--accent);
   box-shadow: 0 0 0 3px #fff;
 }
-.thread-stop:is(:hover, :focus-visible, [aria-expanded="true"]) .thread-dot {
+.thread-stop:is(:focus-visible, [aria-expanded="true"]) .thread-dot {
   box-shadow: 0 0 0 3px #fff, 0 0 0 7px #f98d2252;
 }
+.thread-playback {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  min-height: 32px;
+  padding: 4px 8px;
+  background: transparent;
+  border-radius: var(--box-radius);
+  color: var(--muted);
+  font-size: 12px;
+}
+.thread-playback:hover { color: #000; }
+
 .thread-stop .thread-tip {
   left: 50%;
   right: auto;
@@ -427,6 +440,10 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
   }
 }
 @media (max-width: 680px) {
+  .hero-visual.thread-scene {
+    aspect-ratio: auto;
+    padding-block: 136px 40px;
+  }
   .thread-start .thread-tip { translate: 0 0; }
 }
 .thread-tip strong { display: block; color: #000; font-size: 16px; font-weight: 600; }

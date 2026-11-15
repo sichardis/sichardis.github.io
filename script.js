@@ -329,17 +329,65 @@ window.addEventListener('hashchange' , () => renderRoute({focus:true}));
 renderProjects();
 renderRoute();
 
-// The thread can be explored by pointer, keyboard, or touch.
-const threadStops = [...document.querySelectorAll('.thread-stop')];
-threadStops.forEach(stop => {
+const threadScene = $('.thread-scene');
+const threadStops = [...threadScene.querySelectorAll('.thread-stop')];
+const threadPlayback = $('#thread-playback');
+const reducedThreadMotion = matchMedia('(prefers-reduced-motion: reduce)');
+let threadPlaying = !reducedThreadMotion.matches;
+let threadInView = false;
+let threadStep = -1;
+let threadTimer;
+
+function showThreadStep(step) {
+  threadStep = step;
+  threadStops.forEach((stop, i) => stop.setAttribute('aria-expanded', String(i === step)));
+}
+
+function scheduleThreadStep(delay) {
+  clearTimeout(threadTimer);
+  if (!threadPlaying || !threadInView) return;
+  threadTimer = setTimeout(() => {
+    const next = threadStep + 1;
+    showThreadStep(next < threadStops.length ? next : -1);
+    scheduleThreadStep(threadStep === -1 ? 1000 : 3600);
+  }, delay);
+}
+
+function setThreadPlaying(playing) {
+  threadPlaying = playing;
+  threadPlayback.textContent = playing ? '일시정지' : '자동 재생';
+  threadPlayback.setAttribute('aria-label', playing ? '기획 과정 자동 재생 일시정지' : '기획 과정 자동 재생');
+  scheduleThreadStep(threadStep === -1 ? 850 : 3600);
+}
+
+threadStops.forEach((stop, i) => {
   stop.addEventListener('click', () => {
-    const expanded = stop.getAttribute('aria-expanded') !== 'true';
-    threadStops.forEach(item => item.setAttribute('aria-expanded', String(item === stop && expanded)));
+    setThreadPlaying(false);
+    showThreadStep(threadStep === i ? -1 : i);
   });
   stop.addEventListener('keydown', event => {
-    if (event.key === 'Escape') { stop.setAttribute('aria-expanded','false'); stop.blur(); }
+    if (event.key === 'Escape' && threadStep === i) {
+      setThreadPlaying(false);
+      showThreadStep(-1);
+    }
   });
 });
-document.addEventListener('click', event => {
-  if (!event.target.closest('.thread-stop')) threadStops.forEach(stop => stop.setAttribute('aria-expanded','false'));
+threadPlayback.addEventListener('click', () => {
+  if (threadPlaying && threadStep === -1) showThreadStep(0);
+  setThreadPlaying(!threadPlaying);
 });
+reducedThreadMotion.addEventListener('change', event => {
+  if (event.matches && threadStep === -1) showThreadStep(0);
+  setThreadPlaying(!event.matches);
+});
+
+if (reducedThreadMotion.matches) showThreadStep(0);
+threadPlayback.hidden = false;
+setThreadPlaying(threadPlaying);
+
+const threadObserver = new IntersectionObserver(([entry]) => {
+  threadInView = entry.isIntersecting;
+  if (!threadInView && threadPlaying) showThreadStep(-1);
+  scheduleThreadStep(850);
+}, {threshold: 0.25});
+threadObserver.observe(threadScene);

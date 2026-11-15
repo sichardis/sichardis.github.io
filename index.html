@@ -12,9 +12,9 @@
   <link rel="stylesheet" href="./styles.css?v=footer-divider-inset">
   <link rel="stylesheet" href="./home.css?v=compact-footer">
   <link rel="stylesheet" href="./projects.css?v=compact-footer">
-  <link rel="stylesheet" href="./about.css?v=compact-footer">
-  <link rel="stylesheet" href="./typography.css?v=compact-footer">
-  <script type="module" src="./script.js?v=bridge-team-photo"></script>
+  <link rel="stylesheet" href="./about.css?v=identity-loop">
+  <link rel="stylesheet" href="./typography.css?v=identity-loop">
+  <script type="module" src="./script.js?v=identity-loop"></script>
 </head>
 <body>
   <a class="skip-link" href="#content">본문으로 건너뛰기</a>
@@ -33,7 +33,7 @@
       <section class="hero container" aria-labelledby="hero-title">
         <div class="hero-layout">
           <h1 id="hero-title">실마리를 찾아 근거로 매듭짓는 정서영입니다.</h1>
-          <div class="hero-visual thread-scene" aria-label="실마리에서 매듭까지, 세 지점에서 기획 과정을 확인하세요">
+          <div class="hero-visual thread-scene" role="group" aria-label="실마리에서 매듭까지 이어지는 세 가지 기획 과정">
             <div class="thread-artwork">
               <svg class="hero-rope" width="1690" height="480" viewBox="0 0 1690 480" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="hero-rope-title">
                 <title id="hero-rope-title">부드러운 곡선을 그리며 하나의 매듭으로 이어지는 주황색 실</title>
@@ -70,6 +70,7 @@
               <button class="thread-stop thread-weave" type="button" aria-label="실을 엮어서" aria-expanded="false" aria-controls="thread-tip-2"><span class="thread-dot" aria-hidden="true"></span><span class="thread-tip" id="thread-tip-2"><strong>실을 엮어서</strong><span>서로 다른 의견과 근거를 비교해 기획의 방향과 흐름을 정리합니다.</span></span></button>
               <button class="thread-stop thread-knot" type="button" aria-label="매듭 짓습니다" aria-expanded="false" aria-controls="thread-tip-3"><span class="thread-dot" aria-hidden="true"></span><span class="thread-tip" id="thread-tip-3"><strong>매듭 짓습니다</strong><span>핵심 과제의 우선순위를 정하고 선택한 이유를 기획으로 구체화합니다.</span></span></button>
             </div>
+            <button id="thread-playback" class="thread-playback" type="button" hidden>일시정지</button>
           </div>
           <div class="document-links">
             <a class="document-button" href="./assets/seoyeong-resume.pdf" download="정서영_이력서.pdf">이력서 · 경험의 실 담아가기</a>
