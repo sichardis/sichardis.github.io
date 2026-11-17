@@ -345,6 +345,26 @@ html {
 .site-header nav a[aria-current="page"],
 .hero .explore-link span,
 .arrow-link:hover { color: #000; }
+.site-header nav a {
+  isolation: isolate;
+  transition: color var(--hover-color-timing);
+}
+.site-header nav a::before {
+  content: "";
+  position: absolute;
+  inset: 4px -10px;
+  z-index: -1;
+  border-radius: var(--box-radius);
+  background: linear-gradient(90deg, rgba(249, 141, 34, 0), rgba(249, 141, 34, .14) 50%, rgba(249, 141, 34, 0));
+  opacity: 0;
+  transform: scaleX(.72);
+  transition: opacity var(--hover-color-timing), transform var(--hover-color-timing);
+}
+.site-header nav a:hover::before,
+.site-header nav a:focus-visible::before {
+  opacity: 1;
+  transform: scaleX(1);
+}
 .site-header nav a[aria-current="page"]::after,
 .about-section-heading::before { border-color: var(--accent); }
 a:focus-visible, button:focus-visible, summary:focus-visible {
