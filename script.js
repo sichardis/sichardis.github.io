@@ -327,6 +327,14 @@ function openProcess(index) {
   $('.process-dialog-meta').textContent = name;
   $('.process-dialog-step').textContent = `${String(processIndex + 1).padStart(2, '0')} / ${String(count).padStart(2, '0')}`;
   $('#process-content').innerHTML = caseProcessMarkup(detailProject, steps, processIndex, escape);
+  if (processDialog.open && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const content = $('#process-content');
+    content.getAnimations().forEach(animation => animation.cancel());
+    content.animate([
+      {opacity: 0, transform: 'translateY(10px) scale(.99)'},
+      {opacity: 1, transform: 'translateY(0) scale(1)'},
+    ], {duration: 380, easing: 'cubic-bezier(.22, 1, .36, 1)'});
+  }
   if (!processDialog.open) processDialog.showModal();
   processDialog.scrollTop = 0;
   $('#process-title').setAttribute('tabindex','-1');

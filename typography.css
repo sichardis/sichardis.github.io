@@ -334,7 +334,9 @@ html {
 /* Shared accent and hover color timing for all routes. */
 :root {
   --box-radius: 6px;
-  --hover-color-timing: 150ms ease 30ms;
+  --hover-color-timing: 180ms cubic-bezier(.22, .7, .3, 1) 30ms;
+  --motion-spring: cubic-bezier(.22, 1.28, .36, 1);
+  --motion-settle: cubic-bezier(.22, 1, .36, 1);
   --accent: #f98d22;
   --accent-soft: #fff1e3;
   --accent-line: #f3c397;
@@ -383,11 +385,12 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
   transform: translateY(18px) scale(.985);
 }
 .work-grid.is-filter-entering .project-card {
-  animation: project-filter-enter 420ms cubic-bezier(.2, .75, .2, 1) both;
+  animation: project-filter-enter 540ms var(--motion-settle) both;
   animation-delay: var(--filter-delay);
 }
 @keyframes project-filter-enter {
   from { opacity: 0; transform: translateY(18px) scale(.985); }
+  72% { opacity: 1; transform: translateY(-3px) scale(1.004); }
   to { opacity: 1; transform: translateY(0); }
 }
 .filters button,
@@ -624,8 +627,8 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
 .detail-next { margin-top: 44px; padding-top: 20px; }
 .bridge-cover { margin-top: 24px; }
 .bridge-section + .bridge-section {
-  margin-top: 30px;
-  padding-top: 22px;
+  margin-top: 64px;
+  padding-top: 24px;
 }
 .bridge-section > h2 {
   width: fit-content;
@@ -650,7 +653,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
   .detail-toolbar { margin-bottom: 20px; }
   .detail-facts { gap: 10px 20px; }
   .detail-story { gap: 6px 20px; padding-block: 22px; }
-  .bridge-section + .bridge-section { margin-top: 24px; padding-top: 18px; }
+  .bridge-section + .bridge-section { margin-top: 48px; padding-top: 20px; }
 }
 @media (max-width: 400px) {
   .tool-card { padding: 12px; }
@@ -658,4 +661,81 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
   .tool-icon { flex-basis: 24px; height: 24px; }
   .contact-label .tool-icon { width: 24px; }
   .tool-icon svg, .tool-icon img { width: 18px; height: 18px; }
+}
+
+/* Shared tactile motion: quick response, a small overshoot, then a soft landing. */
+@media (prefers-reduced-motion: no-preference) {
+  :is(.document-button, .filters button, .process-card, .bridge-download,
+      .solid-link, .detail-toolbar a, .contact-cards a, .site-header nav a,
+      .thread-playback, .process-arrow, .process-close, .tool-level summary) {
+    transition: color var(--hover-color-timing),
+      background-color var(--hover-color-timing),
+      border-color var(--hover-color-timing),
+      background-size 420ms var(--motion-settle),
+      translate 420ms var(--motion-spring),
+      scale 380ms var(--motion-spring),
+      box-shadow 320ms var(--motion-settle);
+  }
+  :is(.document-button, .filters button, .process-card, .bridge-download,
+      .solid-link, .detail-toolbar a, .contact-cards a, .site-header nav a,
+      .thread-playback, .process-arrow, .process-close, .tool-level summary):active {
+    scale: .97;
+    transition-duration: 100ms;
+  }
+  .project-card-link {
+    transition: translate 460ms var(--motion-spring), scale 380ms var(--motion-spring);
+  }
+  .project-card-link:active { scale: .985; transition-duration: 120ms; }
+  .project-image img {
+    transition: transform 620ms var(--motion-settle), filter 320ms var(--motion-settle);
+  }
+  .explore-link span, .arrow-link span, .document-button::after {
+    display: inline-block;
+    transition: transform 440ms var(--motion-spring), color var(--hover-color-timing);
+  }
+  .thread-stop .thread-tip {
+    transform-origin: 50% 100%;
+    transform: translateY(12px) scale(.94);
+    transition: opacity 180ms ease, transform 280ms var(--motion-settle), visibility 0s 280ms;
+  }
+  .thread-stop[aria-expanded="true"] .thread-tip {
+    transform: translateY(0) scale(1);
+    transition: opacity 220ms ease 30ms, transform 520ms var(--motion-spring) 30ms, visibility 0s;
+  }
+  .thread-stop .thread-icon {
+    transition: scale 460ms var(--motion-spring), box-shadow var(--hover-color-timing);
+  }
+  .thread-stop[aria-expanded="true"] .thread-icon { scale: 1.12; }
+  .attitude-marker > span, .attitude-marker > svg {
+    transition: opacity 180ms ease, transform 440ms var(--motion-spring);
+  }
+  .attitude-marker > svg { transform: translateY(5px) scale(.7) rotate(-12deg); }
+  #process-dialog[open] { animation: process-dialog-enter 460ms var(--motion-spring) both; }
+  #process-dialog[open]::backdrop { animation: process-backdrop-enter 260ms ease both; }
+  .tool-level .skill-meter[data-fill="visible"] .filled {
+    animation-duration: 220ms;
+    animation-timing-function: var(--motion-settle);
+  }
+  .tool-level .skill-meter[data-fill="visible"] .filled:nth-child(2) { animation-delay: 85ms; }
+  .tool-level .skill-meter[data-fill="visible"] .filled:nth-child(3) { animation-delay: 170ms; }
+  .tool-level .skill-meter[data-fill="visible"] .filled:nth-child(4) { animation-delay: 255ms; }
+  .tool-level .skill-meter[data-fill="visible"] .filled:nth-child(5) { animation-delay: 340ms; }
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  :is(.document-button, .filters button, .bridge-download, .solid-link,
+      .detail-toolbar a, .site-header nav a):hover { translate: 0 -2px; }
+  :is(.project-card-link, .process-card, .contact-cards a):hover { translate: 0 -5px; }
+  :is(.process-card, .contact-cards a):hover { box-shadow: 0 10px 24px #5c2d0b10; }
+  .project-card-link:hover .project-image img { transform: scale(1.035); }
+  .document-button:hover::after { transform: translateY(3px); }
+  .attitude-rows article:hover .attitude-marker > span { transform: translateY(-4px) scale(.85); }
+  .attitude-rows article:hover .attitude-marker > svg { transform: translateY(0) scale(1) rotate(0); }
+}
+@keyframes process-dialog-enter {
+  from { opacity: 0; transform: translateY(20px) scale(.965); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes process-backdrop-enter {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
