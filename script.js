@@ -28,6 +28,7 @@ let listScroll = 0;
 let previousPage = '';
 let processIndex = 0;
 let detailProject;
+let filterUpdateTimer;
 const $ = (selector) => document.querySelector(selector);
 const escape = (value = '') => String(value).replace(/[&<>"']/g, (character) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[character]));
 const projectUrl = (id) => `#/project/${encodeURIComponent(id)}`;
@@ -48,7 +49,7 @@ const summaries = {
   'kaywon-storyboard': '학사·입시 정보와 퀵서비스 화면 설계',
 };
 
-function card(project, {featured = false, priority = 'auto'} = {}) {
+function card(project, {featured = false, priority = 'auto', filterOrder} = {}) {
   const description = escape(summaries[project.id] || project.subtitle);
   const image = project.cover
     ? `<img src="${escape(project.coverThumb || project.cover)}" alt="${escape(project.title)} 프로젝트 표지" width="768" height="432" loading="lazy" decoding="async" fetchpriority="${priority}">`
@@ -73,7 +74,8 @@ function card(project, {featured = false, priority = 'auto'} = {}) {
   }[sourceId] || project.year || '';
   const ongoing = project.filter === 'ongoing' || project.status === 'ongoing';
   const date = featured && ongoing ? `${period} · 진행 중` : period;
-  return `<article class="project-card"><a class="project-card-link" href="${projectUrl(project.id)}">
+  const animationStyle = Number.isInteger(filterOrder) ? ` style="--filter-delay:${30 + filterOrder * 42}ms"` : '';
+  return `<article class="project-card"${animationStyle}><a class="project-card-link" href="${projectUrl(project.id)}">
     <div class="project-image">${image}</div>
     <h3>${escape(title)}</h3>
     <p class="project-card-description">${description}</p>
@@ -81,13 +83,35 @@ function card(project, {featured = false, priority = 'auto'} = {}) {
   </a></article>`;
 }
 
-function renderProjects() {
+function renderProjects({animate = false, focusFilter = false} = {}) {
+  clearTimeout(filterUpdateTimer);
   const featured = featuredIds.map((id) => projects.find((project) => project.id === id)).filter(Boolean);
   $('#featured-grid').innerHTML = featured.map((project, index) => card(project, {featured: true, priority: index === 0 ? 'high' : 'auto'})).join('');
   const visible = projects.filter(p => activeFilter === 'all' || (activeFilter === 'featured' ? featuredIds.includes(p.id) : p.documentType === activeFilter));
   $('.filters').innerHTML = filters.map(([id,label])=>`<button type="button" data-filter="${id}" aria-pressed="${id===activeFilter}">${label} ${projects.filter(p=>id==='all'||(id==='featured'?featuredIds.includes(p.id):p.documentType===id)).length}</button>`).join('');
-  $('#work-grid').innerHTML = visible.map((project, index) => card(project, {priority: index === 0 ? 'high' : 'auto'})).join('');
+  const workGrid = $('#work-grid');
+  workGrid.classList.remove('is-filtering', 'is-filter-entering');
+  workGrid.innerHTML = visible.map((project, index) => card(project, {priority: index === 0 ? 'high' : 'auto', filterOrder: index})).join('');
+  if (animate && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    requestAnimationFrame(() => workGrid.classList.add('is-filter-entering'));
+  }
   $('#project-count').textContent = `${activeFilter === 'all' ? '전체' : '해당'} ${visible.length}개`;
+  if (focusFilter) requestAnimationFrame(() => $(`[data-filter="${activeFilter}"]`)?.focus({preventScroll:true}));
+}
+
+function setProjectFilter(filter) {
+  if (filter === activeFilter) return;
+  activeFilter = filter;
+  document.querySelectorAll('[data-filter]').forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.filter === activeFilter)));
+  const workGrid = $('#work-grid');
+  clearTimeout(filterUpdateTimer);
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    renderProjects({focusFilter:true});
+    return;
+  }
+  workGrid.classList.remove('is-filter-entering');
+  workGrid.classList.add('is-filtering');
+  filterUpdateTimer = setTimeout(() => renderProjects({animate:true, focusFilter:true}), 140);
 }
 
 function detailHero(project) {
@@ -216,9 +240,7 @@ function renderRoute({ focus = false } = {}) {
 $('.filters').addEventListener('click', event => {
   const button = event.target.closest('[data-filter]');
   if (!button) return;
-  activeFilter = button.dataset.filter;
-  renderProjects();
-  $(`[data-filter="${activeFilter}"]`).focus({preventScroll:true});
+  setProjectFilter(button.dataset.filter);
 });
 const motion = () => matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth';
 function scrollToFeatured() {
