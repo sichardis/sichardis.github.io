@@ -90,10 +90,13 @@ function renderProjects({animate = false, focusFilter = false} = {}) {
   const visible = projects.filter(p => activeFilter === 'all' || (activeFilter === 'featured' ? featuredIds.includes(p.id) : p.documentType === activeFilter));
   $('.filters').innerHTML = filters.map(([id,label])=>`<button type="button" data-filter="${id}" aria-pressed="${id===activeFilter}">${label} ${projects.filter(p=>id==='all'||(id==='featured'?featuredIds.includes(p.id):p.documentType===id)).length}</button>`).join('');
   const workGrid = $('#work-grid');
-  workGrid.classList.remove('is-filtering', 'is-filter-entering');
+  workGrid.classList.remove('is-filtering', 'is-filter-prepared', 'is-filter-entering');
   workGrid.innerHTML = visible.map((project, index) => card(project, {priority: index === 0 ? 'high' : 'auto', filterOrder: index})).join('');
   if (animate && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    requestAnimationFrame(() => workGrid.classList.add('is-filter-entering'));
+    workGrid.classList.add('is-filter-prepared');
+    void workGrid.offsetWidth;
+    workGrid.classList.remove('is-filter-prepared');
+    workGrid.classList.add('is-filter-entering');
   }
   $('#project-count').textContent = `${activeFilter === 'all' ? '전체' : '해당'} ${visible.length}개`;
   if (focusFilter) requestAnimationFrame(() => $(`[data-filter="${activeFilter}"]`)?.focus({preventScroll:true}));
@@ -109,9 +112,9 @@ function setProjectFilter(filter) {
     renderProjects({focusFilter:true});
     return;
   }
-  workGrid.classList.remove('is-filter-entering');
+  workGrid.classList.remove('is-filter-prepared', 'is-filter-entering');
   workGrid.classList.add('is-filtering');
-  filterUpdateTimer = setTimeout(() => renderProjects({animate:true, focusFilter:true}), 140);
+  filterUpdateTimer = setTimeout(() => renderProjects({animate:true, focusFilter:true}), 160);
 }
 
 function detailHero(project) {

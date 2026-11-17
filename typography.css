@@ -346,24 +346,16 @@ html {
 .hero .explore-link span,
 .arrow-link:hover { color: #000; }
 .site-header nav a {
-  isolation: isolate;
-  transition: color var(--hover-color-timing);
-}
-.site-header nav a::before {
-  content: "";
-  position: absolute;
-  inset: 3px -14px;
-  z-index: -1;
+  padding: 10px 14px;
   border-radius: 999px;
-  background: linear-gradient(90deg, rgba(249, 141, 34, 0), rgba(249, 141, 34, .025) 20%, rgba(249, 141, 34, .08) 50%, rgba(249, 141, 34, .025) 80%, rgba(249, 141, 34, 0));
-  opacity: 0;
-  transform: scale(.9, .86);
-  transition: opacity var(--hover-color-timing), transform var(--hover-color-timing);
+  background-image: radial-gradient(ellipse at center, rgba(249, 141, 34, .14) 0%, rgba(249, 141, 34, .07) 48%, rgba(249, 141, 34, 0) 76%);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 0% 0%;
+  transition: color var(--hover-color-timing), background-size 260ms cubic-bezier(.2, .75, .2, 1);
 }
-.site-header nav a:hover::before,
-.site-header nav a:focus-visible::before {
-  opacity: 1;
-  transform: scale(1);
+.site-header nav a:is(:hover, :focus-visible) {
+  background-size: 180% 220%;
 }
 .site-header nav a[aria-current="page"]::after,
 .about-section-heading::before { border-color: var(--accent); }
@@ -381,15 +373,20 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
 .bridge-download { background: var(--accent-soft); color: #000; }
 .work-grid.is-filtering .project-card {
   opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 120ms ease, transform 120ms ease;
+  filter: blur(1px);
+  transform: translateY(8px) scale(.985);
+  transition: opacity 150ms ease, filter 150ms ease, transform 150ms ease;
+}
+.work-grid.is-filter-prepared .project-card {
+  opacity: 0;
+  transform: translateY(18px) scale(.985);
 }
 .work-grid.is-filter-entering .project-card {
-  animation: project-filter-enter 320ms cubic-bezier(.2, .75, .2, 1) both;
+  animation: project-filter-enter 420ms cubic-bezier(.2, .75, .2, 1) both;
   animation-delay: var(--filter-delay);
 }
 @keyframes project-filter-enter {
-  from { opacity: 0; transform: translateY(12px); }
+  from { opacity: 0; transform: translateY(18px) scale(.985); }
   to { opacity: 1; transform: translateY(0); }
 }
 .filters button,
