@@ -42,7 +42,7 @@ function processMedia(step, escape, {loading = 'eager', placeholder = ''} = {}) 
 }
 
 export function caseStudyMarkup(project, hero, escape) {
-  const hasTeamPhotos = project.documentType !== 'storyboard';
+  const hasTeamPhotos = project.documentType !== 'storyboard' && !['bridge', 'korail'].includes(project.id);
   const sectionId = key => `${project.id}-${key}`;
   const cards = project.steps.map((step, i) => {
     const label = `${String(i + 1).padStart(2, '0')} ${escape(step.title)}`;
