@@ -5,7 +5,7 @@ import { caseStudyMarkup, caseProcessMarkup } from './case-study.js?v=sharp-proc
 
 const pdfProjectNames = {
   chak: '착!(Chak!)',
-  bluedog: '블루독 (Blue Dog)',
+  bluedog: '블루독(Blue Dog)',
   rocketfresh: '쿠팡 로켓프레시',
   kaywon: '계원예술대학교',
 };
@@ -119,10 +119,12 @@ function setProjectFilter(filter) {
 
 function detailHero(project) {
   const coverClass = project.documentType === 'storyboard' ? 'detail-cover storyboard-cover' : 'detail-cover';
+  const detailType = project.id === 'chak' ? project.type.replace(' · 진행 중', '') : project.type;
+  const detailPeriod = project.id === 'chak' ? '2026.09–12' : project.period || project.year;
   return `
-    <div class="detail-heading"><p class="eyebrow">${escape([project.year,project.type].filter(Boolean).join(' / '))}</p><h1 id="detail-title">${escape(project.title)}</h1><p class="detail-subtitle">${escape(project.subtitle)}</p></div>
+    <div class="detail-heading"><p class="eyebrow">${escape([project.year,detailType].filter(Boolean).join(' / '))}</p><h1 id="detail-title">${escape(project.title)}</h1><p class="detail-subtitle">${escape(project.subtitle)}</p></div>
     <p class="detail-lead">${escape(project.lead)}</p>
-    <dl class="detail-facts">${project.role ? `<div><dt>담당 역할</dt><dd>${escape(project.role)}</dd></div>` : ''}<div><dt>프로젝트 유형</dt><dd>${escape(project.type)}</dd></div>${project.year ? `<div><dt>기간</dt><dd>${project.id === 'chak' ? '2026.09–12 · 진행 중' : escape(project.period || project.year)}</dd></div>` : ''}</dl>
+    <dl class="detail-facts">${project.role ? `<div><dt>담당 역할</dt><dd>${escape(project.role)}</dd></div>` : ''}<div><dt>프로젝트 유형</dt><dd>${escape(detailType)}</dd></div>${project.year ? `<div><dt>기간</dt><dd>${escape(detailPeriod)}</dd></div>` : ''}</dl>
     ${project.cover ? `<img class="${coverClass}" src="${escape(project.cover)}" alt="${escape(project.title)} 프로젝트 표지" width="1920" height="1080" fetchpriority="high" decoding="async">` : ''}`;
 }
 
@@ -321,7 +323,7 @@ function openProcess(index) {
   const steps = detailProject.steps ?? bridgeSteps;
   const count = steps.length;
   processIndex = Math.max(0, Math.min(count - 1, index));
-  const name = detailProject.id === 'bridge' ? '브릿지 · 기획 과정' : `${detailProject.title} · 과정`;
+  const name = `${detailProject.title} · 과정`;
   $('.process-dialog-meta').textContent = name;
   $('.process-dialog-step').textContent = `${String(processIndex + 1).padStart(2, '0')} / ${String(count).padStart(2, '0')}`;
   $('#process-content').innerHTML = caseProcessMarkup(detailProject, steps, processIndex, escape);

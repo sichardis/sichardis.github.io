@@ -359,6 +359,7 @@ html {
 }
 .site-header nav a[aria-current="page"]::after,
 .about-section-heading::before { border-color: var(--accent); }
+.site-header nav a[aria-current]::after { content: none; }
 a:focus-visible, button:focus-visible, summary:focus-visible {
   outline: 2px solid #000;
   outline-offset: 3px;
@@ -628,13 +629,15 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
 }
 .bridge-section > h2 {
   width: fit-content;
-  margin-bottom: 4px;
+  margin: 0 0 var(--detail-section-content-gap);
   padding: 4px 10px;
   border: 1px solid var(--accent-line);
   border-radius: var(--box-radius);
   color: #000;
   line-height: 1.4;
 }
+.bridge-section { --detail-section-content-gap: 32px; }
+.bridge-section > h2 + * { margin-top: 0; }
 .section-index button[aria-current="location"] { color: #000; }
 .section-index button[aria-current="location"]::before { background: var(--accent); }
 .bridge-section .bridge-goal { margin-bottom: 4px; }
