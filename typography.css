@@ -347,7 +347,7 @@ html {
 .site-header nav a[aria-current="page"],
 .hero .explore-link span,
 .arrow-link:hover { color: #000; }
-.site-header nav a {
+.site-header nav a, .site-header .brand {
   padding: 10px 14px;
   border-radius: 999px;
   background-image: radial-gradient(ellipse at center, rgba(249, 141, 34, .14) 0%, rgba(249, 141, 34, .07) 48%, rgba(249, 141, 34, 0) 76%);
@@ -356,7 +356,9 @@ html {
   background-size: 0% 0%;
   transition: color var(--hover-color-timing), background-size 260ms cubic-bezier(.2, .75, .2, 1);
 }
-.site-header nav a:is(:hover, :focus-visible) {
+.site-header .brand { margin-inline-start: -14px; }
+.site-header nav a:is(:hover, :focus-visible),
+.site-header .brand:is(:hover, :focus-visible) {
   background-size: 180% 220%;
 }
 .site-header nav a[aria-current="page"]::after,
@@ -666,7 +668,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
 /* Shared tactile motion: quick response, a small overshoot, then a soft landing. */
 @media (prefers-reduced-motion: no-preference) {
   :is(.document-button, .filters button, .process-card, .bridge-download,
-      .solid-link, .detail-toolbar a, .contact-cards a, .site-header nav a,
+      .solid-link, .detail-toolbar a, .contact-cards a, .site-header nav a, .site-header .brand,
       .thread-playback, .process-arrow, .process-close, .tool-level summary) {
     transition: color var(--hover-color-timing),
       background-color var(--hover-color-timing),
@@ -677,7 +679,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
       box-shadow 320ms var(--motion-settle);
   }
   :is(.document-button, .filters button, .process-card, .bridge-download,
-      .solid-link, .detail-toolbar a, .contact-cards a, .site-header nav a,
+      .solid-link, .detail-toolbar a, .contact-cards a, .site-header nav a, .site-header .brand,
       .thread-playback, .process-arrow, .process-close, .tool-level summary):active {
     scale: .97;
     transition-duration: 100ms;
@@ -723,7 +725,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
 }
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
   :is(.document-button, .filters button, .bridge-download, .solid-link,
-      .detail-toolbar a, .site-header nav a):hover { translate: 0 -2px; }
+      .detail-toolbar a, .site-header nav a, .site-header .brand):hover { translate: 0 -2px; }
   :is(.project-card-link, .process-card, .contact-cards a):hover { translate: 0 -5px; }
   :is(.process-card, .contact-cards a):hover { box-shadow: 0 10px 24px #5c2d0b10; }
   .project-card-link:hover .project-image img { transform: scale(1.035); }

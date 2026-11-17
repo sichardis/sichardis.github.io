@@ -1,6 +1,7 @@
 // 상세 페이지의 문서별 콘텐츠와 과정 자료.
 export const caseStudies = {
   "bridge": {
+    "lead": "수십년 간의 경험이 채용 시장에서 읽히지 못하는 문제를 해결하기 위해 사용자의 경험을 직무 언어와 커리어 프로필로 연결합니다.",
     "teamPhotos": [
       {
         "src": "./assets/optimized/bridge-team-1.webp?v=img-0973",
@@ -1071,7 +1072,7 @@ export const caseStudies = {
     "role": "팀장 · 서비스 기획",
     "team": "6인",
     "documentLabel": "기획서",
-    "lead": "선행을 미션으로 실천하고 인증·공감으로 나눕니다.",
+    "lead": "작은 선행을 미션으로 실천하고 인증과 공감으로 나누며, 한 사람의 실천을 다음 사람의 참여로 이어갑니다.",
     "tasks": "서비스 구조와 미션·그룹 챌린지 기획, 주요 화면과 이용 흐름 정리, 웹앱 MVP 이용 결과 분석",
     "goal": "작은 선행을 실천하고 나누기 쉽게 만듭니다.",
     "background": [
