@@ -357,14 +357,7 @@ html {
   transition: color var(--hover-color-timing), background-size 260ms cubic-bezier(.2, .75, .2, 1);
 }
 .site-header .brand { margin-inline-start: -14px; }
-.site-header { background: transparent; backdrop-filter: none; -webkit-backdrop-filter: none; isolation: isolate; }
-.site-header::before {
-  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
-  background: rgba(255, 255, 255, .8);
-  backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-  mask-image: linear-gradient(to right, transparent, #000 24px, #000 calc(100% - 24px), transparent), linear-gradient(to bottom, transparent, #000 8px, #000 calc(100% - 12px), transparent);
-  mask-composite: intersect;
-}
+.site-header { background: rgba(255, 255, 255, .8); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); }
 .site-header nav a:is(:hover, :focus-visible),
 .site-header .brand:is(:hover, :focus-visible) {
   background-size: 100% 100%;
@@ -816,6 +809,8 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
 }
 
 .contact-section { padding-top: 100px; }
+.site-footer { --footer-block-space: clamp(32px, 4vw, 64px); padding-bottom: var(--footer-block-space); }
+.footer-grid { padding-top: var(--footer-block-space); }
 .section-title { display: flex; align-items: center; gap: 12px; }
 .section-title-icon { display: inline-flex; flex: 0 0 30px; width: 30px; height: 30px; color: #c56a21; }
 .section-title-icon :is(svg, img) { width: 100%; height: 100%; object-fit: contain; }
