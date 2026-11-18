@@ -57,11 +57,6 @@ function card(project, {featured = false, priority = 'auto', filterOrder} = {}) 
   let title = project.documentType === 'storyboard' ? project.title : project.id === 'chak' ? '착! (Chak!)' : project.id === 'lotte' ? '[롯데시네마] 탐색 및 예매 기능 개선 제안서' : project.title;
   if (!featured) title = ({bluedog:'블루독 (Blue Dog)',korail:'[코레일톡] 기능 분산 구조 및 탐색 혼란 기능 개선 보고서',rocketfresh:'[쿠팡 로켓프레시] 메인페이지 UX 리뉴얼 제안서',kaywon:'[계원예술대학교] 메인페이지 UX 리뉴얼 제안서'})[project.id] || title;
   const documentLabel = filters.find(([id]) => id === project.documentType)?.[1] || '';
-  const meta = [
-    featuredIds.includes(project.id) ? '대표' : '',
-    documentLabel,
-    project.award?.shortTitle ?? project.award?.title,
-  ].filter(Boolean).join(' | ');
   const sourceId = project.id.replace('-storyboard', '');
   const period = {
     chak: '2026.09–12',
@@ -72,10 +67,8 @@ function card(project, {featured = false, priority = 'auto', filterOrder} = {}) 
     rocketfresh: '2025.09–12',
     kaywon: '2026.09–12',
   }[sourceId] || project.year || '';
-  const ongoing = project.filter === 'ongoing' || project.status === 'ongoing';
-  const date = featured && ongoing ? `${period} · 진행 중` : period;
+  const date = period;
   const animationStyle = Number.isInteger(filterOrder) ? ` style="--filter-delay:${30 + filterOrder * 42}ms"` : '';
-  if (!featured) {
     const study = caseStudies[project.id] || {};
     const methods = project.documentType === 'storyboard'
       ? ['화면설계', '이용 흐름']
@@ -89,24 +82,17 @@ function card(project, {featured = false, priority = 'auto', filterOrder} = {}) 
     const icon = kind => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${kind === 'calendar'
       ? '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4m10-4v4M3 11h18"/>'
       : '<circle cx="9" cy="7" r="3"/><path d="M3 21v-3a6 6 0 0 1 12 0v3m1-17a3 3 0 0 1 0 6m3 11v-3a6 6 0 0 0-2-4"/>'}</svg>`;
-    return `<article class="project-card"${animationStyle}><a class="project-card-link" href="${projectUrl(project.id)}">
+    return `<article class="project-card project-card--panel"${animationStyle}><a class="project-card-link" href="${projectUrl(project.id)}">
       <div class="project-image">${image}</div>
       <div class="project-card-body">
         <div class="project-card-tags">${tags.map(tag => `<span>${escape(tag)}</span>`).join('')}</div>
         <h3>${escape(title)}</h3>
         <p class="project-card-description">${description}</p>
         <p class="project-card-introduction">${escape(introduction)}</p>
-        ${award ? `<p class="project-card-award">${escape(award)}</p>` : ''}
+        ${award ? `<p class="project-card-award"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3h8v6a4 4 0 0 1-8 0V3Zm0 2H4v2a3 3 0 0 0 4 3m8-5h4v2a3 3 0 0 1-4 3m-4 3v5m-5 3h10m-9 0v-3h8v3"/></svg><span>${escape(award)}</span></p>` : ''}
         <div class="project-card-meta">${date ? `<span>${icon('calendar')}<span>${escape(date)}</span></span>` : ''}${team ? `<span>${icon('team')}<span>${escape(team)}</span></span>` : ''}</div>
       </div>
     </a></article>`;
-  }
-  return `<article class="project-card"${animationStyle}><a class="project-card-link" href="${projectUrl(project.id)}">
-    <div class="project-image">${image}</div>
-    <h3>${escape(title)}</h3>
-    <p class="project-card-description">${description}</p>
-    <p class="project-card-meta"><span>${escape(meta)}</span>${date ? `<span>${escape(date)}</span>` : ''}</p>
-  </a></article>`;
 }
 
 function renderProjects({animate = false, focusFilter = false} = {}) {
@@ -245,6 +231,7 @@ function renderRoute({ focus = false } = {}) {
   const detail = route[0] === 'project';
   const page = detail ? 'detail' : ['projects','about'].includes(route[0]) ? route[0] : 'home';
   document.querySelectorAll('[data-page]').forEach((element) => { element.hidden = element.dataset.page !== page; });
+  $('#contact-section').hidden = !['home', 'about'].includes(page);
   document.querySelectorAll('[data-nav]').forEach((link) => {
     if (link.dataset.nav === page || (detail && link.dataset.nav === 'projects')) link.setAttribute('aria-current','page');
     else link.removeAttribute('aria-current');
@@ -391,6 +378,24 @@ processDialog.addEventListener('click',event=>{
 window.addEventListener('hashchange' , () => renderRoute({focus:true}));
 renderProjects();
 renderRoute();
+
+function contactMailUrl({name, email, message}) {
+  const subject = `[포트폴리오 문의] ${name.trim()}님이 남긴 메시지`;
+  const body = `이름: ${name.trim()}\r\n이메일: ${email.trim()}\r\n\r\n${message.trim()}`;
+  return `mailto:richardis6551@naver.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
+$('#contact-form').addEventListener('submit', event => {
+  event.preventDefault();
+  const form = event.currentTarget;
+  if (!form.reportValidity()) return;
+  const fields = Object.fromEntries(new FormData(form));
+  if (!fields.name.trim() || !fields.message.trim()) {
+    $('#contact-form-status').textContent = '이름과 메시지를 입력해 주세요.';
+    return;
+  }
+  window.location.href = contactMailUrl(fields);
+  $('#contact-form-status').textContent = '메일 작성창에서 내용을 확인한 뒤 전송해 주세요.';
+});
 
 const threadScene = $('.thread-scene');
 const threadStops = [...threadScene.querySelectorAll('.thread-stop')];
