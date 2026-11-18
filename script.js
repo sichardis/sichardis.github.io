@@ -1,6 +1,6 @@
 import { projects as sourceProjects, featuredIds } from './data.js?v=project-awards';
 import { bridgeMarkup, steps as bridgeSteps } from './bridge.js?v=team-activity-photos';
-import { caseStudies } from './case-studies.js?v=project-intros-20261118';
+import { caseStudies } from './case-studies.js?v=unified-intros-20261118';
 import { caseStudyMarkup, caseProcessMarkup } from './case-study.js?v=sharp-process-images';
 
 const pdfProjectNames = {
