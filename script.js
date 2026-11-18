@@ -216,14 +216,15 @@ function observeSkillMeters({ reset = false } = {}) {
     skillMeters.forEach(meter => { meter.dataset.fill = 'visible'; });
     return;
   }
-  // Observe the upper half: a bar begins filling as it crosses the viewport midpoint.
+  // The reference SVG's black line sits roughly two-thirds down the browser viewport.
+  const triggerY = Math.round(window.innerHeight * (2 / 3));
   skillMeterObserver = new IntersectionObserver((entries, observer) => {
     for (const { target, isIntersecting } of entries) {
       if (!isIntersecting) continue;
       target.dataset.fill = 'visible';
       observer.unobserve(target);
     }
-  }, { rootMargin: `0px 0px -${Math.round(window.innerHeight / 2)}px 0px`, threshold: 0 });
+  }, { rootMargin: `0px 0px -${window.innerHeight - triggerY}px 0px`, threshold: 0 });
   skillMeters.forEach(meter => {
     if (meter.dataset.fill === 'waiting') skillMeterObserver.observe(meter);
   });
