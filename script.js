@@ -408,8 +408,9 @@ $('#contact-form').addEventListener('submit', event => {
   $('#contact-form-status').textContent = '메일 작성창에서 내용을 확인한 뒤 전송해 주세요.';
 });
 
-const threadScene = $('.thread-scene');
+const threadScene = $('.identity-stage');
 const threadStops = [...threadScene.querySelectorAll('.thread-stop')];
+const threadSteps = [...threadScene.querySelectorAll('.identity-step')];
 const threadPlayback = $('#thread-playback');
 const reducedThreadMotion = matchMedia('(prefers-reduced-motion: reduce)');
 let threadPlaying = !reducedThreadMotion.matches;
@@ -419,7 +420,20 @@ let threadTimer;
 
 function showThreadStep(step) {
   threadStep = step;
-  threadStops.forEach((stop, i) => stop.setAttribute('aria-expanded', String(i === step)));
+  threadStops.forEach((stop, i) => {
+    stop.setAttribute('aria-expanded', String(i <= step));
+    if (i === step) stop.setAttribute('aria-current', 'step');
+    else stop.removeAttribute('aria-current');
+  });
+  threadSteps.forEach((item, i) => {
+    item.classList.toggle('is-visible', i <= step);
+    item.classList.toggle('is-current', i === step);
+    item.setAttribute('aria-hidden', String(i > step));
+  });
+}
+
+function threadStepDelay() {
+  return threadStep === -1 ? 1000 : threadStep === threadStops.length - 1 ? 3400 : 1100;
 }
 
 function scheduleThreadStep(delay) {
@@ -428,15 +442,18 @@ function scheduleThreadStep(delay) {
   threadTimer = setTimeout(() => {
     const next = threadStep + 1;
     showThreadStep(next < threadStops.length ? next : -1);
-    scheduleThreadStep(threadStep === -1 ? 1000 : 3600);
+    scheduleThreadStep(threadStepDelay());
   }, delay);
 }
 
 function setThreadPlaying(playing) {
   threadPlaying = playing;
-  threadPlayback.textContent = playing ? '일시정지' : '자동 재생';
-  threadPlayback.setAttribute('aria-label', playing ? '기획 과정 자동 재생 일시정지' : '기획 과정 자동 재생');
-  scheduleThreadStep(threadStep === -1 ? 850 : 3600);
+  threadPlayback.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${playing ? '<rect x="6" y="6" width="12" height="12" rx="1"/>' : '<path d="m8 5 11 7-11 7V5Z"/>'}</svg>`;
+  const label = playing ? '기획 과정 자동 재생 정지' : '기획 과정 자동 재생';
+  threadPlayback.setAttribute('aria-label', label);
+  threadPlayback.title = label;
+  threadPlayback.setAttribute('aria-pressed', String(playing));
+  scheduleThreadStep(threadStepDelay());
 }
 
 threadStops.forEach((stop, i) => {
@@ -453,14 +470,15 @@ threadStops.forEach((stop, i) => {
 });
 threadPlayback.addEventListener('click', () => {
   if (threadPlaying && threadStep === -1) showThreadStep(0);
+  if (!threadPlaying && threadStep === threadStops.length - 1) showThreadStep(-1);
   setThreadPlaying(!threadPlaying);
 });
 reducedThreadMotion.addEventListener('change', event => {
-  if (event.matches && threadStep === -1) showThreadStep(0);
+  if (event.matches) showThreadStep(threadStops.length - 1);
   setThreadPlaying(!event.matches);
 });
 
-if (reducedThreadMotion.matches) showThreadStep(0);
+if (reducedThreadMotion.matches) showThreadStep(threadStops.length - 1);
 threadPlayback.hidden = false;
 setThreadPlaying(threadPlaying);
 

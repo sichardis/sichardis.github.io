@@ -13,8 +13,8 @@
   <link rel="stylesheet" href="./home.css?v=compact-footer">
   <link rel="stylesheet" href="./projects.css?v=compact-footer">
   <link rel="stylesheet" href="./about.css?v=identity-icons">
-  <link rel="stylesheet" href="./typography.css?v=header-footer-20261118">
-  <script type="module" src="./script.js?v=unified-intros-20261118"></script>
+  <link rel="stylesheet" href="./typography.css?v=identity-layout-20261118">
+  <script type="module" src="./script.js?v=identity-layout-20261118"></script>
 </head>
 <body>
   <a class="skip-link" href="#content">본문으로 건너뛰기</a>
@@ -30,11 +30,12 @@
 
   <main id="content" tabindex="-1">
     <div data-page="home">
-      <section class="hero container" aria-labelledby="hero-title">
+      <section class="hero identity-hero container" aria-labelledby="hero-title">
         <div class="hero-layout">
           <h1 id="hero-title">실마리를 찾아 근거로 매듭짓는 정서영입니다.</h1>
-          <div class="hero-visual thread-scene" role="group" aria-label="실마리에서 매듭까지 이어지는 세 가지 기획 과정">
-            <div class="thread-artwork">
+          <div class="identity-stage" role="group" aria-label="실마리에서 매듭까지 이어지는 세 가지 기획 과정">
+            <div class="hero-visual thread-scene">
+              <div class="thread-artwork">
               <svg class="hero-rope" width="1690" height="480" viewBox="0 0 1690 480" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="hero-rope-title">
                 <title id="hero-rope-title">부드러운 곡선을 그리며 하나의 매듭으로 이어지는 주황색 실</title>
                 <defs>
@@ -66,15 +67,23 @@
                     C1329.92 190.918 1390.62 137.946 1456 92
                     C1516 49 1586 33 1662 33"/>
               </svg>
-              <button class="thread-stop thread-start" type="button" aria-label="실마리를 찾고" aria-expanded="false" aria-controls="thread-tip-1"><img class="thread-icon" src="./assets/thread-search.png" alt="" width="40" height="40"><span class="thread-tip" id="thread-tip-1"><strong>실마리를 찾고</strong><span>사용자의 상황과 작은 불편을 관찰해 해결해야 할 질문을 찾습니다.</span></span></button>
-              <button class="thread-stop thread-weave" type="button" aria-label="실을 엮어서" aria-expanded="false" aria-controls="thread-tip-2"><img class="thread-icon" src="./assets/thread-weave.png" alt="" width="40" height="40"><span class="thread-tip" id="thread-tip-2"><strong>실을 엮어서</strong><span>서로 다른 의견과 근거를 비교해 기획의 방향과 흐름을 정리합니다.</span></span></button>
-              <button class="thread-stop thread-knot" type="button" aria-label="매듭 짓습니다" aria-expanded="false" aria-controls="thread-tip-3"><img class="thread-icon" src="./assets/thread-check.png" alt="" width="40" height="40"><span class="thread-tip" id="thread-tip-3"><strong>매듭 짓습니다</strong><span>핵심 과제의 우선순위를 정하고 선택한 이유를 기획으로 구체화합니다.</span></span></button>
+                <button class="thread-stop thread-start" type="button" aria-label="실마리를 찾고 설명 보기" aria-expanded="false" aria-controls="identity-step-1"><span class="thread-icon"><svg class="identity-marker-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></span></button>
+                <button class="thread-stop thread-weave" type="button" aria-label="실을 엮어서 설명 보기" aria-expanded="false" aria-controls="identity-step-2"><span class="thread-icon"><svg class="identity-marker-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 4v5h-5M4 20v-5h5M5.7 9A7 7 0 0 1 17.3 6L20 9M4 15l2.7 3A7 7 0 0 0 18.3 15"/></svg></span></button>
+                <button class="thread-stop thread-knot" type="button" aria-label="매듭 짓습니다 설명 보기" aria-expanded="false" aria-controls="identity-step-3"><span class="thread-icon"><svg class="identity-marker-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="m8.5 12 2.3 2.3 4.7-4.6"/></svg></span></button>
+              </div>
             </div>
-            <button id="thread-playback" class="thread-playback" type="button" hidden>일시정지</button>
+            <div class="identity-steps">
+              <article class="identity-step" id="identity-step-1" aria-hidden="true"><h2><svg class="identity-step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg><span>실마리를 찾고</span></h2><p>사용자의 상황과 작은 불편을 관찰해 해결해야 할 질문을 찾습니다.</p></article>
+              <article class="identity-step" id="identity-step-2" aria-hidden="true"><h2><svg class="identity-step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 4v5h-5M4 20v-5h5M5.7 9A7 7 0 0 1 17.3 6L20 9M4 15l2.7 3A7 7 0 0 0 18.3 15"/></svg><span>실을 엮어서</span></h2><p>서로 다른 의견과 근거를 비교해 기획의 방향과 흐름을 정리합니다.</p></article>
+              <article class="identity-step" id="identity-step-3" aria-hidden="true"><h2><svg class="identity-step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="m8.5 12 2.3 2.3 4.7-4.6"/></svg><span>매듭 짓습니다</span></h2><p>핵심 과제의 우선순위를 정하고 선택한 이유를 기획으로 구체화합니다.</p></article>
+            </div>
           </div>
-          <div class="document-links">
-            <a class="document-button" href="./assets/seoyeong-resume.pdf" download="정서영_이력서.pdf">이력서 · 경험의 실 담아가기</a>
-            <a class="document-button" href="./assets/seoyeong-cover-letter.pdf" download="정서영_자기소개서.pdf">자기소개서 · 생각의 매듭 담아가기</a>
+          <div class="identity-footer">
+            <div class="document-links">
+              <a class="document-button" href="./assets/seoyeong-resume.pdf" download="정서영_이력서.pdf">이력서 · 경험의 실 담아가기</a>
+              <a class="document-button" href="./assets/seoyeong-cover-letter.pdf" download="정서영_자기소개서.pdf">자기소개서 · 생각의 매듭 담아가기</a>
+            </div>
+            <button id="thread-playback" class="thread-playback" type="button" hidden aria-label="기획 과정 자동 재생 정지" title="자동 재생 정지"><svg class="identity-playback-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="1"/></svg></button>
           </div>
         </div>
         <a class="explore-link" href="#selected">대표 프로젝트 보러 가기 <span aria-hidden="true">↓</span></a>
