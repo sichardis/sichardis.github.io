@@ -208,15 +208,29 @@ window.addEventListener('scroll',queueDetailIndexUpdate,{passive:true});
 window.addEventListener('resize',queueDetailIndexUpdate,{passive:true});
 
 const skillMeters = document.querySelectorAll('.tool-level .skill-meter');
-const skillMeterObserver = 'IntersectionObserver' in window
-  ? new IntersectionObserver((entries, observer) => {
-      for (const { target, intersectionRatio } of entries) {
-        if (intersectionRatio < 0.5) continue;
-        target.dataset.fill = 'visible';
-        observer.unobserve(target);
-      }
-    }, { threshold: 0.5 })
-  : null;
+let skillMeterObserver;
+function observeSkillMeters({ reset = false } = {}) {
+  skillMeterObserver?.disconnect();
+  if (reset) skillMeters.forEach(meter => { meter.dataset.fill = 'waiting'; });
+  if (!('IntersectionObserver' in window)) {
+    skillMeters.forEach(meter => { meter.dataset.fill = 'visible'; });
+    return;
+  }
+  // Observe the upper half: a bar begins filling as it crosses the viewport midpoint.
+  skillMeterObserver = new IntersectionObserver((entries, observer) => {
+    for (const { target, isIntersecting } of entries) {
+      if (!isIntersecting) continue;
+      target.dataset.fill = 'visible';
+      observer.unobserve(target);
+    }
+  }, { rootMargin: `0px 0px -${Math.round(window.innerHeight / 2)}px 0px`, threshold: 0 });
+  skillMeters.forEach(meter => {
+    if (meter.dataset.fill === 'waiting') skillMeterObserver.observe(meter);
+  });
+}
+window.addEventListener('resize', () => {
+  if (previousPage === 'about') observeSkillMeters();
+});
 
 function renderRoute({ focus = false } = {}) {
   if (previousPage === 'projects') listScroll = window.scrollY;
@@ -243,12 +257,8 @@ function renderRoute({ focus = false } = {}) {
     name = renderDetail(id);
   }
   $('#content').classList.toggle('case-study-page', detail && Boolean(detailProject));
-  if (page === 'about' && previousPage !== 'about' && skillMeterObserver) {
-    for (const meter of skillMeters) {
-      meter.dataset.fill = 'waiting';
-      skillMeterObserver.observe(meter);
-    }
-  }
+  if (page === 'about' && previousPage !== 'about') observeSkillMeters({reset: true});
+  else if (page !== 'about') skillMeterObserver?.disconnect();
   const restoreList = page === 'projects' && previousPage === 'detail';
   previousPage = page;
   queueDetailIndexUpdate();
