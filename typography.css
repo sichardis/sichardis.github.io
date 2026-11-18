@@ -741,3 +741,60 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
   from { opacity: 0; }
   to { opacity: 1; }
 }
+
+/* Catalog cards keep the wide thumbnails with a compact editorial body. */
+.work-grid { gap: 28px 24px; align-items: stretch; }
+.work-grid .project-card-link {
+  height: 100%;
+  border: 1px solid #efdfd2;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 3px 14px #46230705;
+  overflow: hidden;
+  transition: translate 460ms var(--motion-spring), scale 380ms var(--motion-spring),
+    border-color var(--hover-color-timing), box-shadow 320ms var(--motion-settle);
+}
+.work-grid .project-card-link:is(:hover, :focus-visible) {
+  border-color: var(--accent-line);
+  box-shadow: 0 12px 28px #743a0a12;
+}
+.work-grid .project-image {
+  flex: 0 0 auto;
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid #f1e9e2;
+  border-radius: 0;
+}
+.project-card-body { display: flex; flex-direction: column; flex: 1; padding: 22px; }
+.project-card-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+.project-card-tags > span {
+  padding: 3px 8px;
+  border: 1px solid var(--accent-line);
+  border-radius: 6px;
+  background: #fff8f1;
+  color: #a84c08;
+  font-size: 11px;
+  line-height: 1.5;
+}
+.work-grid .project-card h3 { margin: 0; font-size: 18px; font-weight: 600; line-height: 1.45; }
+.work-grid .project-card-description { margin: 10px 0 0; color: #b55108; font-size: 14px; line-height: 1.55; }
+.project-card-introduction { margin-top: 12px; margin-bottom: 22px; color: #737373; font-size: 13px; line-height: 1.65; }
+.project-card-award { margin: -6px 0 20px; color: #995019; font-size: 11px; line-height: 1.5; }
+.work-grid .project-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid #f0e8e1;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.work-grid .project-card-meta > span { display: inline-flex; align-items: center; gap: 7px; margin: 0; }
+.work-grid .project-card-meta span span { display: inline; margin: 0; }
+.project-card-meta svg { flex: 0 0 18px; width: 18px; height: 18px; color: #c56a21; }
+@media (max-width: 800px) {
+  .work-grid { gap: 24px 18px; }
+  .project-card-body { padding: 18px; }
+  .work-grid .project-card h3 { font-size: 17px; }
+}

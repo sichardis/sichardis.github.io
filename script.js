@@ -75,6 +75,32 @@ function card(project, {featured = false, priority = 'auto', filterOrder} = {}) 
   const ongoing = project.filter === 'ongoing' || project.status === 'ongoing';
   const date = featured && ongoing ? `${period} · 진행 중` : period;
   const animationStyle = Number.isInteger(filterOrder) ? ` style="--filter-delay:${30 + filterOrder * 42}ms"` : '';
+  if (!featured) {
+    const study = caseStudies[project.id] || {};
+    const methods = project.documentType === 'storyboard'
+      ? ['화면설계', '이용 흐름']
+      : ({chak:['서비스 기획', 'MVP 검증'], bridge:['사용자 조사', '정보 구조'],
+          korail:['사용성 테스트', '아이트래킹'], bluedog:['현장 조사', '서비스 기획'],
+          rocketfresh:['UX 리뉴얼', '화면 제안'], kaywon:['UX 리뉴얼', '정보 구조']})[project.id] || [];
+    const tags = [featuredIds.includes(project.id) ? '대표' : '', documentLabel, ...methods].filter(Boolean);
+    const team = study.team || (project.id === 'bridge' ? '3인' : '');
+    const introduction = study.lead || project.lead;
+    const award = project.award?.shortTitle ?? project.award?.title;
+    const icon = kind => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${kind === 'calendar'
+      ? '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4m10-4v4M3 11h18"/>'
+      : '<circle cx="9" cy="7" r="3"/><path d="M3 21v-3a6 6 0 0 1 12 0v3m1-17a3 3 0 0 1 0 6m3 11v-3a6 6 0 0 0-2-4"/>'}</svg>`;
+    return `<article class="project-card"${animationStyle}><a class="project-card-link" href="${projectUrl(project.id)}">
+      <div class="project-image">${image}</div>
+      <div class="project-card-body">
+        <div class="project-card-tags">${tags.map(tag => `<span>${escape(tag)}</span>`).join('')}</div>
+        <h3>${escape(title)}</h3>
+        <p class="project-card-description">${description}</p>
+        <p class="project-card-introduction">${escape(introduction)}</p>
+        ${award ? `<p class="project-card-award">${escape(award)}</p>` : ''}
+        <div class="project-card-meta">${date ? `<span>${icon('calendar')}<span>${escape(date)}</span></span>` : ''}${team ? `<span>${icon('team')}<span>${escape(team)}</span></span>` : ''}</div>
+      </div>
+    </a></article>`;
+  }
   return `<article class="project-card"${animationStyle}><a class="project-card-link" href="${projectUrl(project.id)}">
     <div class="project-image">${image}</div>
     <h3>${escape(title)}</h3>
