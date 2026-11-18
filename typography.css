@@ -791,7 +791,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
 .project-card--panel h3 { margin: 0; font-size: 18px; font-weight: 600; line-height: 1.45; }
 .project-card--panel .project-card-description { margin: 10px 0 0; color: #b55108; font-size: 14px; line-height: 1.55; }
 .project-card-introduction { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; overflow: hidden; min-height: 3.3em; margin-top: 12px; margin-bottom: 22px; color: #555; font-size: 13px; line-height: 1.65; }
-.project-card-award { display: flex; align-items: center; gap: 9px; width: fit-content; max-width: 100%; margin: -4px 0 20px; padding: 10px 12px; border: 1px solid var(--accent-line); border-radius: 6px; background: #fff8f0; color: var(--accent); font-size: 13px; font-weight: 650; line-height: 1.5; }
+.project-card-award { display: flex; align-items: center; gap: 9px; max-width: 100%; margin: -4px 0 20px; color: var(--accent); font-size: 13px; font-weight: 650; line-height: 1.5; }
 .project-award-trophy { flex: 0 0 auto; font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif; font-size: 22px; font-weight: 400; line-height: 1.2; }
 .project-card--panel .project-card-meta {
   display: flex;
