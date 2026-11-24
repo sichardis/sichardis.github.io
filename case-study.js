@@ -11,7 +11,7 @@ const sectionLabels = [
 
 export function detailIndexButtons(projectId, hasTeamPhotos = true) {
   const labels = hasTeamPhotos ? sectionLabels : sectionLabels.slice(0, -1);
-  return `<div class="reading-status"><p>프로젝트의 흐름</p><span class="reading-position">요약 · 1 / ${labels.length}</span><span class="reading-progress" aria-hidden="true"></span></div>` + labels.map(([key, label]) =>
+  return labels.map(([key, label]) =>
     `<button type="button" data-section="${projectId}-${key}">${label}</button>`).join('');
 }
 
@@ -97,17 +97,15 @@ export function caseProcessMarkup(project, steps, index, escape) {
   const media = project.id === 'bridge'
     ? `<img class="case-process-media" src="./assets/bridge-process-${index + 1}.jpg" alt="브릿지 ${escape(step.title)} 원본 자료" width="1600" height="900" decoding="async">`
     : processMedia(step, escape, {placeholder:project.processImagePlaceholder});
-  const canZoom = project.id === 'bridge' || (step.image && !project.processImagePlaceholder);
   return `<h2 id="process-title">${escape(step.title)}</h2>
     <p class="process-summary">${escape(step.summary)}</p>
-    ${canZoom ? `<button class="process-zoom" type="button" data-process-zoom aria-label="${escape(step.title)} 자료 확대">${media}<span>자료 확대</span></button>` : media}
-    <div class="process-stage-controls">
+    <div class="process-media-row">
       <button class="process-arrow" type="button" data-process-prev aria-label="이전 단계"${index === 0 ? ' disabled' : ''}>
-        이전 단계
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5-7 7 7 7"/></svg>
       </button>
-      <span>${index + 1} / ${steps.length}</span>
+      ${media}
       <button class="process-arrow" type="button" data-process-next aria-label="${index + 1 === steps.length ? '첫 단계로' : '다음 단계'}">
-        ${index + 1 === steps.length ? '처음부터 보기' : '다음 단계'}
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
       </button>
     </div>
     ${step.sections.map(([title, text]) => `<section class="process-explanation"><h3>${escape(title)}</h3><p>${escape(text)}</p></section>`).join('')}`;

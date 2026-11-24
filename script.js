@@ -1,8 +1,7 @@
 import { projects as sourceProjects, featuredIds } from './data.js?v=project-awards';
-import { bridgeMarkup, steps as bridgeSteps } from './bridge.js?v=exploration-20261124';
+import { bridgeMarkup, steps as bridgeSteps } from './bridge.js?v=unified-trophy-20261124';
 import { caseStudies } from './case-studies.js?v=storyboard-authors-20261118';
-import { caseStudyMarkup, caseProcessMarkup } from './case-study.js?v=exploration-20261124';
-import { lenses, replaceCards, transitionView } from './exploration.js?v=exploration-20261124';
+import { caseStudyMarkup, caseProcessMarkup } from './case-study.js?v=unified-trophy-20261124';
 
 const pdfProjectNames = {
   chak: '착!(Chak!)',
@@ -26,13 +25,10 @@ const documentOrder = ['chak','bridge','korail','bluedog','lotte','rocketfresh',
 projects.sort((a,b)=>documentOrder.indexOf(a.id)-documentOrder.indexOf(b.id));
 const filters = [['all','전체'],['featured','대표'],['plan','기획서'],['report','보고서'],['proposal','제안서'],['storyboard','화면설계서']];
 let listScroll = 0;
-let homeScroll = 0;
-let aboutScroll = 0;
-let detailOrigin = 'projects';
-let featuredLens = 'all';
 let previousPage = '';
 let processIndex = 0;
 let detailProject;
+let filterUpdateTimer;
 const $ = (selector) => document.querySelector(selector);
 const escape = (value = '') => String(value).replace(/[&<>"']/g, (character) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[character]));
 const projectUrl = (id) => `#/project/${encodeURIComponent(id)}`;
@@ -53,7 +49,7 @@ const summaries = {
   'kaywon-storyboard': '학사·입시 정보와 퀵서비스 화면 설계',
 };
 
-function card(project, {featured = false, priority = 'auto'} = {}) {
+function card(project, {featured = false, priority = 'auto', filterOrder} = {}) {
   const description = escape(summaries[project.id] || project.subtitle);
   const image = project.cover
     ? `<img src="${escape(project.coverThumb || project.cover)}" alt="${escape(project.title)} 프로젝트 표지" width="768" height="432" loading="lazy" decoding="async" fetchpriority="${priority}">`
@@ -72,6 +68,7 @@ function card(project, {featured = false, priority = 'auto'} = {}) {
     kaywon: '2026.09–12',
   }[sourceId] || project.year || '';
   const date = period;
+  const animationStyle = Number.isInteger(filterOrder) ? ` style="--filter-delay:${30 + filterOrder * 42}ms"` : '';
     const study = caseStudies[project.id] || {};
     const methods = project.documentType === 'storyboard'
       ? ['화면설계', '이용 흐름']
@@ -85,8 +82,8 @@ function card(project, {featured = false, priority = 'auto'} = {}) {
     const icon = kind => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${kind === 'calendar'
       ? '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4m10-4v4M3 11h18"/>'
       : '<circle cx="9" cy="7" r="3"/><path d="M3 21v-3a6 6 0 0 1 12 0v3m1-17a3 3 0 0 1 0 6m3 11v-3a6 6 0 0 0-2-4"/>'}</svg>`;
-    return `<article class="project-card project-card--panel" data-project-id="${project.id}" style="view-transition-name:card-${project.id}"><a class="project-card-link" href="${projectUrl(project.id)}">
-      <div class="project-image" style="view-transition-name:cover-${project.id}">${image}</div>
+    return `<article class="project-card project-card--panel"${animationStyle}><a class="project-card-link" href="${projectUrl(project.id)}">
+      <div class="project-image">${image}</div>
       <div class="project-card-body">
         <div class="project-card-tags">${tags.map(tag => `<span>${escape(tag)}</span>`).join('')}</div>
         <h3>${escape(title)}</h3>
@@ -98,21 +95,21 @@ function card(project, {featured = false, priority = 'auto'} = {}) {
     </a></article>`;
 }
 
-function renderFeatured({animate = false} = {}) {
-  const lens = lenses.find(item => item.id === featuredLens);
-  const selected = lens ? lens.projects : featuredIds;
-  const featured = selected.map(id => projects.find(project => project.id === id)).filter(Boolean);
-  const transition = replaceCards($('#featured-grid'), featured.map((project, index) => card(project, {featured: true, priority: index === 0 ? 'high' : 'auto'})).join(''), animate);
-  document.querySelectorAll('[data-lens]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.lens === featuredLens)));
-  $('#featured-context').textContent = lens ? `${lens.label} 관점으로 살펴보는 ${featured.length}개의 프로젝트` : '사용자의 필요를 발견하고 해결로 이어간 대표 프로젝트';
-  return transition;
-}
-
 function renderProjects({animate = false, focusFilter = false} = {}) {
+  clearTimeout(filterUpdateTimer);
+  const featured = featuredIds.map((id) => projects.find((project) => project.id === id)).filter(Boolean);
+  $('#featured-grid').innerHTML = featured.map((project, index) => card(project, {featured: true, priority: index === 0 ? 'high' : 'auto'})).join('');
   const visible = projects.filter(p => activeFilter === 'all' || (activeFilter === 'featured' ? featuredIds.includes(p.id) : p.documentType === activeFilter));
   $('.filters').innerHTML = filters.map(([id,label])=>`<button type="button" data-filter="${id}" aria-pressed="${id===activeFilter}">${label} ${projects.filter(p=>id==='all'||(id==='featured'?featuredIds.includes(p.id):p.documentType===id)).length}</button>`).join('');
   const workGrid = $('#work-grid');
-  replaceCards(workGrid, visible.map((project, index) => card(project, {priority: index === 0 ? 'high' : 'auto', filterOrder: index})).join(''), animate);
+  workGrid.classList.remove('is-filtering', 'is-filter-prepared', 'is-filter-entering');
+  workGrid.innerHTML = visible.map((project, index) => card(project, {priority: index === 0 ? 'high' : 'auto', filterOrder: index})).join('');
+  if (animate && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    workGrid.classList.add('is-filter-prepared');
+    void workGrid.offsetWidth;
+    workGrid.classList.remove('is-filter-prepared');
+    workGrid.classList.add('is-filter-entering');
+  }
   $('#project-count').textContent = `${activeFilter === 'all' ? '전체' : '해당'} ${visible.length}개`;
   if (focusFilter) requestAnimationFrame(() => $(`[data-filter="${activeFilter}"]`)?.focus({preventScroll:true}));
 }
@@ -121,7 +118,15 @@ function setProjectFilter(filter) {
   if (filter === activeFilter) return;
   activeFilter = filter;
   document.querySelectorAll('[data-filter]').forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.filter === activeFilter)));
-  renderProjects({animate:true, focusFilter:true});
+  const workGrid = $('#work-grid');
+  clearTimeout(filterUpdateTimer);
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    renderProjects({focusFilter:true});
+    return;
+  }
+  workGrid.classList.remove('is-filter-prepared', 'is-filter-entering');
+  workGrid.classList.add('is-filtering');
+  filterUpdateTimer = setTimeout(() => renderProjects({animate:true, focusFilter:true}), 160);
 }
 
 function detailHero(project) {
@@ -134,15 +139,10 @@ function detailHero(project) {
     <div class="detail-heading"><p class="eyebrow">${escape([project.year,detailType].filter(Boolean).join(' / '))}</p><h1 id="detail-title">${escape(project.title)}</h1><p class="detail-subtitle">${escape(project.subtitle)}</p></div>
     <p class="detail-lead">${escape(project.lead)}</p>
     <dl class="detail-facts">${detailRole ? `<div><dt>담당 역할</dt><dd>${escape(detailRole)}</dd></div>` : ''}<div><dt>프로젝트 유형</dt><dd>${escape(detailType)}</dd></div>${project.year ? `<div><dt>기간</dt><dd>${escape(detailPeriod)}</dd></div>` : ''}</dl>
-    <div class="project-overview"><div><p class="overview-label">이 프로젝트에서 이룬 것</p><p class="overview-result">${escape(project.results?.[0] || project.outcome || project.lead)}</p></div><div class="overview-actions"><button type="button" data-process="0">과정 살펴보기</button><button type="button" data-section="${project.id}-result">결과 자세히 보기</button></div></div>
-    ${project.cover ? `<img class="${coverClass}" style="view-transition-name:cover-${project.id}" src="${escape(project.cover)}" alt="${escape(project.title)} 프로젝트 표지" width="1920" height="1080" fetchpriority="high" decoding="async">` : ''}`;
+    ${project.cover ? `<img class="${coverClass}" src="${escape(project.cover)}" alt="${escape(project.title)} 프로젝트 표지" width="1920" height="1080" fetchpriority="high" decoding="async">` : ''}`;
 }
 
 function renderDetail(id) {
-  if (previousPage && previousPage !== 'detail') detailOrigin = previousPage;
-  const back = $('.detail-toolbar .back-link');
-  back.href = detailOrigin === 'home' ? '#/' : detailOrigin === 'about' ? '#/about' : '#/projects';
-  back.textContent = detailOrigin === 'home' ? '둘러보던 프로젝트로' : detailOrigin === 'about' ? '프로필로 돌아가기' : '전체 프로젝트 목록';
   const baseProject = projects.find((project) => project.id === id);
   const pdfTitleSuffix = baseProject?.documentType === 'storyboard' ? ' 화면설계서' : '';
   const project = baseProject && {
@@ -172,16 +172,10 @@ function renderDetail(id) {
 // Keep the section index in sync with both click navigation and manual scrolling.
 let detailIndexFrame = 0;
 function setDetailSection(id) {
-  const buttons = [...document.querySelectorAll('.section-index [data-section]')];
-  buttons.forEach(button => {
+  document.querySelectorAll('.section-index [data-section]').forEach(button => {
     if (button.dataset.section === id) button.setAttribute('aria-current','location');
     else button.removeAttribute('aria-current');
   });
-  const current = Math.max(0, buttons.findIndex(button => button.dataset.section === id));
-  const label = $('.reading-position');
-  if (label && buttons.length) label.textContent = `${buttons[current].textContent} · ${current + 1} / ${buttons.length}`;
-  const meter = $('.reading-progress');
-  if (meter) meter.style.setProperty('--reading-progress', `${(current + 1) / buttons.length * 100}%`);
 }
 function queueDetailIndexUpdate() {
   if (detailIndexFrame) return;
@@ -241,9 +235,6 @@ window.addEventListener('resize', () => {
 
 function renderRoute({ focus = false } = {}) {
   if (previousPage === 'projects') listScroll = window.scrollY;
-  if (previousPage === 'home') homeScroll = window.scrollY;
-  if (previousPage === 'about') aboutScroll = window.scrollY;
-  if (imageDialog.open) imageDialog.close();
   if (processDialog.open) processDialog.close();
   const hash = location.hash || '#/';
   if (hash === '#content') {
@@ -270,17 +261,11 @@ function renderRoute({ focus = false } = {}) {
   if (page === 'about' && previousPage !== 'about') observeSkillMeters({reset: true});
   else if (page !== 'about') skillMeterObserver?.disconnect();
   const restoreList = page === 'projects' && previousPage === 'detail';
-  const restoreHome = page === 'home' && previousPage === 'detail';
-  const restoreAbout = page === 'about' && previousPage === 'detail';
   previousPage = page;
   queueDetailIndexUpdate();
   document.title = `${name} | 정서영 포트폴리오`;
   if (sectionLink) requestAnimationFrame(scrollToFeatured);
-  else { window.scrollTo({top:restoreList ? listScroll : restoreHome ? homeScroll : restoreAbout ? aboutScroll : 0,behavior:'instant'}); if (focus) $('#content').focus({preventScroll:true}); }
-  if (route[2]) requestAnimationFrame(() => {
-    const target = document.getElementById(`${id}-${route[2]}`);
-    if (target) { target.focus({preventScroll:true}); target.scrollIntoView({behavior:'instant'}); queueDetailIndexUpdate(); }
-  });
+  else { window.scrollTo({top:restoreList ? listScroll : 0,behavior:'instant'}); if (focus) $('#content').focus({preventScroll:true}); }
 }
 
 $('.filters').addEventListener('click', event => {
@@ -313,7 +298,6 @@ document.querySelectorAll('a[href="#/"], a[href="#/about"]').forEach((link) => {
   });
 });
 const processDialog = $('#process-dialog');
-const imageDialog = $('#image-dialog');
 let pdfPending = false;
 
 async function downloadPdfParts({folder, count, size}, filename) {
@@ -361,16 +345,14 @@ $('#content').addEventListener('click', event => {
   }
 });
 
-let processOpener;
-function openProcess(index, {focus = true} = {}) {
+function openProcess(index) {
   const steps = detailProject.steps ?? bridgeSteps;
   const count = steps.length;
   processIndex = Math.max(0, Math.min(count - 1, index));
-  const name = `${detailProject.title} 과정`;
+  const name = `${detailProject.title} · 과정`;
   $('.process-dialog-meta').textContent = name;
   $('.process-dialog-step').textContent = `${String(processIndex + 1).padStart(2, '0')} / ${String(count).padStart(2, '0')}`;
   $('#process-content').innerHTML = caseProcessMarkup(detailProject, steps, processIndex, escape);
-  $('#process-navigation').innerHTML = `<p class="process-navigation-label">기획의 흐름</p>${steps.map((step, i) => `<button type="button" data-process-select="${i}"${i === processIndex ? ' aria-current="step"' : ''}><span class="process-step-node" aria-hidden="true"></span><span>${escape(step.title)}</span></button>`).join('')}`;
   if (processDialog.open && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
     const content = $('#process-content');
     content.getAnimations().forEach(animation => animation.cancel());
@@ -379,21 +361,10 @@ function openProcess(index, {focus = true} = {}) {
       {opacity: 1, transform: 'translateY(0) scale(1)'},
     ], {duration: 380, easing: 'cubic-bezier(.22, 1, .36, 1)'});
   }
-  if (!processDialog.open) { processOpener = document.activeElement; processDialog.showModal(); }
-  $('#process-content').scrollTop = 0;
-  const navigation = $('#process-navigation');
-  const current = navigation.querySelector('[aria-current]');
-  if (current) {
-    const item = current.getBoundingClientRect(), bounds = navigation.getBoundingClientRect();
-    if (matchMedia('(max-width:800px)').matches) {
-      if (item.left < bounds.left || item.right > bounds.right) navigation.scrollLeft += item.left - bounds.left - 16;
-    } else {
-      if (item.top < bounds.top) navigation.scrollTop -= bounds.top - item.top + 12;
-      else if (item.bottom > bounds.bottom) navigation.scrollTop += item.bottom - bounds.bottom + 12;
-    }
-  }
+  if (!processDialog.open) processDialog.showModal();
+  processDialog.scrollTop = 0;
   $('#process-title').setAttribute('tabindex','-1');
-  if (focus) $('#process-title').focus({preventScroll:true});
+  $('#process-title').focus({preventScroll:true});
 }
 $('#detail-content').addEventListener('click', event => {
   const process = event.target.closest('[data-process]');
@@ -407,21 +378,7 @@ $('#detail-content').addEventListener('click', event => {
   }
 });
 processDialog.querySelector('.process-close').addEventListener('click',()=>processDialog.close());
-processDialog.addEventListener('close', () => processOpener?.isConnected && processOpener.focus({preventScroll:true}));
 processDialog.addEventListener('click',event=>{
-  const selected = event.target.closest('[data-process-select]');
-  if (selected) openProcess(Number(selected.dataset.processSelect));
-  const zoom = event.target.closest('[data-process-zoom]');
-  if (zoom) {
-    const source = zoom.querySelector('img');
-    $('#image-dialog-image').src = source.src;
-    $('#image-dialog-image').alt = source.alt;
-    $('#image-dialog-title').textContent = (detailProject.steps ?? bridgeSteps)[processIndex].title;
-    imageDialog.classList.remove('is-original-size');
-    $('[data-image-size]').setAttribute('aria-pressed', 'false');
-    $('[data-image-size]').textContent = '원본 크기';
-    imageDialog.showModal();
-  }
   if (event.target.closest('[data-process-next]')) openProcess((processIndex+1)%(detailProject.steps ?? bridgeSteps).length);
   if (event.target.closest('[data-process-prev]')) openProcess(Math.max(0,processIndex-1));
   if (event.target === processDialog) {
@@ -429,30 +386,7 @@ processDialog.addEventListener('click',event=>{
     if(event.clientX<b.left||event.clientX>b.right||event.clientY<b.top||event.clientY>b.bottom) processDialog.close();
   }
 });
-processDialog.addEventListener('keydown', event => {
-  if (event.altKey || event.ctrlKey || event.metaKey || !['ArrowLeft','ArrowRight'].includes(event.key)) return;
-  event.preventDefault();
-  const steps = detailProject.steps ?? bridgeSteps;
-  openProcess(Math.max(0, Math.min(steps.length - 1, processIndex + (event.key === 'ArrowRight' ? 1 : -1))));
-});
-$('[data-image-close]').addEventListener('click', () => imageDialog.close());
-$('[data-image-size]').addEventListener('click', event => {
-  const original = imageDialog.classList.toggle('is-original-size');
-  event.currentTarget.setAttribute('aria-pressed', String(original));
-  event.currentTarget.textContent = original ? '화면에 맞추기' : '원본 크기';
-});
-// GNB and history render immediately; only an explicit project-card click animates.
-let animateCardRoute = false;
-document.addEventListener('click', event => {
-  animateCardRoute = Boolean(event.target.closest('.project-card-link'));
-}, {capture: true});
-window.addEventListener('hashchange', () => {
-  const animate = animateCardRoute;
-  animateCardRoute = false;
-  if (animate) transitionView(() => renderRoute({focus:true}));
-  else renderRoute({focus:true});
-});
-renderFeatured();
+window.addEventListener('hashchange' , () => renderRoute({focus:true}));
 renderProjects();
 renderRoute();
 
@@ -525,8 +459,7 @@ function setThreadPlaying(playing) {
 threadStops.forEach((stop, i) => {
   stop.addEventListener('click', () => {
     setThreadPlaying(false);
-    showThreadStep(i);
-    selectLens(lenses[i].id, {jump: true});
+    showThreadStep(threadStep === i ? -1 : i);
   });
   stop.addEventListener('keydown', event => {
     if (event.key === 'Escape' && threadStep === i) {
@@ -534,23 +467,6 @@ threadStops.forEach((stop, i) => {
       showThreadStep(-1);
     }
   });
-});
-function selectLens(id, {jump = false} = {}) {
-  featuredLens = id;
-  threadSteps.forEach(item => { item.classList.add('is-visible'); item.setAttribute('aria-hidden', 'false'); });
-  const transition = renderFeatured({animate: true});
-  if (jump) {
-    if (transition?.finished) transition.finished.then(scrollToFeatured).catch(() => {});
-    else scrollToFeatured();
-  }
-}
-document.addEventListener('click', event => {
-  const button = event.target.closest('[data-lens]');
-  if (!button) return;
-  const index = lenses.findIndex(lens => lens.id === button.dataset.lens);
-  setThreadPlaying(false);
-  showThreadStep(index);
-  selectLens(button.dataset.lens, {jump: Boolean(button.closest('.identity-stage'))});
 });
 threadPlayback.addEventListener('click', () => {
   if (threadPlaying && threadStep === -1) showThreadStep(0);
