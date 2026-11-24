@@ -441,7 +441,17 @@ $('[data-image-size]').addEventListener('click', event => {
   event.currentTarget.setAttribute('aria-pressed', String(original));
   event.currentTarget.textContent = original ? '화면에 맞추기' : '원본 크기';
 });
-window.addEventListener('hashchange' , () => transitionView(() => renderRoute({focus:true})));
+// GNB and history render immediately; only an explicit project-card click animates.
+let animateCardRoute = false;
+document.addEventListener('click', event => {
+  animateCardRoute = Boolean(event.target.closest('.project-card-link'));
+}, {capture: true});
+window.addEventListener('hashchange', () => {
+  const animate = animateCardRoute;
+  animateCardRoute = false;
+  if (animate) transitionView(() => renderRoute({focus:true}));
+  else renderRoute({focus:true});
+});
 renderFeatured();
 renderProjects();
 renderRoute();
