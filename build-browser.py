@@ -9,7 +9,7 @@ import re
 
 ROOT = Path(__file__).resolve().parent
 IMPORT = re.compile(r"^import\s+\{([^}]+)\}\s+from\s+['\"]([^'\"]+)['\"];?\s*$", re.M)
-EXPORT = re.compile(r"\bexport\s+(const|let|function)\s+(\w+)")
+EXPORT = re.compile(r"\bexport\s+(const|let|(?:async\s+)?function)\s+(\w+)")
 
 
 def build():

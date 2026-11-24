@@ -2,6 +2,8 @@ import { projects as sourceProjects, featuredIds } from './data.js?v=project-awa
 import { bridgeMarkup, steps as bridgeSteps } from './bridge.js?v=unified-trophy-20261124';
 import { caseStudies } from './case-studies.js?v=storyboard-authors-20261118';
 import { caseStudyMarkup, caseProcessMarkup } from './case-study.js?v=unified-trophy-20261124';
+import { contactConfig } from './contact-config.js';
+import { initContactForm } from './contact.js';
 
 const pdfProjectNames = {
   chak: '착!(Chak!)',
@@ -458,23 +460,7 @@ window.addEventListener('hashchange' , () => renderRoute({focus:true}));
 renderProjects();
 renderRoute();
 
-function contactMailUrl({name, email, message}) {
-  const subject = `[포트폴리오 문의] ${name.trim()}님이 남긴 메시지`;
-  const body = `이름: ${name.trim()}\r\n이메일: ${email.trim()}\r\n\r\n${message.trim()}`;
-  return `mailto:richardis6551@naver.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-}
-$('#contact-form').addEventListener('submit', event => {
-  event.preventDefault();
-  const form = event.currentTarget;
-  if (!form.reportValidity()) return;
-  const fields = Object.fromEntries(new FormData(form));
-  if (!fields.name.trim() || !fields.message.trim()) {
-    $('#contact-form-status').textContent = '이름과 메시지를 입력해 주세요.';
-    return;
-  }
-  window.location.href = contactMailUrl(fields);
-  $('#contact-form-status').textContent = '메일 작성창에서 내용을 확인한 뒤 전송해 주세요.';
-});
+initContactForm($('#contact-form'), contactConfig);
 
 const threadScene = $('.identity-stage');
 const threadStops = [...threadScene.querySelectorAll('.thread-stop')];
