@@ -131,10 +131,9 @@ function featuredCase(project) {
   const award = project.award?.shortTitle ?? project.award?.title;
   const team = study.team || (project.id === 'bridge' ? '3인' : '');
   return `<article class="featured-case featured-case--${escape(project.id)}" id="case-${escape(project.id)}" role="tabpanel" aria-labelledby="featured-tab-${escape(project.id)}">
-    <a class="featured-case-visual" href="${projectUrl(project.id)}" aria-label="${escape(note.name)} 프로젝트 상세 보기">
+    <div class="featured-case-visual">
       <img src="${escape(project.cover)}" alt="${escape(note.name)} 프로젝트 대표 이미지" width="1920" height="1080" loading="lazy" decoding="async">
-      <span class="featured-image-action">프로젝트 살펴보기</span>
-    </a>
+    </div>
     <div class="featured-case-copy">
       <div class="featured-case-context"><p>${escape(note.name)}</p><span>${escape(note.methods)}</span></div>
       <h3 id="case-title-${escape(project.id)}" tabindex="-1"><a href="${projectUrl(project.id)}">${note.headline.map(line => `<span>${escape(line)}</span>`).join('')}</a></h3>
