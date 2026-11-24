@@ -137,12 +137,12 @@ function featuredCase(project) {
       <div class="featured-case-context"><p>${escape(note.name)}</p><span>${escape(note.methods)}</span></div>
       <h3 id="case-title-${escape(project.id)}" tabindex="-1"><a href="${projectUrl(project.id)}">${note.headline.map(line => `<span>${escape(line)}</span>`).join('')}</a></h3>
       <p class="featured-case-intro">${escape(study.lead || project.lead)}</p>
+      ${award ? `<p class="featured-award"><span class="project-award-trophy" aria-hidden="true">🏆</span>${escape(award)}</p>` : ''}
       <dl class="featured-reasoning">
         <div><dt>담당 역할</dt><dd>${leader ? '<span class="featured-leader">팀장</span>' : ''}${escape(role.replace('팀장 · ', ''))}</dd></div>
         <div><dt>핵심 선택</dt><dd>${escape(note.decision)}</dd></div>
         <div class="featured-evidence"><dt>이뤄낸 결과</dt><dd>${escape(note.evidence)}</dd></div>
       </dl>
-      ${award ? `<p class="featured-award"><span class="project-award-trophy" aria-hidden="true">🏆</span>${escape(award)}</p>` : ''}
       <div class="featured-case-footer"><p>${escape(note.period)}<span>${escape(team)}</span></p><a href="${projectUrl(project.id)}">기획 과정 살펴보기</a></div>
     </div>
   </article>`;
@@ -342,10 +342,6 @@ function scrollToFeatured() {
   title.focus({preventScroll:true});
   title.scrollIntoView({behavior:motion(), block:'start'});
 }
-document.querySelectorAll('[data-featured-start]').forEach(link => link.addEventListener('click', event => {
-  event.preventDefault();
-  scrollToFeatured();
-}));
 // Project selection scrolls the track horizontally without moving the page.
 const featuredTrack = $('#featured-grid');
 const featuredTabs = [...document.querySelectorAll('[data-featured-jump]')];

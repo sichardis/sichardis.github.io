@@ -3,7 +3,7 @@
 .contact-form[aria-busy="true"] .contact-submit::before { content: ''; width: 14px; height: 14px; border: 2px solid currentColor; border-right-color: transparent; border-radius: 50%; animation: contact-sending 800ms linear infinite; }
 .contact-form-status[data-state] { padding: 12px 14px; border: 1px solid #e8e1da; border-radius: 6px; font-size: 14px; }
 .contact-form-status[data-state="success"] { color: #166534; border-color: #c4ddcb; background: #f4faf5; }
-.contact-form-status[data-state="error"] { color: #9b2c20; border-color: #edd0ca; background: #fff7f5; }
+.contact-form-status[data-state="error"] { color: #c62828; border-color: #edd0ca; background: #fff7f5; }
 .contact-form-status[data-state="sending"], .contact-form-status[data-state="pending"] { color: #666; background: #fafafa; }
 .contact-form-status:focus { outline: none; }
 @keyframes contact-sending { to { transform: rotate(360deg); } }

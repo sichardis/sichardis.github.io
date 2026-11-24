@@ -1,6 +1,5 @@
 /* First layout pass: home only. The catalogue, profile and readers keep their layout. */
 .home-editorial {
-  --home-orange-ink: #a94d0a;
   --home-rule: #e8e6e3;
   --home-section-space: clamp(144px, 12vw, 200px);
 }
@@ -46,54 +45,36 @@
   line-height: 1.7;
   letter-spacing: -.025em;
 }
-.home-editorial .hero-project-link {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 46px;
-  padding: 12px 20px;
-  margin-top: 20px;
-  border: 1px solid var(--accent);
-  border-radius: 8px;
-  background: var(--accent);
-  color: #171717;
-  font-size: 15px;
-  font-weight: 600;
-  line-height: 1.4;
-  transition: background 180ms ease, color 180ms ease, transform 400ms var(--motion-spring);
-}
-.home-editorial .hero-project-link:is(:hover, :focus-visible) {
-  color: #fff;
-  background: var(--accent-hover);
-  transform: translateY(-3px);
-}
-.home-editorial .hero-project-link:active { transform: translateY(0) scale(.98); }
+/* Restore the outlined download buttons used across the portfolio. */
 .home-editorial .hero .document-links {
   display: flex;
+  width: 100%;
+  justify-self: stretch;
+  align-self: auto;
   flex-flow: row wrap;
-  gap: 8px 18px;
-  margin-top: 10px;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  margin-top: 24px;
 }
 .home-editorial .hero .document-button {
   flex: 0 1 auto;
-  min-height: 32px;
-  padding: 5px 0;
-  border: 0;
-  border-radius: 0;
-  background: none;
-  color: #666;
+  min-height: 40px;
+  padding: 9px 15px;
+  border: 1px solid #dcdcdc;
+  border-radius: var(--box-radius);
+  background: #fff;
+  color: var(--ink);
   font-size: 13px;
-  line-height: 1.6;
-  white-space: normal;
-  text-decoration: underline;
-  text-underline-offset: 5px;
-  text-decoration-color: #d2ceca;
+  font-weight: 400;
+  line-height: 1.5;
+  white-space: nowrap;
+  text-decoration: none;
 }
-.home-editorial .hero .document-button::after { display: none; }
 .home-editorial .hero .document-button:is(:hover, :focus-visible) {
-  background: none;
-  color: var(--home-orange-ink);
-  text-decoration-color: currentColor;
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #fff;
   transform: none;
 }
 .home-editorial .hero-visual-group {
@@ -105,17 +86,6 @@
   min-width: 0;
   min-height: 300px;
   align-self: stretch;
-}
-.home-editorial .hero-visual-group::before {
-  content: "";
-  position: absolute;
-  width: 90%;
-  aspect-ratio: 1.5;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -58%);
-  background: radial-gradient(ellipse, #fff5e8 0%, #fffaf4 38%, #fff0 72%);
-  pointer-events: none;
 }
 .home-editorial .hero-visual.thread-scene {
   position: relative;
@@ -186,7 +156,7 @@
   display: inline-block;
   padding-block: 7px;
   margin-top: 3px;
-  color: var(--home-orange-ink);
+  color: var(--accent);
   font-size: 13px;
   line-height: 1.5;
   text-decoration: underline;
@@ -234,7 +204,7 @@
 .home-editorial .featured-index [role="tab"]::after { display: none; }
 .home-editorial .featured-index [role="tab"] strong { font-weight: 550; }
 .home-editorial .featured-index [role="tab"] span { font-size: 12px; }
-.home-editorial .featured-index [role="tab"][aria-selected="true"] { background: #fff1e3; color: var(--home-orange-ink); }
+.home-editorial .featured-index [role="tab"][aria-selected="true"] { background: #fff1e3; color: var(--accent); }
 .home-editorial .featured-index [role="tab"]:is(:hover, :focus-visible) { background: var(--accent); color: #fff; }
 /* A real horizontal scroll track supports buttons, touch and trackpads. */
 .home-editorial .featured-cases {
@@ -311,7 +281,7 @@
   letter-spacing: -.045em;
 }
 .home-editorial .featured-case h3 span { display: block; }
-.home-editorial .featured-case h3 a:hover { color: var(--home-orange-ink); }
+.home-editorial .featured-case h3 a:hover { color: var(--accent); }
 .home-editorial .featured-case h3:focus { outline: none; }
 .home-editorial .featured-case-intro { margin-top: 18px; color: #626262; font-size: 16px; line-height: 1.7; }
 .home-editorial .featured-reasoning { display: grid; gap: 15px; margin-top: 25px; }
@@ -326,7 +296,7 @@
   border: 1px solid var(--accent-line);
   border-radius: 5px;
   background: var(--accent-soft);
-  color: var(--home-orange-ink);
+  color: var(--accent);
   font-size: 12px;
   font-weight: 600;
   line-height: 1.5;
@@ -352,8 +322,7 @@
   .home-editorial .hero h1 { font-size: clamp(36px, 3.25vw, 50px); }
   .home-editorial .hero-role { margin-bottom: 12px; }
   .home-editorial .hero-description { margin-top: 16px; }
-  .home-editorial .hero-project-link { margin-top: 18px; }
-  .home-editorial .hero .document-links { margin-top: 10px; }
+  .home-editorial .hero .document-links { margin-top: 22px; }
   .home-editorial .identity-step { padding-top: 12px; }
 
   .home-editorial .featured-heading { padding-bottom: 24px; }
@@ -383,9 +352,8 @@
   .home-editorial .hero h1 { font-size: clamp(34px, 7.6vw, 49px); }
   .home-editorial .hero-role { font-size: 13px; margin-bottom: 15px; }
   .home-editorial .hero-description { font-size: 16px; margin-top: 20px; }
-  .home-editorial .hero-project-link { margin-top: 20px; }
-  .home-editorial .hero .document-links { gap: 4px 16px; margin-top: 12px; }
-  .home-editorial .hero .document-button { font-size: 12px; min-height: 32px; }
+  .home-editorial .hero .document-links { flex-direction: column; align-items: stretch; gap: 10px; margin-top: 22px; max-width: 420px; }
+  .home-editorial .hero .document-button { justify-content: space-between; font-size: 13px; min-height: 44px; }
   .home-editorial .hero-visual-group { min-height: 0; }
   .home-editorial .hero-visual.thread-scene { max-width: none; padding: 12px 0; }
   .home-editorial .hero-visual-meta { margin-top: 2px; }
@@ -420,4 +388,31 @@
 @media (prefers-reduced-motion: reduce) {
   .home-editorial *, .home-editorial *::before { animation: none !important; transition: none !important; }
   .home-editorial .featured-case-visual:is(:hover, :focus-visible) img { transform: none; }
+}
+
+/* The home portrait previews the second profile photo on hover or keyboard focus. */
+.home-editorial .profile-photo-swap {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 503 / 670;
+  margin-top: 24px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.home-editorial .profile-photo-swap .profile-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  object-fit: cover;
+  object-position: center;
+  transition: opacity 320ms ease;
+}
+.home-editorial .profile-photo-hover { opacity: 0; }
+.home-editorial .profile-photo-swap:is(:hover, :focus-visible) .profile-photo-hover { opacity: 1; }
+.home-editorial .profile-photo-swap:focus-visible { outline-offset: -3px; }
+@media (prefers-reduced-motion: reduce) {
+  .home-editorial .profile-photo-swap .profile-photo { transition: none; }
 }

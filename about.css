@@ -25,7 +25,7 @@
   border: 1px solid var(--accent-line);
   border-radius: 6px;
   background: var(--accent-soft);
-  color: #a84c08;
+  color: var(--accent);
   font-size: 13px;
   font-weight: 650;
   line-height: 1.3;
