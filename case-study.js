@@ -17,9 +17,27 @@ export function detailIndexButtons(projectId, hasTeamPhotos = true) {
 
 export function awardMarkup(award, escape) {
   if (!award) return '';
-  return `<h3 class="project-award-heading">
-    <span class="project-award-trophy" aria-hidden="true">🏆</span>수상 내역
-  </h3><p>${escape(award.title)}</p>`;
+  return `<p class="summary-award" aria-label="수상 내역"><span class="project-award-trophy" aria-hidden="true">🏆</span><span>${escape(award.title)}</span></p>`;
+}
+
+export function summaryMarkup(project, escape) {
+  const role = project.documentType === 'storyboard' ? '화면설계' : project.role;
+  const period = project.id === 'chak' ? '2026.09–12' : project.period || project.year;
+  const facts = [['기간', period], ['담당 역할', role], ['팀 구성', project.team], ['문서 유형', project.documentLabel]].filter(([, value]) => value);
+  const tasks = (project.tasks || '').split(/[,\n]+/).map(item => item.trim()).filter(Boolean);
+  return `<div class="detail-overview">
+    ${awardMarkup(project.award, escape)}
+    <dl class="summary-facts">${facts.map(([label, value]) => `<div><dt>${label}</dt><dd>${escape(value)}</dd></div>`).join('')}</dl>
+  </div>${tasks.length ? `<div class="detail-task-block"><h3>주요 수행 과업</h3><ul class="task-list">${tasks.map(task => `<li>${escape(task)}</li>`).join('')}</ul></div>` : ''}`;
+}
+
+export function pdfDownloadMarkup(project, escape) {
+  if (!project.pdf && !project.pdfParts) return '';
+  const pageHint = (project.pdfLabel || '').match(/화면설계\s*\d+\s*[–-]\s*\d+쪽/)?.[0];
+  const control = project.pdfParts
+    ? '<button class="bridge-download" type="button" data-pdf-parts>PDF 다운로드</button>'
+    : `<a class="bridge-download" data-pdf-download href="${escape(project.pdf)}" download="${escape(project.pdfFilename)}">PDF 다운로드</a>`;
+  return `<div class="detail-download-row"><p>원본 문서<span>${escape(project.pdfFilename)}</span>${pageHint ? `<small>${escape(pageHint)}</small>` : ''}</p>${control}</div>`;
 }
 
 export function teamPhotosMarkup(projectId, photos, escape) {
@@ -34,10 +52,10 @@ export function teamPhotosMarkup(projectId, photos, escape) {
 }
 
 function processMedia(step, escape, {loading = 'eager', placeholder = ''} = {}) {
-  if (placeholder || !step.image) {
+  if (placeholder || (!step.image && !step.imageSrc)) {
     return `<div class="case-process-media case-process-placeholder" role="img" aria-label="${escape(placeholder || '이미지 자료 준비 중')}">${escape(placeholder)}</div>`;
   }
-  const src = `./assets/case-studies/${step.image}`;
+  const src = step.imageSrc || `./assets/case-studies/${step.image}`;
   return `<img class="case-process-media" src="${escape(src)}" alt="${escape(step.title)} 자료" width="1600" height="900" loading="${loading}" decoding="async">`;
 }
 
@@ -50,12 +68,6 @@ export function caseStudyMarkup(project, hero, escape) {
       ${processMedia(step, escape, {loading:'lazy', placeholder:project.processImagePlaceholder})}<span>${label}</span>
     </button>`;
   }).join('');
-  const downloadLabel = `${escape(project.pdfLabel || project.title + ' 원본 전체 보기')} · PDF`;
-  const download = project.pdfParts
-    ? `<button class="bridge-download" type="button" data-pdf-view><span>${downloadLabel}</span><span aria-hidden="true">↗</span></button>`
-    : project.pdf
-      ? `<a class="bridge-download" data-pdf-file-view href="${escape(project.pdf)}" target="_blank" rel="noopener">${downloadLabel} <span aria-hidden="true">↗</span></a>`
-      : '';
   const paragraphs = items => items.map(item => `<p>${escape(item)}</p>`).join('');
 
   const result = `<section id="${sectionId('result')}" class="bridge-section case-copy" tabindex="-1">
@@ -68,12 +80,7 @@ export function caseStudyMarkup(project, hero, escape) {
       <div class="bridge-hero">${hero}</div>
       <section id="${sectionId('summary')}" class="bridge-section" tabindex="-1">
         <h2>요약</h2>
-        <dl class="bridge-facts">
-          <div><dt>문서 유형</dt><dd>${escape(project.documentLabel)}</dd></div>
-          <div><dt>팀 구성</dt><dd>${escape(project.team)}</dd></div>
-        </dl>
-        ${awardMarkup(project.award, escape)}
-        <h3>주요 수행 과업</h3><p>${escape(project.tasks)}</p>
+        ${summaryMarkup(project, escape)}
       </section>
       <section id="${sectionId('background')}" class="bridge-section case-copy" tabindex="-1">
         <h2>배경·목표</h2><h3 class="bridge-goal">${escape(project.goal)}</h3>
@@ -81,7 +88,7 @@ export function caseStudyMarkup(project, hero, escape) {
       </section>
       <section id="${sectionId('process')}" class="bridge-section" tabindex="-1">
         <h2>과정</h2><p>카드를 선택해 ${escape(project.processLabel)} 과정을 확인해 보세요.</p>
-        <div class="process-grid">${cards}</div>${download}
+        <div class="process-grid">${cards}</div>${pdfDownloadMarkup(project, escape)}
       </section>
       <section id="${sectionId('contribution')}" class="bridge-section" tabindex="-1">
         <h2>기여</h2><ul>${project.contributions.map(item => `<li>${escape(item)}</li>`).join('')}</ul>

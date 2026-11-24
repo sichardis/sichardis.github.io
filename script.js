@@ -188,12 +188,9 @@ function detailHero(project) {
   const coverClass = project.documentType === 'storyboard' ? 'detail-cover storyboard-cover' : 'detail-cover';
   const isStoryboard = project.documentType === 'storyboard';
   const detailType = isStoryboard ? '화면설계' : project.id === 'chak' ? project.type.replace(' · 진행 중', '') : project.type;
-  const detailRole = isStoryboard ? '화면설계' : project.role;
-  const detailPeriod = project.id === 'chak' ? '2026.09–12' : project.period || project.year;
   return `
     <div class="detail-heading"><p class="eyebrow">${escape([project.year,detailType].filter(Boolean).join(' / '))}</p><h1 id="detail-title">${escape(project.title)}</h1><p class="detail-subtitle">${escape(project.subtitle)}</p></div>
     <p class="detail-lead">${escape(project.lead)}</p>
-    <dl class="detail-facts">${detailRole ? `<div><dt>담당 역할</dt><dd>${escape(detailRole)}</dd></div>` : ''}<div><dt>프로젝트 유형</dt><dd>${escape(detailType)}</dd></div>${project.year ? `<div><dt>기간</dt><dd>${escape(detailPeriod)}</dd></div>` : ''}</dl>
     ${project.cover ? `<img class="${coverClass}" src="${escape(project.cover)}" alt="${escape(project.title)} 프로젝트 표지" width="1920" height="1080" fetchpriority="high" decoding="async">` : ''}`;
 }
 
@@ -205,18 +202,12 @@ function renderDetail(id) {
     pdfFilename: pdfDocuments[id]?.filename || `${baseProject.pdfProjectName}_정서영.pdf`,
   };
   detailProject = project;
-  const download = $('.detail-toolbar a[download]');
   const preview = $('.detail-toolbar [data-pdf-file-view]');
   const previewParts = $('.detail-toolbar [data-pdf-view]');
-  $('.detail-toolbar [data-pdf-parts]').hidden = !project?.pdfParts;
   previewParts.hidden = !project?.pdfParts;
   preview.hidden = !project?.pdf || Boolean(project?.pdfParts);
   if (project?.pdf) preview.href = project.pdf;
   else preview.removeAttribute('href');
-  download.hidden = !project?.pdf;
-  download.download = project?.pdfFilename || '';
-  if (project?.pdf) download.href = project.pdf;
-  else download.removeAttribute('href');
   if (!project) {
     $('#detail-content').innerHTML = '<div class="not-found"><h1 id="detail-title">프로젝트를 찾을 수 없습니다.</h1><p>프로젝트 목록에서 작업을 다시 선택해 주세요.</p></div>';
     return '프로젝트를 찾을 수 없습니다';
@@ -236,6 +227,12 @@ function setDetailSection(id) {
     if (button.dataset.section === id) button.setAttribute('aria-current','location');
     else button.removeAttribute('aria-current');
   });
+  const navigation = $('.section-index');
+  const current = navigation?.querySelector('[aria-current="location"]');
+  if (!current || !matchMedia('(max-width:800px)').matches) return;
+  const item = current.getBoundingClientRect(), bounds = navigation.getBoundingClientRect();
+  if (item.left < bounds.left) navigation.scrollLeft += item.left - bounds.left;
+  else if (item.right > bounds.right) navigation.scrollLeft += item.right - bounds.right;
 }
 function queueDetailIndexUpdate() {
   if (detailIndexFrame) return;

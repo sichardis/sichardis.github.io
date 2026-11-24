@@ -156,9 +156,27 @@ function detailIndexButtons(projectId, hasTeamPhotos = true) {
 
 function awardMarkup(award, escape) {
   if (!award) return '';
-  return `<h3 class="project-award-heading">
-    <span class="project-award-trophy" aria-hidden="true">🏆</span>수상 내역
-  </h3><p>${escape(award.title)}</p>`;
+  return `<p class="summary-award" aria-label="수상 내역"><span class="project-award-trophy" aria-hidden="true">🏆</span><span>${escape(award.title)}</span></p>`;
+}
+
+function summaryMarkup(project, escape) {
+  const role = project.documentType === 'storyboard' ? '화면설계' : project.role;
+  const period = project.id === 'chak' ? '2026.09–12' : project.period || project.year;
+  const facts = [['기간', period], ['담당 역할', role], ['팀 구성', project.team], ['문서 유형', project.documentLabel]].filter(([, value]) => value);
+  const tasks = (project.tasks || '').split(/[,\n]+/).map(item => item.trim()).filter(Boolean);
+  return `<div class="detail-overview">
+    ${awardMarkup(project.award, escape)}
+    <dl class="summary-facts">${facts.map(([label, value]) => `<div><dt>${label}</dt><dd>${escape(value)}</dd></div>`).join('')}</dl>
+  </div>${tasks.length ? `<div class="detail-task-block"><h3>주요 수행 과업</h3><ul class="task-list">${tasks.map(task => `<li>${escape(task)}</li>`).join('')}</ul></div>` : ''}`;
+}
+
+function pdfDownloadMarkup(project, escape) {
+  if (!project.pdf && !project.pdfParts) return '';
+  const pageHint = (project.pdfLabel || '').match(/화면설계\s*\d+\s*[–-]\s*\d+쪽/)?.[0];
+  const control = project.pdfParts
+    ? '<button class="bridge-download" type="button" data-pdf-parts>PDF 다운로드</button>'
+    : `<a class="bridge-download" data-pdf-download href="${escape(project.pdf)}" download="${escape(project.pdfFilename)}">PDF 다운로드</a>`;
+  return `<div class="detail-download-row"><p>원본 문서<span>${escape(project.pdfFilename)}</span>${pageHint ? `<small>${escape(pageHint)}</small>` : ''}</p>${control}</div>`;
 }
 
 function teamPhotosMarkup(projectId, photos, escape) {
@@ -173,10 +191,10 @@ function teamPhotosMarkup(projectId, photos, escape) {
 }
 
 function processMedia(step, escape, {loading = 'eager', placeholder = ''} = {}) {
-  if (placeholder || !step.image) {
+  if (placeholder || (!step.image && !step.imageSrc)) {
     return `<div class="case-process-media case-process-placeholder" role="img" aria-label="${escape(placeholder || '이미지 자료 준비 중')}">${escape(placeholder)}</div>`;
   }
-  const src = `./assets/case-studies/${step.image}`;
+  const src = step.imageSrc || `./assets/case-studies/${step.image}`;
   return `<img class="case-process-media" src="${escape(src)}" alt="${escape(step.title)} 자료" width="1600" height="900" loading="${loading}" decoding="async">`;
 }
 
@@ -189,12 +207,6 @@ function caseStudyMarkup(project, hero, escape) {
       ${processMedia(step, escape, {loading:'lazy', placeholder:project.processImagePlaceholder})}<span>${label}</span>
     </button>`;
   }).join('');
-  const downloadLabel = `${escape(project.pdfLabel || project.title + ' 원본 전체 보기')} · PDF`;
-  const download = project.pdfParts
-    ? `<button class="bridge-download" type="button" data-pdf-view><span>${downloadLabel}</span><span aria-hidden="true">↗</span></button>`
-    : project.pdf
-      ? `<a class="bridge-download" data-pdf-file-view href="${escape(project.pdf)}" target="_blank" rel="noopener">${downloadLabel} <span aria-hidden="true">↗</span></a>`
-      : '';
   const paragraphs = items => items.map(item => `<p>${escape(item)}</p>`).join('');
 
   const result = `<section id="${sectionId('result')}" class="bridge-section case-copy" tabindex="-1">
@@ -207,12 +219,7 @@ function caseStudyMarkup(project, hero, escape) {
       <div class="bridge-hero">${hero}</div>
       <section id="${sectionId('summary')}" class="bridge-section" tabindex="-1">
         <h2>요약</h2>
-        <dl class="bridge-facts">
-          <div><dt>문서 유형</dt><dd>${escape(project.documentLabel)}</dd></div>
-          <div><dt>팀 구성</dt><dd>${escape(project.team)}</dd></div>
-        </dl>
-        ${awardMarkup(project.award, escape)}
-        <h3>주요 수행 과업</h3><p>${escape(project.tasks)}</p>
+        ${summaryMarkup(project, escape)}
       </section>
       <section id="${sectionId('background')}" class="bridge-section case-copy" tabindex="-1">
         <h2>배경·목표</h2><h3 class="bridge-goal">${escape(project.goal)}</h3>
@@ -220,7 +227,7 @@ function caseStudyMarkup(project, hero, escape) {
       </section>
       <section id="${sectionId('process')}" class="bridge-section" tabindex="-1">
         <h2>과정</h2><p>카드를 선택해 ${escape(project.processLabel)} 과정을 확인해 보세요.</p>
-        <div class="process-grid">${cards}</div>${download}
+        <div class="process-grid">${cards}</div>${pdfDownloadMarkup(project, escape)}
       </section>
       <section id="${sectionId('contribution')}" class="bridge-section" tabindex="-1">
         <h2>기여</h2><ul>${project.contributions.map(item => `<li>${escape(item)}</li>`).join('')}</ul>
@@ -243,12 +250,12 @@ function caseProcessMarkup(project, steps, index, escape) {
     ${step.sections.map(([title, text]) => `<section class="process-explanation"><h3>${escape(title)}</h3><p>${escape(text)}</p></section>`).join('')}`;
 }
 
-return {detailIndexButtons, awardMarkup, teamPhotosMarkup, caseStudyMarkup, caseProcessMarkup};
+return {detailIndexButtons, awardMarkup, summaryMarkup, pdfDownloadMarkup, teamPhotosMarkup, caseStudyMarkup, caseProcessMarkup};
 })();
 
 // bridge.js
 __modules["bridge.js"] = (() => {
-const { awardMarkup, detailIndexButtons, teamPhotosMarkup } = __modules["case-study.js"];
+const { caseStudyMarkup } = __modules["case-study.js"];
 const steps = [
   {title:'사용자 요구 분석·문제 정의',summary:'시니어의 경력 정리 부담을 살폈습니다.',sections:[['01 데스크 리서치 · 경험을 드러내기 어려운 구직 환경','시니어의 노동 참여와 디지털 구직 환경을 조사했습니다.\n복잡한 절차와 메뉴가 서비스 이용의 장벽이 될 수 있음을 파악하고, 경력 표현과 디지털 문서 작성의 부담에 주목했습니다.'],['02 사용자 설문 · 경력을 정리하고 표현하는 데 필요한 지원','50~60대 은퇴·재취업 관심자와 30~40대 경력보유자를 대상으로 온라인 설문을 진행했습니다.\n경력 정리의 어려움과 직무 언어 변환·프로필 생성에 대한 지원 요구를 확인했습니다.'],['03 문제 정의 · 경험을 채용 시장의 언어로 연결하기 어렵다','핵심 문제를 축적된 경험을 직무와 역량의 언어로 정리하고 전달하기 어렵다는 점으로 정의했습니다.\n이를 바탕으로 경험에서 강점을 찾고, 지원 직무에 맞는 프로필로 구성하도록 돕는 방향을 설정했습니다.']]},
   {title:'경쟁 서비스 분석·차별화 방향 수립',summary:'경쟁 서비스를 비교해 차별화 방향을 정했습니다.',sections:[['01 경쟁 서비스 비교','시니어 채용·전문가 매칭 서비스의 대상, 기능, 강점과 한계를 비교했습니다.'],['02 차별화 방향','단순한 일자리 추천을 넘어 대화로 경력을 정리하고 직무에 맞는 프로필로 연결하는 방향을 제안했습니다.']]},
@@ -258,18 +265,25 @@ const steps = [
   {title:'서비스 이용 흐름도 작성',summary:'대화에서 프로필 완성까지 설계했습니다.',sections:[['01 진입과 경력 정리','회원 유형과 프로필 보유 여부에 따라 경로를 나누고 대화와 키워드 확인·수정 단계를 연결했습니다.'],['02 프로필 완성','증빙자료 첨부 여부와 프로필 유형 선택 등 조건에 따른 분기를 정리했습니다.']]},
 ];
 function bridgeMarkup(hero, project, escape) {
- return `<div class="bridge-layout"><nav class="section-index" aria-label="브릿지 상세 목차">${detailIndexButtons('bridge')}</nav>
- <article class="bridge-article">
- <div class="bridge-hero">${hero}</div>
- <section id="bridge-summary" class="bridge-section" tabindex="-1"><h2>요약</h2>
- <dl class="bridge-facts"><div><dt>문서 유형</dt><dd>기획서</dd></div><div><dt>팀 구성</dt><dd>3인</dd></div></dl>
- ${awardMarkup(project.award, escape)}<h3>주요 수행 과업</h3><p>환경 및 경쟁 서비스 분석, 설문조사 결과 분석, 핵심 문제 정의, 서비스 방향 수립, 사용자 여정 지도 작성, 정보 구조도 작성, 서비스 이용 흐름도 작성</p></section>
- <section id="bridge-background" class="bridge-section" tabindex="-1"><h2>배경·목표</h2><h3 class="bridge-goal">시니어의 경험을 직무 언어로 정리합니다.</h3><p>데스크리서치와 온라인 설문조사를 바탕으로, 경력보유자가 자신의 경험을 이력서와 프로필로 정리하는 과정의 어려움을 살핀 후, 재취업을 준비하는 시니어가 경력과 강점을 직무에 맞는 표현으로 정리하도록 돕는 것을 서비스의 핵심 과제로 설정했습니다.</p><p>사용자가 대화로 경험을 설명하고, 정리된 내용을 확인·수정한 뒤 커리어 프로필을 완성하는 서비스의 흐름을 설계했습니다.</p></section>
- <section id="bridge-process" class="bridge-section" tabindex="-1"><h2>과정</h2><p>이미지를 클릭해 브릿지의 주요 과정을 확인해 보세요.</p><div class="process-grid">${steps.map((step,i)=>`<button type="button" class="process-card" data-process="${i}" aria-label="${String(i+1).padStart(2,'0')} ${step.title} 상세 보기"><img src="./assets/bridge-process-${i+1}.jpg" alt="${step.title}" width="1600" height="900" loading="lazy" decoding="async"><span>${String(i+1).padStart(2,'0')} ${step.title}</span></button>`).join('')}</div><a class="bridge-download" data-pdf-file-view href="${escape(project.pdf)}" target="_blank" rel="noopener">브릿지(Bridge) 기획서 전체 보기 · PDF <span aria-hidden="true">↓</span></a></section>
- <section id="bridge-contribution" class="bridge-section" tabindex="-1"><h2>기여</h2><ul><li>조사 결과를 바탕으로 핵심 문제와 서비스 방향을 정했습니다.</li><li>사용자 요구와 서비스 목표에 따라 기능의 우선순위를 정했습니다.</li><li>사용자 여정 지도·정보 구조도·이용 흐름도를 작성했습니다.</li><li>화면별 목적과 필수 정보를 공유하고 검토 의견을 정리했습니다.</li></ul></section>
- <section id="bridge-result" class="bridge-section case-copy" tabindex="-1"><h2>결과</h2>${project.results.map(text => `<p>${escape(text)}</p>`).join('')}</section>
- ${teamPhotosMarkup(project.id, project.teamPhotos, escape)}
- </article></div>`;
+  return caseStudyMarkup({
+    ...project,
+    documentLabel: '기획서',
+    team: '3인',
+    tasks: '환경 및 경쟁 서비스 분석, 설문조사 결과 분석, 핵심 문제 정의, 서비스 방향 수립, 사용자 여정 지도 작성, 정보 구조도 작성, 서비스 이용 흐름도 작성',
+    goal: '시니어의 경험을 직무 언어로 정리합니다.',
+    background: [
+      '데스크리서치와 온라인 설문조사를 바탕으로, 경력보유자가 자신의 경험을 이력서와 프로필로 정리하는 과정의 어려움을 살핀 후, 재취업을 준비하는 시니어가 경력과 강점을 직무에 맞는 표현으로 정리하도록 돕는 것을 서비스의 핵심 과제로 설정했습니다.',
+      '사용자가 대화로 경험을 설명하고, 정리된 내용을 확인·수정한 뒤 커리어 프로필을 완성하는 서비스의 흐름을 설계했습니다.',
+    ],
+    processLabel: '기획',
+    contributions: [
+      '조사 결과를 바탕으로 핵심 문제와 서비스 방향을 정했습니다.',
+      '사용자 요구와 서비스 목표에 따라 기능의 우선순위를 정했습니다.',
+      '사용자 여정 지도·정보 구조도·이용 흐름도를 작성했습니다.',
+      '화면별 목적과 필수 정보를 공유하고 검토 의견을 정리했습니다.',
+    ],
+    steps: steps.map((step, index) => ({...step, imageSrc:`./assets/bridge-process-${index + 1}.jpg`})),
+  }, hero, escape);
 }
 
 return {steps, bridgeMarkup};
@@ -2250,12 +2264,9 @@ function detailHero(project) {
   const coverClass = project.documentType === 'storyboard' ? 'detail-cover storyboard-cover' : 'detail-cover';
   const isStoryboard = project.documentType === 'storyboard';
   const detailType = isStoryboard ? '화면설계' : project.id === 'chak' ? project.type.replace(' · 진행 중', '') : project.type;
-  const detailRole = isStoryboard ? '화면설계' : project.role;
-  const detailPeriod = project.id === 'chak' ? '2026.09–12' : project.period || project.year;
   return `
     <div class="detail-heading"><p class="eyebrow">${escape([project.year,detailType].filter(Boolean).join(' / '))}</p><h1 id="detail-title">${escape(project.title)}</h1><p class="detail-subtitle">${escape(project.subtitle)}</p></div>
     <p class="detail-lead">${escape(project.lead)}</p>
-    <dl class="detail-facts">${detailRole ? `<div><dt>담당 역할</dt><dd>${escape(detailRole)}</dd></div>` : ''}<div><dt>프로젝트 유형</dt><dd>${escape(detailType)}</dd></div>${project.year ? `<div><dt>기간</dt><dd>${escape(detailPeriod)}</dd></div>` : ''}</dl>
     ${project.cover ? `<img class="${coverClass}" src="${escape(project.cover)}" alt="${escape(project.title)} 프로젝트 표지" width="1920" height="1080" fetchpriority="high" decoding="async">` : ''}`;
 }
 
@@ -2267,18 +2278,12 @@ function renderDetail(id) {
     pdfFilename: pdfDocuments[id]?.filename || `${baseProject.pdfProjectName}_정서영.pdf`,
   };
   detailProject = project;
-  const download = $('.detail-toolbar a[download]');
   const preview = $('.detail-toolbar [data-pdf-file-view]');
   const previewParts = $('.detail-toolbar [data-pdf-view]');
-  $('.detail-toolbar [data-pdf-parts]').hidden = !project?.pdfParts;
   previewParts.hidden = !project?.pdfParts;
   preview.hidden = !project?.pdf || Boolean(project?.pdfParts);
   if (project?.pdf) preview.href = project.pdf;
   else preview.removeAttribute('href');
-  download.hidden = !project?.pdf;
-  download.download = project?.pdfFilename || '';
-  if (project?.pdf) download.href = project.pdf;
-  else download.removeAttribute('href');
   if (!project) {
     $('#detail-content').innerHTML = '<div class="not-found"><h1 id="detail-title">프로젝트를 찾을 수 없습니다.</h1><p>프로젝트 목록에서 작업을 다시 선택해 주세요.</p></div>';
     return '프로젝트를 찾을 수 없습니다';
@@ -2298,6 +2303,12 @@ function setDetailSection(id) {
     if (button.dataset.section === id) button.setAttribute('aria-current','location');
     else button.removeAttribute('aria-current');
   });
+  const navigation = $('.section-index');
+  const current = navigation?.querySelector('[aria-current="location"]');
+  if (!current || !matchMedia('(max-width:800px)').matches) return;
+  const item = current.getBoundingClientRect(), bounds = navigation.getBoundingClientRect();
+  if (item.left < bounds.left) navigation.scrollLeft += item.left - bounds.left;
+  else if (item.right > bounds.right) navigation.scrollLeft += item.right - bounds.right;
 }
 function queueDetailIndexUpdate() {
   if (detailIndexFrame) return;
