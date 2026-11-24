@@ -101,14 +101,5 @@ export function caseProcessMarkup(project, steps, index, escape) {
   return `<h2 id="process-title">${escape(step.title)}</h2>
     <p class="process-summary">${escape(step.summary)}</p>
     ${canZoom ? `<button class="process-zoom" type="button" data-process-zoom aria-label="${escape(step.title)} 자료 확대">${media}<span>자료 확대</span></button>` : media}
-    <div class="process-stage-controls">
-      <button class="process-arrow" type="button" data-process-prev aria-label="이전 단계"${index === 0 ? ' disabled' : ''}>
-        이전 단계
-      </button>
-      <span>${index + 1} / ${steps.length}</span>
-      <button class="process-arrow" type="button" data-process-next aria-label="${index + 1 === steps.length ? '첫 단계로' : '다음 단계'}">
-        ${index + 1 === steps.length ? '처음부터 보기' : '다음 단계'}
-      </button>
-    </div>
     ${step.sections.map(([title, text]) => `<section class="process-explanation"><h3>${escape(title)}</h3><p>${escape(text)}</p></section>`).join('')}`;
 }

@@ -240,15 +240,6 @@ function caseProcessMarkup(project, steps, index, escape) {
   return `<h2 id="process-title">${escape(step.title)}</h2>
     <p class="process-summary">${escape(step.summary)}</p>
     ${canZoom ? `<button class="process-zoom" type="button" data-process-zoom aria-label="${escape(step.title)} 자료 확대">${media}<span>자료 확대</span></button>` : media}
-    <div class="process-stage-controls">
-      <button class="process-arrow" type="button" data-process-prev aria-label="이전 단계"${index === 0 ? ' disabled' : ''}>
-        이전 단계
-      </button>
-      <span>${index + 1} / ${steps.length}</span>
-      <button class="process-arrow" type="button" data-process-next aria-label="${index + 1 === steps.length ? '첫 단계로' : '다음 단계'}">
-        ${index + 1 === steps.length ? '처음부터 보기' : '다음 단계'}
-      </button>
-    </div>
     ${step.sections.map(([title, text]) => `<section class="process-explanation"><h3>${escape(title)}</h3><p>${escape(text)}</p></section>`).join('')}`;
 }
 
@@ -2309,8 +2300,6 @@ processDialog.addEventListener('click',event=>{
     $('[data-image-size]').textContent = '원본 크기';
     imageDialog.showModal();
   }
-  if (event.target.closest('[data-process-next]')) openProcess((processIndex+1)%(detailProject.steps ?? bridgeSteps).length);
-  if (event.target.closest('[data-process-prev]')) openProcess(Math.max(0,processIndex-1));
   if (event.target === processDialog) {
     const b=processDialog.getBoundingClientRect();
     if(event.clientX<b.left||event.clientX>b.right||event.clientY<b.top||event.clientY>b.bottom) processDialog.close();

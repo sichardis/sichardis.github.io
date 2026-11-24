@@ -437,8 +437,6 @@ processDialog.addEventListener('click',event=>{
     $('[data-image-size]').textContent = '원본 크기';
     imageDialog.showModal();
   }
-  if (event.target.closest('[data-process-next]')) openProcess((processIndex+1)%(detailProject.steps ?? bridgeSteps).length);
-  if (event.target.closest('[data-process-prev]')) openProcess(Math.max(0,processIndex-1));
   if (event.target === processDialog) {
     const b=processDialog.getBoundingClientRect();
     if(event.clientX<b.left||event.clientX>b.right||event.clientY<b.top||event.clientY>b.bottom) processDialog.close();
