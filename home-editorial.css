@@ -195,7 +195,7 @@
 }
 .home-editorial .identity-step > a:is(:hover, :focus-visible) { text-decoration-color: currentColor; }
 .home-editorial .featured-section { margin-top: var(--home-section-space); padding-block: 0; }
-.home-editorial .profile-section { margin-top: calc(var(--home-section-space) + 64px); padding-top: 0; }
+.home-editorial .profile-section { margin-top: calc(var(--home-section-space) + 96px); padding-top: 0; }
 .home-editorial .featured-heading {
   display: flex;
   align-items: flex-end;
