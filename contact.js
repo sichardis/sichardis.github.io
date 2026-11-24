@@ -74,7 +74,7 @@ export function initContactForm(form, config, {send = sendContactMessage} = {}) 
     }
     if (result.ok) {
       form.reset();
-      setStatus('success', '메시지가 접수되었습니다. 남겨주신 이메일로 답변드리겠습니다.');
+      setStatus('success', '메시지가 접수되었습니다. 앞으로 이어갈 매듭에 대해 답변드리겠습니다. 감사합니다.');
     } else {
       const uncertain = ['network', 'timeout'].includes(result.reason);
       setStatus('error', uncertain
