@@ -128,7 +128,7 @@ function featuredCase(project) {
   const leader = role.includes('팀장');
   const award = project.award?.shortTitle ?? project.award?.title;
   const team = study.team || (project.id === 'bridge' ? '3인' : '');
-  return `<article class="featured-case featured-case--${escape(project.id)}" id="case-${escape(project.id)}" aria-labelledby="case-title-${escape(project.id)}">
+  return `<article class="featured-case featured-case--${escape(project.id)}" id="case-${escape(project.id)}" role="tabpanel" aria-labelledby="featured-tab-${escape(project.id)}">
     <a class="featured-case-visual" href="${projectUrl(project.id)}" aria-label="${escape(note.name)} 프로젝트 상세 보기">
       <img src="${escape(project.cover)}" alt="${escape(note.name)} 프로젝트 대표 이미지" width="1920" height="1080" loading="lazy" decoding="async">
       <span class="featured-image-action">프로젝트 살펴보기</span>
@@ -324,6 +324,7 @@ function renderRoute({ focus = false } = {}) {
   const restoreList = page === 'projects' && previousPage === 'detail';
   previousPage = page;
   queueDetailIndexUpdate();
+  if (page === 'home' && !featuredLink) requestAnimationFrame(() => selectFeaturedCase(activeFeatured, {instant:true}));
   document.title = `${name} | 정서영 포트폴리오`;
   if (sectionLink) requestAnimationFrame(scrollToFeatured);
   else if (featuredLink) requestAnimationFrame(() => scrollToFeaturedCase(featuredLink[1]));
@@ -345,36 +346,88 @@ document.querySelectorAll('[data-featured-start]').forEach(link => link.addEvent
   event.preventDefault();
   scrollToFeatured();
 }));
-// Local project navigation preserves the home route and follows manual scrolling.
-let featuredIndexFrame = 0;
+// Project selection scrolls the track horizontally without moving the page.
+const featuredTrack = $('#featured-grid');
+const featuredTabs = [...document.querySelectorAll('[data-featured-jump]')];
+let activeFeatured = featuredIds[0];
+let featuredSlideFrame = 0;
+let featuredResizeFrame = 0;
+let featuredScrollTarget = null;
+let featuredScrollTimer;
+
+function updateFeaturedSelection(id) {
+  activeFeatured = id;
+  featuredTabs.forEach(tab => {
+    const selected = tab.dataset.featuredJump === id;
+    tab.setAttribute('aria-selected', String(selected));
+    tab.tabIndex = selected ? 0 : -1;
+  });
+  [...featuredTrack.children].forEach(panel => {
+    const selected = panel.id === 'case-' + id;
+    panel.inert = !selected;
+    panel.setAttribute('aria-hidden', String(!selected));
+  });
+  const status = `${featuredNotes[id].name}, ${featuredTabs.length}개 중 ${featuredIds.indexOf(id) + 1}번째 프로젝트`;
+  if ($('#featured-status').textContent !== status) $('#featured-status').textContent = status;
+}
+function featuredSlideLeft(panel) {
+  return panel.offsetLeft - featuredTrack.firstElementChild.offsetLeft;
+}
+function selectFeaturedCase(id, {instant = false, focusTab = false} = {}) {
+  const panel = document.getElementById('case-' + id);
+  if (!panel || !featuredTrack.clientWidth) return;
+  const left = featuredSlideLeft(panel);
+  featuredScrollTarget = left;
+  updateFeaturedSelection(id);
+  if (focusTab) document.getElementById('featured-tab-' + id).focus({preventScroll:true});
+  featuredTrack.scrollTo({left, behavior:instant ? 'instant' : motion()});
+  if (Math.abs(featuredTrack.scrollLeft - left) < 2) featuredScrollTarget = null;
+}
 function queueFeaturedIndexUpdate() {
-  if (featuredIndexFrame) return;
-  featuredIndexFrame = requestAnimationFrame(() => {
-    featuredIndexFrame = 0;
-    if ($('[data-page="home"]').hidden) return;
-    const cases = [...document.querySelectorAll('.featured-case')];
-    if (!cases.length) return;
-    const line = $('.site-header').getBoundingClientRect().bottom + $('.featured-index').getBoundingClientRect().height + 72;
-    let current = cases[0];
-    for (const item of cases) if (item.getBoundingClientRect().top <= line) current = item;
-    document.querySelectorAll('[data-featured-jump]').forEach(link => {
-      if ('case-' + link.dataset.featuredJump === current.id) link.setAttribute('aria-current', 'location');
-      else link.removeAttribute('aria-current');
-    });
+  if (featuredSlideFrame) return;
+  featuredSlideFrame = requestAnimationFrame(() => {
+    featuredSlideFrame = 0;
+    if (!featuredTrack.clientWidth) return;
+    if (featuredScrollTarget !== null) {
+      if (Math.abs(featuredTrack.scrollLeft - featuredScrollTarget) > 2) return;
+      featuredScrollTarget = null;
+    }
+    const panels = [...featuredTrack.children];
+    if (!panels.length) return;
+    const closest = panels.reduce((best, panel) => Math.abs(featuredSlideLeft(panel) - featuredTrack.scrollLeft) < Math.abs(featuredSlideLeft(best) - featuredTrack.scrollLeft) ? panel : best);
+    updateFeaturedSelection(closest.id.replace('case-', ''));
   });
 }
+// Preserve old direct project anchors while tabs no longer jump vertically.
 function scrollToFeaturedCase(id) {
-  const target = document.getElementById('case-title-' + id);
-  target.focus({preventScroll:true});
-  document.getElementById('case-' + id).scrollIntoView({behavior:motion(), block:'start'});
+  selectFeaturedCase(id, {instant:true});
+  scrollToFeatured();
 }
-document.querySelectorAll('[data-featured-jump]').forEach(link => link.addEventListener('click', event => {
-  if (location.hash !== link.getAttribute('href')) return;
-  event.preventDefault();
-  scrollToFeaturedCase(link.dataset.featuredJump);
-}));
-window.addEventListener('scroll', queueFeaturedIndexUpdate, {passive:true});
-window.addEventListener('resize', queueFeaturedIndexUpdate, {passive:true});
+featuredTabs.forEach(tab => {
+  tab.addEventListener('click', () => selectFeaturedCase(tab.dataset.featuredJump));
+  tab.addEventListener('keydown', event => {
+    if (event.altKey || event.ctrlKey || event.metaKey || !['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+    event.preventDefault();
+    const current = featuredTabs.indexOf(tab);
+    const index = event.key === 'Home' ? 0 : event.key === 'End' ? featuredTabs.length - 1 : (current + (event.key === 'ArrowRight' ? 1 : -1) + featuredTabs.length) % featuredTabs.length;
+    selectFeaturedCase(featuredTabs[index].dataset.featuredJump, {focusTab:true});
+  });
+});
+featuredTrack.addEventListener('scroll', () => {
+  queueFeaturedIndexUpdate();
+  clearTimeout(featuredScrollTimer);
+  featuredScrollTimer = setTimeout(() => {
+    featuredScrollTarget = null;
+    queueFeaturedIndexUpdate();
+  }, 150);
+}, {passive:true});
+for (const event of ['pointerdown', 'wheel']) featuredTrack.addEventListener(event, () => {
+  featuredScrollTarget = null;
+}, {passive:true});
+window.addEventListener('resize', () => {
+  cancelAnimationFrame(featuredResizeFrame);
+  featuredResizeFrame = requestAnimationFrame(() => selectFeaturedCase(activeFeatured, {instant:true}));
+}, {passive:true});
 
 document.querySelectorAll('a[href="#/projects"]').forEach((link) => {
   link.addEventListener('click', () => {

@@ -16,8 +16,8 @@
   <link rel="stylesheet" href="./typography.css?v=unified-trophy-20261124">
   <link rel="stylesheet" href="./process-reader.css?v=popup-controls-20261124">
   <link rel="stylesheet" href="./contact.css?v=direct-contact-20261124">
-  <link rel="stylesheet" href="./home-editorial.css?v=home-layout-20261124">
-  <script defer src="./app.js?v=home-layout-20261124"></script>
+  <link rel="stylesheet" href="./home-editorial.css?v=home-slider-20261124">
+  <script defer src="./app.js?v=home-slider-20261124"></script>
 </head>
 <body>
   <a class="skip-link" href="#content">본문으로 건너뛰기</a>
@@ -102,12 +102,13 @@
           <div class="featured-heading"><div>
           <h2 class="section-title" id="selected-title" tabindex="-1"><span class="section-title-icon" aria-hidden="true"><img src="./assets/section-knot.svg?v=orange-20261118" alt="" width="36" height="24"></span>촘촘한 매듭</h2>
           </div><p class="section-description">사용자의 필요를 발견하고 해결로 이어간 대표 프로젝트.<br>문제를 정의하고 선택한 방향, 그 결과를 담았습니다.</p></div>
-          <nav class="featured-index" aria-label="대표 프로젝트 바로가기">
-            <a href="#case-chak" data-featured-jump="chak"><strong>착!</strong><span>서비스 기획</span></a>
-            <a href="#case-bridge" data-featured-jump="bridge"><strong>브릿지</strong><span>경험의 구조화</span></a>
-            <a href="#case-korail" data-featured-jump="korail"><strong>코레일톡</strong><span>사용성 검증</span></a>
-          </nav>
-          <div class="featured-cases" id="featured-grid"></div>
+          <div class="featured-index" role="tablist" aria-label="대표 프로젝트 선택">
+            <button type="button" role="tab" id="featured-tab-chak" aria-controls="case-chak" aria-selected="true" data-featured-jump="chak"><strong>착!</strong><span>서비스 기획</span></button>
+            <button type="button" role="tab" id="featured-tab-bridge" aria-controls="case-bridge" aria-selected="false" tabindex="-1" data-featured-jump="bridge"><strong>브릿지</strong><span>경험의 구조화</span></button>
+            <button type="button" role="tab" id="featured-tab-korail" aria-controls="case-korail" aria-selected="false" tabindex="-1" data-featured-jump="korail"><strong>코레일톡</strong><span>사용성 검증</span></button>
+          </div>
+          <div class="featured-cases" id="featured-grid" role="region" aria-roledescription="캐러셀" aria-label="대표 프로젝트"></div>
+          <p class="sr-only" id="featured-status" role="status" aria-live="polite" aria-atomic="true"></p>
           <div class="section-end"><a class="arrow-link" href="#/projects">엮어온 매듭 풀어 보기 <span aria-hidden="true">↗</span></a></div>
         </div>
       </section>

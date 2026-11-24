@@ -2,6 +2,7 @@
 .home-editorial {
   --home-orange-ink: #a94d0a;
   --home-rule: #e8e6e3;
+  --home-section-space: clamp(144px, 12vw, 200px);
 }
 .home-editorial .identity-hero {
   display: block;
@@ -193,7 +194,8 @@
   text-underline-offset: 4px;
 }
 .home-editorial .identity-step > a:is(:hover, :focus-visible) { text-decoration-color: currentColor; }
-.home-editorial .featured-section { padding-block: 28px 32px; }
+.home-editorial .featured-section { margin-top: var(--home-section-space); padding-block: 0; }
+.home-editorial .profile-section { margin-top: calc(var(--home-section-space) + 64px); padding-top: 0; }
 .home-editorial .featured-heading {
   display: flex;
   align-items: flex-end;
@@ -216,10 +218,12 @@
   background: rgba(255,255,255,.94);
   backdrop-filter: blur(16px);
 }
-.home-editorial .featured-index a {
+.home-editorial .featured-index [role="tab"] {
   display: inline-flex;
   align-items: baseline;
   gap: 10px;
+  border: 0;
+  background: transparent;
   padding: 10px 18px;
   border-radius: 6px;
   color: #777;
@@ -227,37 +231,54 @@
   line-height: 1.4;
   transition: background 180ms ease, color 180ms ease;
 }
-.home-editorial .featured-index a::after { display: none; }
-.home-editorial .featured-index a strong { font-weight: 550; }
-.home-editorial .featured-index a span { font-size: 12px; }
-.home-editorial .featured-index a[aria-current] { background: #fff1e3; color: var(--home-orange-ink); }
-.home-editorial .featured-index a:is(:hover, :focus-visible) { background: var(--accent); color: #fff; }
-.home-editorial .featured-cases { display: block; margin-top: 0; }
+.home-editorial .featured-index [role="tab"]::after { display: none; }
+.home-editorial .featured-index [role="tab"] strong { font-weight: 550; }
+.home-editorial .featured-index [role="tab"] span { font-size: 12px; }
+.home-editorial .featured-index [role="tab"][aria-selected="true"] { background: #fff1e3; color: var(--home-orange-ink); }
+.home-editorial .featured-index [role="tab"]:is(:hover, :focus-visible) { background: var(--accent); color: #fff; }
+/* A real horizontal scroll track supports buttons, touch and trackpads. */
+.home-editorial .featured-cases {
+  position: relative;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 100%;
+  grid-template-rows: auto;
+  align-items: start;
+  margin-top: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+}
+.home-editorial #featured-grid { gap: 0; align-items: start; }
+.home-editorial .featured-case-visual:focus-visible { outline-offset: -3px; }
+.home-editorial .featured-cases::-webkit-scrollbar { display: none; }
+.home-editorial .featured-cases:focus-within { outline: none; }
 .home-editorial .featured-case {
   display: grid;
   grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr);
   gap: clamp(32px, 4.5vw, 80px);
   align-items: start;
-  padding: 32px 0 56px;
-  scroll-margin-top: 50px;
+  min-width: 0;
+  padding: 32px 0 44px;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
 }
-.home-editorial .featured-case + .featured-case { border-top: 1px solid var(--home-rule); }
+
 .home-editorial .featured-case-visual {
   position: relative;
-  display: grid;
-  align-items: center;
+  display: block;
   width: 100%;
-  aspect-ratio: 16 / 11;
+  aspect-ratio: auto;
   overflow: hidden;
   border-radius: 8px;
-  background: #e54895;
+  background: transparent;
 }
-.home-editorial .featured-case--bridge .featured-case-visual { background: #101113; }
-.home-editorial .featured-case--korail .featured-case-visual { background: #e9f4ff; }
 .home-editorial .featured-case-visual img {
   width: 100%;
   height: auto;
-  max-height: 100%;
+  max-height: none;
   object-fit: contain;
   filter: none;
   transition: transform 700ms var(--motion-spring);
@@ -334,14 +355,14 @@
   .home-editorial .hero-project-link { margin-top: 18px; }
   .home-editorial .hero .document-links { margin-top: 10px; }
   .home-editorial .identity-step { padding-top: 12px; }
-  .home-editorial .featured-section { padding-top: 32px; }
+
   .home-editorial .featured-heading { padding-bottom: 24px; }
 }
 @media (min-width: 1600px) {
   .home-editorial .identity-hero { padding-block: 64px 36px; }
   .home-editorial .hero-layout.identity-stage { gap: 52px 88px; }
   .home-editorial .hero-description { font-size: 18px; }
-  .home-editorial .featured-case { padding-block: 64px 80px; }
+  .home-editorial .featured-case { padding-block: 40px 48px; }
 }
 @media (max-width: 1000px) {
   .home-editorial .hero-layout.identity-stage { gap: 32px; }
@@ -375,16 +396,17 @@
   .home-editorial .identity-step h2 { font-size: 16px; }
   .home-editorial .identity-step p { grid-column: 1 / -1; grid-row: 2; margin-top: 7px; font-size: 14px; }
   .home-editorial .identity-step > a { align-self: center; margin: 0; padding: 3px 0; font-size: 12px; }
-  .home-editorial .featured-section { padding-top: 40px; }
+  .home-editorial { --home-section-space: 96px; }
+  .home-editorial .profile-section { margin-top: 144px; }
   .home-editorial .featured-heading { display: block; padding-bottom: 24px; }
   .home-editorial .featured-heading h2 { font-size: 30px; }
   .home-editorial .featured-heading .section-description { margin-top: 16px; font-size: 15px; }
   .home-editorial .featured-heading .section-description br { display: none; }
   .home-editorial .featured-index { gap: 0; padding-block: 8px; }
-  .home-editorial .featured-index a { flex: 1; display: block; text-align: center; padding: 8px 5px; font-size: 14px; }
-  .home-editorial .featured-index a span { display: block; margin-top: 3px; font-size: 12px; }
-  .home-editorial .featured-case { grid-template-columns: 1fr; gap: 26px; padding-block: 28px 44px; scroll-margin-top: 50px; }
-  .home-editorial .featured-case-visual { aspect-ratio: 1.5; }
+  .home-editorial .featured-index [role="tab"] { flex: 1; display: block; text-align: center; padding: 8px 5px; font-size: 14px; }
+  .home-editorial .featured-index [role="tab"] span { display: block; margin-top: 3px; font-size: 12px; }
+  .home-editorial .featured-case { grid-template-columns: 1fr; gap: 26px; padding-block: 28px 32px; }
+
   .home-editorial .featured-case-context { display: flex; }
   .home-editorial .featured-case-context > span { margin: 0; }
   .home-editorial .featured-case h3 { margin-top: 14px; font-size: 29px; }
