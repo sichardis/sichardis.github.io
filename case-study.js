@@ -54,7 +54,7 @@ export function caseStudyMarkup(project, hero, escape) {
   const download = project.pdfParts
     ? `<button class="bridge-download" type="button" data-pdf-view><span>${downloadLabel}</span><span aria-hidden="true">↗</span></button>`
     : project.pdf
-      ? `<a class="bridge-download" href="${escape(project.pdf)}" target="_blank" rel="noopener">${downloadLabel} <span aria-hidden="true">↗</span></a>`
+      ? `<a class="bridge-download" data-pdf-file-view href="${escape(project.pdf)}" target="_blank" rel="noopener">${downloadLabel} <span aria-hidden="true">↗</span></a>`
       : '';
   const paragraphs = items => items.map(item => `<p>${escape(item)}</p>`).join('');
 

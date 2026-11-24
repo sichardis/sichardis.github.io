@@ -1,0 +1,72 @@
+/* Shared reading rhythm for every project and its process reader. */
+.project-detail .detail-heading h1,
+.project-detail .bridge-article h1 {
+  line-height: 1.4;
+}
+.project-detail .detail-subtitle {
+  margin-top: 12px;
+  line-height: 1.6;
+}
+.project-detail .bridge-hero > .detail-lead {
+  margin-top: 20px;
+  font-size: 16px;
+  line-height: 1.8;
+  white-space: normal;
+}
+.project-detail .detail-facts dt,
+.project-detail .bridge-facts dt {
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+.project-detail .detail-facts dd,
+.project-detail .bridge-facts dd {
+  line-height: 1.7;
+}
+.project-detail .bridge-section > h2 { line-height: 1.5; }
+.project-detail .bridge-section h3 {
+  margin-top: 28px;
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+.project-detail .bridge-section .bridge-goal {
+  margin-top: 0;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+.project-detail .bridge-section p,
+.project-detail .bridge-section li,
+.project-detail .detail-story p {
+  font-size: 16px;
+  line-height: 1.8;
+  white-space: normal;
+}
+.project-detail .bridge-section p + p { margin-top: 16px; }
+.project-detail .bridge-section li + li { margin-top: 12px; }
+.project-detail .bridge-section > h2 + * { margin-top: 0; }
+.project-detail .process-card span { line-height: 1.6; }
+#process-content #process-title { line-height: 1.45; }
+#process-content .process-summary {
+  line-height: 1.8;
+  margin-top: 14px;
+  margin-bottom: 28px;
+}
+#process-content .process-explanation h3 {
+  margin-bottom: 12px;
+  line-height: 1.6;
+}
+#process-content .process-explanation p {
+  font-size: 16px;
+  line-height: 1.8;
+  white-space: normal;
+}
+[data-pdf-file-view][aria-disabled="true"],
+[data-pdf-view][aria-disabled="true"],
+[data-pdf-parts][aria-disabled="true"],
+[data-pdf-download][aria-disabled="true"] {
+  opacity: .65;
+  cursor: progress;
+}
+@media (max-width: 800px) {
+  .project-detail .bridge-section h3 { margin-top: 24px; }
+  .project-detail .bridge-section li + li { margin-top: 10px; }
+}

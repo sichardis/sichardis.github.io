@@ -4,6 +4,8 @@ import { caseStudies } from './case-studies.js?v=storyboard-authors-20261118';
 import { caseStudyMarkup, caseProcessMarkup } from './case-study.js?v=unified-trophy-20261124';
 import { contactConfig } from './contact-config.js';
 import { initContactForm } from './contact.js';
+import { pdfDocuments } from './pdf-documents.js';
+import { loadNamedPdf } from './pdf-reader.js';
 
 const pdfProjectNames = {
   chak: '착!(Chak!)',
@@ -197,11 +199,10 @@ function detailHero(project) {
 
 function renderDetail(id) {
   const baseProject = projects.find((project) => project.id === id);
-  const pdfTitleSuffix = baseProject?.documentType === 'storyboard' ? ' 화면설계서' : '';
   const project = baseProject && {
     ...baseProject,
     ...caseStudies[id],
-    pdfFilename: `${baseProject.pdfProjectName}${pdfTitleSuffix}_정서영.pdf`,
+    pdfFilename: pdfDocuments[id]?.filename || `${baseProject.pdfProjectName}_정서영.pdf`,
   };
   detailProject = project;
   const download = $('.detail-toolbar a[download]');
@@ -444,8 +445,9 @@ const imageDialog = $('#image-dialog');
 let pdfPending = false;
 const pdfCache = new Map();
 
-async function downloadPdfParts({folder, count, size}, filename, {preview = false} = {}) {
+async function openProjectPdf(project, {preview = false} = {}) {
   if (pdfPending) return;
+  const documentInfo = pdfDocuments[project.id];
   const reader = preview ? window.open('about:blank', '_blank') : null;
   if (preview && !reader) {
     window.alert('PDF 새 창을 열지 못했어요. 브라우저의 팝업 허용을 확인해 주세요.');
@@ -453,62 +455,54 @@ async function downloadPdfParts({folder, count, size}, filename, {preview = fals
   }
   if (reader) {
     reader.opener = null;
-    reader.document.title = 'PDF 불러오는 중';
-    reader.document.body.textContent = 'PDF를 불러오고 있습니다. 잠시만 기다려 주세요.';
-    reader.document.body.style.cssText = 'font:16px/1.7 sans-serif;padding:32px;color:#555';
+    reader.document.title = project.pdfFilename;
+    reader.document.body.textContent = `${project.pdfFilename} 문서를 불러오고 있습니다. 잠시만 기다려 주세요.`;
+    reader.document.body.style.cssText = 'font:16px/1.8 sans-serif;padding:32px;color:#555';
   }
   pdfPending = true;
-  const controls = [...document.querySelectorAll('[data-pdf-parts], [data-pdf-view]')];
-  const labels = controls.map(button => button.firstElementChild.textContent);
-  controls.forEach(button => {
-    button.disabled = true;
-    button.firstElementChild.textContent = 'PDF 불러오는 중…';
+  const controls = [...document.querySelectorAll('[data-pdf-file-view], [data-pdf-view], [data-pdf-parts], [data-pdf-download]')];
+  controls.forEach(control => {
+    control.setAttribute('aria-disabled', 'true');
+    if (control.tagName === 'BUTTON') control.disabled = true;
   });
-
   try {
-    // The original PDF is stored in parts to fit the upload limit.
-    let pdf = pdfCache.get(folder);
-    if (!pdf) {
-      const parts = await Promise.all(Array.from({length:count}, async (_, index) => {
-        const number = String(index + 1).padStart(2, '0');
-        const response = await fetch(`${folder}/${number}.bin`);
-        if (!response.ok) throw new Error('PDF part unavailable');
-        return response.blob();
-      }));
-      pdf = new Blob(parts, {type:'application/pdf'});
+    const key = `${documentInfo.sourceSha256}:${documentInfo.filename}`;
+    let cached = pdfCache.get(key);
+    if (!cached) {
+      const file = await loadNamedPdf(project, documentInfo);
+      cached = {file, url:URL.createObjectURL(file)};
+      pdfCache.set(key, cached);
     }
-    if (pdf.size !== size) throw new Error('Incomplete PDF');
-    pdfCache.set(folder, pdf);
-    const url = URL.createObjectURL(pdf);
-    if (reader && !reader.closed) reader.location.replace(url);
-    else if (!preview) {
+    if (preview) {
+      if (!reader.closed) reader.location.replace(cached.url);
+    } else {
       const link = document.createElement('a');
-      link.href = url;
-      link.download = filename;
+      link.href = cached.url;
+      link.download = cached.file.name;
       document.body.append(link);
       link.click();
       link.remove();
-      setTimeout(() => URL.revokeObjectURL(url), 60000);
-    } else URL.revokeObjectURL(url);
+    }
   } catch {
     if (reader && !reader.closed) reader.document.body.textContent = 'PDF를 열지 못했습니다. 포트폴리오에서 다시 시도해 주세요.';
     window.alert('PDF를 불러오지 못했어요. 다시 시도해 주세요.');
   } finally {
     pdfPending = false;
-    controls.forEach((button, index) => {
-      button.disabled = false;
-      button.firstElementChild.textContent = labels[index];
+    controls.forEach(control => {
+      control.removeAttribute('aria-disabled');
+      if (control.tagName === 'BUTTON') control.disabled = false;
     });
   }
 }
 
 $('#content').addEventListener('click', event => {
-  if (event.target.closest('[data-pdf-view]') && detailProject?.pdfParts) {
-    downloadPdfParts(detailProject.pdfParts, detailProject.pdfFilename, {preview: true});
-  }
-  if (event.target.closest('[data-pdf-parts]') && detailProject?.pdfParts) {
-    downloadPdfParts(detailProject.pdfParts, detailProject.pdfFilename);
-  }
+  const view = event.target.closest('[data-pdf-file-view], [data-pdf-view]');
+  const download = event.target.closest('[data-pdf-parts], [data-pdf-download]');
+  if ((!view && !download) || !detailProject || !pdfDocuments[detailProject.id]) return;
+  // Ordinary local file links still work when the browser blocks file:// fetch.
+  if (location.protocol === 'file:' && !detailProject.pdfParts) return;
+  event.preventDefault();
+  openProjectPdf(detailProject, {preview:Boolean(view)});
 });
 
 let processOpener;
