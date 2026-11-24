@@ -13,3 +13,42 @@
 .project-image img{filter:none}.project-card-link:hover .project-image img,.project-card-link:focus-visible .project-image img{filter:none}
 .project-status{left:auto;right:16px}
 .thread-weave{left:41.55%;top:47.74%}
+
+/* Profile records: highlight leadership and match the existing heading icons. */
+[data-page="about"] .about-records .leadership-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 25px;
+  margin-inline-start: 6px;
+  padding: 3px 9px;
+  border: 1px solid var(--accent-line);
+  border-radius: 6px;
+  background: var(--accent-soft);
+  color: #a84c08;
+  font-size: 13px;
+  font-weight: 650;
+  line-height: 1.3;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+[data-page="about"] .about-records .profile-award-icon .project-award-trophy {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  font-size: 22px;
+  line-height: 1;
+}
+@media (max-width: 400px) {
+  [data-page="about"] .about-records .profile-award-icon .project-award-trophy {
+    width: 18px;
+    height: 18px;
+    font-size: 18px;
+  }
+  [data-page="about"] .about-records .leadership-chip {
+    min-height: 24px;
+    padding-inline: 8px;
+    font-size: 12px;
+  }
+}
