@@ -244,8 +244,8 @@ html {
   align-items: center;
   gap: 8px;
 }
-.project-award-heading .tool-icon { flex-basis: 24px; height: 24px; }
-.project-award-heading .tool-icon svg { width: 16px; height: 16px; }
+.project-award-heading .project-award-trophy,
+.record-heading .project-award-trophy { display: inline-grid; place-items: center; width: 24px; height: 24px; }
 .attitude-rows .attitude-marker {
   display: grid;
   place-items: center;

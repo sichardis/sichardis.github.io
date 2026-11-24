@@ -18,7 +18,7 @@ export function detailIndexButtons(projectId, hasTeamPhotos = true) {
 export function awardMarkup(award, escape) {
   if (!award) return '';
   return `<h3 class="project-award-heading">
-    <span class="tool-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3h8v6a4 4 0 0 1-8 0V3Zm0 2H4v2a3 3 0 0 0 4 3m8-5h4v2a3 3 0 0 1-4 3m-4 3v5m-5 3h10m-9 0v-3h8v3"/></svg></span>수상 내역
+    <span class="project-award-trophy" aria-hidden="true">🏆</span>수상 내역
   </h3><p>${escape(award.title)}</p>`;
 }
 
