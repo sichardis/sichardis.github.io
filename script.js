@@ -97,10 +97,61 @@ function card(project, {featured = false, priority = 'auto', filterOrder} = {}) 
     </a></article>`;
 }
 
+// Home presents the reasoning and evidence; the full catalogue retains comparable cards.
+const featuredNotes = {
+  chak: {
+    name: '착! (Chak!)', methods: '서비스 기획 · MVP 검증',
+    headline: ['작은 선행이', '다음 참여로 이어지도록'],
+    decision: '미션·인증·공감을 하나의 참여 흐름으로 연결',
+    evidence: '두 차례 웹앱 시험 운영에서 선행 기록 32건·54건 확보',
+    period: '2026.09–12',
+  },
+  bridge: {
+    name: '브릿지 (Bridge)', methods: '사용자 조사 · 정보 구조',
+    headline: ['수십 년의 경험이', '채용 시장에서 읽히도록'],
+    decision: '대화로 경험을 정리하고 직무 맞춤 프로필로 전환',
+    evidence: '사용자 조사부터 정보 구조·이용 흐름까지 기획서 완성',
+    period: '2026.03–06',
+  },
+  korail: {
+    name: '코레일톡', methods: '사용성 테스트 · 아이트래킹',
+    headline: ['예약한 승차권을', '헤매지 않고 찾도록'],
+    decision: '분산된 예약 정보를 ‘나의 티켓’으로 통합',
+    evidence: '참가자 5명의 2차 평가에서 예약 내역 확인 평균 6.4초',
+    period: '2026.03–06',
+  },
+};
+function featuredCase(project) {
+  const note = featuredNotes[project.id];
+  const study = caseStudies[project.id] || {};
+  const role = study.role || project.role;
+  const leader = role.includes('팀장');
+  const award = project.award?.shortTitle ?? project.award?.title;
+  const team = study.team || (project.id === 'bridge' ? '3인' : '');
+  return `<article class="featured-case featured-case--${escape(project.id)}" id="case-${escape(project.id)}" aria-labelledby="case-title-${escape(project.id)}">
+    <a class="featured-case-visual" href="${projectUrl(project.id)}" aria-label="${escape(note.name)} 프로젝트 상세 보기">
+      <img src="${escape(project.cover)}" alt="${escape(note.name)} 프로젝트 대표 이미지" width="1920" height="1080" loading="lazy" decoding="async">
+      <span class="featured-image-action">프로젝트 살펴보기</span>
+    </a>
+    <div class="featured-case-copy">
+      <div class="featured-case-context"><p>${escape(note.name)}</p><span>${escape(note.methods)}</span></div>
+      <h3 id="case-title-${escape(project.id)}" tabindex="-1"><a href="${projectUrl(project.id)}">${note.headline.map(line => `<span>${escape(line)}</span>`).join('')}</a></h3>
+      <p class="featured-case-intro">${escape(study.lead || project.lead)}</p>
+      <dl class="featured-reasoning">
+        <div><dt>담당 역할</dt><dd>${leader ? '<span class="featured-leader">팀장</span>' : ''}${escape(role.replace('팀장 · ', ''))}</dd></div>
+        <div><dt>핵심 선택</dt><dd>${escape(note.decision)}</dd></div>
+        <div class="featured-evidence"><dt>이뤄낸 결과</dt><dd>${escape(note.evidence)}</dd></div>
+      </dl>
+      ${award ? `<p class="featured-award"><span class="project-award-trophy" aria-hidden="true">🏆</span>${escape(award)}</p>` : ''}
+      <div class="featured-case-footer"><p>${escape(note.period)}<span>${escape(team)}</span></p><a href="${projectUrl(project.id)}">기획 과정 살펴보기</a></div>
+    </div>
+  </article>`;
+}
+
 function renderProjects({animate = false, focusFilter = false} = {}) {
   clearTimeout(filterUpdateTimer);
   const featured = featuredIds.map((id) => projects.find((project) => project.id === id)).filter(Boolean);
-  $('#featured-grid').innerHTML = featured.map((project, index) => card(project, {featured: true, priority: index === 0 ? 'high' : 'auto'})).join('');
+  if (!$('#featured-grid').children.length) $('#featured-grid').innerHTML = featured.map(featuredCase).join('');
   const visible = projects.filter(p => activeFilter === 'all' || (activeFilter === 'featured' ? featuredIds.includes(p.id) : p.documentType === activeFilter));
   $('.filters').innerHTML = filters.map(([id,label])=>`<button type="button" data-filter="${id}" aria-pressed="${id===activeFilter}">${label} ${projects.filter(p=>id==='all'||(id==='featured'?featuredIds.includes(p.id):p.documentType===id)).length}</button>`).join('');
   const workGrid = $('#work-grid');
@@ -251,6 +302,7 @@ function renderRoute({ focus = false } = {}) {
     return;
   }
   const sectionLink = hash === '#selected';
+  const featuredLink = /^#case-(chak|bridge|korail)$/.exec(hash);
   const route = hash.replace(/^#\/?/,'').split('/');
   const detail = route[0] === 'project';
   const page = detail ? 'detail' : ['projects','about'].includes(route[0]) ? route[0] : 'home';
@@ -274,6 +326,7 @@ function renderRoute({ focus = false } = {}) {
   queueDetailIndexUpdate();
   document.title = `${name} | 정서영 포트폴리오`;
   if (sectionLink) requestAnimationFrame(scrollToFeatured);
+  else if (featuredLink) requestAnimationFrame(() => scrollToFeaturedCase(featuredLink[1]));
   else { window.scrollTo({top:restoreList ? listScroll : 0,behavior:'instant'}); if (focus) $('#content').focus({preventScroll:true}); }
 }
 
@@ -288,10 +341,41 @@ function scrollToFeatured() {
   title.focus({preventScroll:true});
   title.scrollIntoView({behavior:motion(), block:'start'});
 }
-$('.explore-link').addEventListener('click', (event) => {
+document.querySelectorAll('[data-featured-start]').forEach(link => link.addEventListener('click', event => {
   event.preventDefault();
   scrollToFeatured();
-});
+}));
+// Local project navigation preserves the home route and follows manual scrolling.
+let featuredIndexFrame = 0;
+function queueFeaturedIndexUpdate() {
+  if (featuredIndexFrame) return;
+  featuredIndexFrame = requestAnimationFrame(() => {
+    featuredIndexFrame = 0;
+    if ($('[data-page="home"]').hidden) return;
+    const cases = [...document.querySelectorAll('.featured-case')];
+    if (!cases.length) return;
+    const line = $('.site-header').getBoundingClientRect().bottom + $('.featured-index').getBoundingClientRect().height + 72;
+    let current = cases[0];
+    for (const item of cases) if (item.getBoundingClientRect().top <= line) current = item;
+    document.querySelectorAll('[data-featured-jump]').forEach(link => {
+      if ('case-' + link.dataset.featuredJump === current.id) link.setAttribute('aria-current', 'location');
+      else link.removeAttribute('aria-current');
+    });
+  });
+}
+function scrollToFeaturedCase(id) {
+  const target = document.getElementById('case-title-' + id);
+  target.focus({preventScroll:true});
+  document.getElementById('case-' + id).scrollIntoView({behavior:motion(), block:'start'});
+}
+document.querySelectorAll('[data-featured-jump]').forEach(link => link.addEventListener('click', event => {
+  if (location.hash !== link.getAttribute('href')) return;
+  event.preventDefault();
+  scrollToFeaturedCase(link.dataset.featuredJump);
+}));
+window.addEventListener('scroll', queueFeaturedIndexUpdate, {passive:true});
+window.addEventListener('resize', queueFeaturedIndexUpdate, {passive:true});
+
 document.querySelectorAll('a[href="#/projects"]').forEach((link) => {
   link.addEventListener('click', () => {
     if (link.classList.contains('back-link')) return;
@@ -459,6 +543,7 @@ $('[data-image-size]').addEventListener('click', event => {
 window.addEventListener('hashchange' , () => renderRoute({focus:true}));
 renderProjects();
 renderRoute();
+queueFeaturedIndexUpdate();
 
 initContactForm($('#contact-form'), contactConfig);
 
@@ -475,14 +560,14 @@ let threadTimer;
 function showThreadStep(step) {
   threadStep = step;
   threadStops.forEach((stop, i) => {
-    stop.setAttribute('aria-expanded', String(i <= step));
+    stop.setAttribute('aria-pressed', String(i === step));
     if (i === step) stop.setAttribute('aria-current', 'step');
     else stop.removeAttribute('aria-current');
   });
   threadSteps.forEach((item, i) => {
-    item.classList.toggle('is-visible', i <= step);
+    item.classList.add('is-visible');
     item.classList.toggle('is-current', i === step);
-    item.setAttribute('aria-hidden', String(i > step));
+    item.removeAttribute('aria-hidden');
   });
 }
 
@@ -532,7 +617,7 @@ reducedThreadMotion.addEventListener('change', event => {
   setThreadPlaying(!event.matches);
 });
 
-if (reducedThreadMotion.matches) showThreadStep(threadStops.length - 1);
+showThreadStep(-1);
 threadPlayback.hidden = false;
 setThreadPlaying(threadPlaying);
 
