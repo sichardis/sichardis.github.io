@@ -52,9 +52,9 @@ export function caseStudyMarkup(project, hero, escape) {
   }).join('');
   const downloadLabel = `${escape(project.pdfLabel || project.title + ' 원본 전체 보기')} · PDF`;
   const download = project.pdfParts
-    ? `<button class="bridge-download" type="button" data-pdf-parts><span>${downloadLabel}</span><span aria-hidden="true">↓</span></button>`
+    ? `<button class="bridge-download" type="button" data-pdf-view><span>${downloadLabel}</span><span aria-hidden="true">↗</span></button>`
     : project.pdf
-      ? `<a class="bridge-download" href="${escape(project.pdf)}" download="${escape(project.pdfFilename)}">${downloadLabel} <span aria-hidden="true">↓</span></a>`
+      ? `<a class="bridge-download" href="${escape(project.pdf)}" target="_blank" rel="noopener">${downloadLabel} <span aria-hidden="true">↗</span></a>`
       : '';
   const paragraphs = items => items.map(item => `<p>${escape(item)}</p>`).join('');
 
@@ -97,15 +97,17 @@ export function caseProcessMarkup(project, steps, index, escape) {
   const media = project.id === 'bridge'
     ? `<img class="case-process-media" src="./assets/bridge-process-${index + 1}.jpg" alt="브릿지 ${escape(step.title)} 원본 자료" width="1600" height="900" decoding="async">`
     : processMedia(step, escape, {placeholder:project.processImagePlaceholder});
+  const canZoom = project.id === 'bridge' || (step.image && !project.processImagePlaceholder);
   return `<h2 id="process-title">${escape(step.title)}</h2>
     <p class="process-summary">${escape(step.summary)}</p>
-    <div class="process-media-row">
+    ${canZoom ? `<button class="process-zoom" type="button" data-process-zoom aria-label="${escape(step.title)} 자료 확대">${media}<span>자료 확대</span></button>` : media}
+    <div class="process-stage-controls">
       <button class="process-arrow" type="button" data-process-prev aria-label="이전 단계"${index === 0 ? ' disabled' : ''}>
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5-7 7 7 7"/></svg>
+        이전 단계
       </button>
-      ${media}
+      <span>${index + 1} / ${steps.length}</span>
       <button class="process-arrow" type="button" data-process-next aria-label="${index + 1 === steps.length ? '첫 단계로' : '다음 단계'}">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        ${index + 1 === steps.length ? '처음부터 보기' : '다음 단계'}
       </button>
     </div>
     ${step.sections.map(([title, text]) => `<section class="process-explanation"><h3>${escape(title)}</h3><p>${escape(text)}</p></section>`).join('')}`;

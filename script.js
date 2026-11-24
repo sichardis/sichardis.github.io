@@ -151,8 +151,14 @@ function renderDetail(id) {
     pdfFilename: `${baseProject.pdfProjectName}${pdfTitleSuffix}_정서영.pdf`,
   };
   detailProject = project;
-  const download = $('.detail-toolbar a.detail-pdf');
+  const download = $('.detail-toolbar a[download]');
+  const preview = $('.detail-toolbar [data-pdf-file-view]');
+  const previewParts = $('.detail-toolbar [data-pdf-view]');
   $('.detail-toolbar [data-pdf-parts]').hidden = !project?.pdfParts;
+  previewParts.hidden = !project?.pdfParts;
+  preview.hidden = !project?.pdf || Boolean(project?.pdfParts);
+  if (project?.pdf) preview.href = project.pdf;
+  else preview.removeAttribute('href');
   download.hidden = !project?.pdf;
   download.download = project?.pdfFilename || '';
   if (project?.pdf) download.href = project.pdf;
@@ -235,6 +241,7 @@ window.addEventListener('resize', () => {
 
 function renderRoute({ focus = false } = {}) {
   if (previousPage === 'projects') listScroll = window.scrollY;
+  if (imageDialog.open) imageDialog.close();
   if (processDialog.open) processDialog.close();
   const hash = location.hash || '#/';
   if (hash === '#content') {
@@ -298,38 +305,59 @@ document.querySelectorAll('a[href="#/"], a[href="#/about"]').forEach((link) => {
   });
 });
 const processDialog = $('#process-dialog');
+const imageDialog = $('#image-dialog');
 let pdfPending = false;
+const pdfCache = new Map();
 
-async function downloadPdfParts({folder, count, size}, filename) {
+async function downloadPdfParts({folder, count, size}, filename, {preview = false} = {}) {
   if (pdfPending) return;
+  const reader = preview ? window.open('about:blank', '_blank') : null;
+  if (preview && !reader) {
+    window.alert('PDF 새 창을 열지 못했어요. 브라우저의 팝업 허용을 확인해 주세요.');
+    return;
+  }
+  if (reader) {
+    reader.opener = null;
+    reader.document.title = 'PDF 불러오는 중';
+    reader.document.body.textContent = 'PDF를 불러오고 있습니다. 잠시만 기다려 주세요.';
+    reader.document.body.style.cssText = 'font:16px/1.7 sans-serif;padding:32px;color:#555';
+  }
   pdfPending = true;
-  const controls = [...document.querySelectorAll('[data-pdf-parts]')];
+  const controls = [...document.querySelectorAll('[data-pdf-parts], [data-pdf-view]')];
   const labels = controls.map(button => button.firstElementChild.textContent);
   controls.forEach(button => {
     button.disabled = true;
-    button.firstElementChild.textContent = 'PDF 받는 중…';
+    button.firstElementChild.textContent = 'PDF 불러오는 중…';
   });
 
   try {
     // The original PDF is stored in parts to fit the upload limit.
-    const parts = await Promise.all(Array.from({length:count}, async (_, index) => {
-      const number = String(index + 1).padStart(2, '0');
-      const response = await fetch(`${folder}/${number}.bin`);
-      if (!response.ok) throw new Error('PDF part unavailable');
-      return response.blob();
-    }));
-    const pdf = new Blob(parts, {type:'application/pdf'});
+    let pdf = pdfCache.get(folder);
+    if (!pdf) {
+      const parts = await Promise.all(Array.from({length:count}, async (_, index) => {
+        const number = String(index + 1).padStart(2, '0');
+        const response = await fetch(`${folder}/${number}.bin`);
+        if (!response.ok) throw new Error('PDF part unavailable');
+        return response.blob();
+      }));
+      pdf = new Blob(parts, {type:'application/pdf'});
+    }
     if (pdf.size !== size) throw new Error('Incomplete PDF');
+    pdfCache.set(folder, pdf);
     const url = URL.createObjectURL(pdf);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = filename;
-    document.body.append(link);
-    link.click();
-    link.remove();
-    setTimeout(() => URL.revokeObjectURL(url), 60000);
+    if (reader && !reader.closed) reader.location.replace(url);
+    else if (!preview) {
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = filename;
+      document.body.append(link);
+      link.click();
+      link.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 60000);
+    } else URL.revokeObjectURL(url);
   } catch {
-    window.alert('PDF를 내려받지 못했어요. 다시 시도해 주세요.');
+    if (reader && !reader.closed) reader.document.body.textContent = 'PDF를 열지 못했습니다. 포트폴리오에서 다시 시도해 주세요.';
+    window.alert('PDF를 불러오지 못했어요. 다시 시도해 주세요.');
   } finally {
     pdfPending = false;
     controls.forEach((button, index) => {
@@ -340,19 +368,24 @@ async function downloadPdfParts({folder, count, size}, filename) {
 }
 
 $('#content').addEventListener('click', event => {
+  if (event.target.closest('[data-pdf-view]') && detailProject?.pdfParts) {
+    downloadPdfParts(detailProject.pdfParts, detailProject.pdfFilename, {preview: true});
+  }
   if (event.target.closest('[data-pdf-parts]') && detailProject?.pdfParts) {
     downloadPdfParts(detailProject.pdfParts, detailProject.pdfFilename);
   }
 });
 
+let processOpener;
 function openProcess(index) {
   const steps = detailProject.steps ?? bridgeSteps;
   const count = steps.length;
   processIndex = Math.max(0, Math.min(count - 1, index));
-  const name = `${detailProject.title} · 과정`;
+  const name = `${detailProject.title} 과정`;
   $('.process-dialog-meta').textContent = name;
   $('.process-dialog-step').textContent = `${String(processIndex + 1).padStart(2, '0')} / ${String(count).padStart(2, '0')}`;
   $('#process-content').innerHTML = caseProcessMarkup(detailProject, steps, processIndex, escape);
+  $('#process-navigation').innerHTML = `<p class="process-navigation-label">기획의 흐름</p>${steps.map((step, i) => `<button type="button" data-process-select="${i}"${i === processIndex ? ' aria-current="step"' : ''}><span class="process-step-node" aria-hidden="true"></span><span>${escape(step.title)}</span></button>`).join('')}`;
   if (processDialog.open && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
     const content = $('#process-content');
     content.getAnimations().forEach(animation => animation.cancel());
@@ -361,8 +394,19 @@ function openProcess(index) {
       {opacity: 1, transform: 'translateY(0) scale(1)'},
     ], {duration: 380, easing: 'cubic-bezier(.22, 1, .36, 1)'});
   }
-  if (!processDialog.open) processDialog.showModal();
-  processDialog.scrollTop = 0;
+  if (!processDialog.open) { processOpener = document.activeElement; processDialog.showModal(); }
+  $('#process-content').scrollTop = 0;
+  const navigation = $('#process-navigation');
+  const current = navigation.querySelector('[aria-current]');
+  if (current) {
+    const item = current.getBoundingClientRect(), bounds = navigation.getBoundingClientRect();
+    if (matchMedia('(max-width:800px)').matches) {
+      if (item.left < bounds.left || item.right > bounds.right) navigation.scrollLeft += item.left - bounds.left - 16;
+    } else {
+      if (item.top < bounds.top) navigation.scrollTop -= bounds.top - item.top + 12;
+      else if (item.bottom > bounds.bottom) navigation.scrollTop += item.bottom - bounds.bottom + 12;
+    }
+  }
   $('#process-title').setAttribute('tabindex','-1');
   $('#process-title').focus({preventScroll:true});
 }
@@ -378,13 +422,39 @@ $('#detail-content').addEventListener('click', event => {
   }
 });
 processDialog.querySelector('.process-close').addEventListener('click',()=>processDialog.close());
+processDialog.addEventListener('close', () => processOpener?.isConnected && processOpener.focus({preventScroll:true}));
 processDialog.addEventListener('click',event=>{
+  const selected = event.target.closest('[data-process-select]');
+  if (selected) openProcess(Number(selected.dataset.processSelect));
+  const zoom = event.target.closest('[data-process-zoom]');
+  if (zoom) {
+    const source = zoom.querySelector('img');
+    $('#image-dialog-image').src = source.src;
+    $('#image-dialog-image').alt = source.alt;
+    $('#image-dialog-title').textContent = (detailProject.steps ?? bridgeSteps)[processIndex].title;
+    imageDialog.classList.remove('is-original-size');
+    $('[data-image-size]').setAttribute('aria-pressed', 'false');
+    $('[data-image-size]').textContent = '원본 크기';
+    imageDialog.showModal();
+  }
   if (event.target.closest('[data-process-next]')) openProcess((processIndex+1)%(detailProject.steps ?? bridgeSteps).length);
   if (event.target.closest('[data-process-prev]')) openProcess(Math.max(0,processIndex-1));
   if (event.target === processDialog) {
     const b=processDialog.getBoundingClientRect();
     if(event.clientX<b.left||event.clientX>b.right||event.clientY<b.top||event.clientY>b.bottom) processDialog.close();
   }
+});
+processDialog.addEventListener('keydown', event => {
+  if (event.altKey || event.ctrlKey || event.metaKey || !['ArrowLeft','ArrowRight'].includes(event.key)) return;
+  event.preventDefault();
+  const steps = detailProject.steps ?? bridgeSteps;
+  openProcess(Math.max(0, Math.min(steps.length - 1, processIndex + (event.key === 'ArrowRight' ? 1 : -1))));
+});
+$('[data-image-close]').addEventListener('click', () => imageDialog.close());
+$('[data-image-size]').addEventListener('click', event => {
+  const original = imageDialog.classList.toggle('is-original-size');
+  event.currentTarget.setAttribute('aria-pressed', String(original));
+  event.currentTarget.textContent = original ? '화면에 맞추기' : '원본 크기';
 });
 window.addEventListener('hashchange' , () => renderRoute({focus:true}));
 renderProjects();

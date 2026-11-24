@@ -14,7 +14,8 @@
   <link rel="stylesheet" href="./projects.css?v=compact-footer">
   <link rel="stylesheet" href="./about.css?v=identity-icons">
   <link rel="stylesheet" href="./typography.css?v=unified-trophy-20261124">
-  <script defer src="./app.js?v=restored-20261124"></script>
+  <link rel="stylesheet" href="./process-reader.css?v=profile-pdf-reader-20261124">
+  <script defer src="./app.js?v=profile-pdf-reader-20261124"></script>
 </head>
 <body>
   <a class="skip-link" href="#content">본문으로 건너뛰기</a>
@@ -138,7 +139,7 @@
 
     <div data-page="about" hidden>
       <section class="about-profile container" aria-labelledby="about-title"><h1 class="section-title profile-hero-title" id="about-title"><span class="section-title-icon" aria-hidden="true"><img src="./assets/section-knot.svg?v=orange-20261118" alt="" width="36" height="24"></span><span>실마리를 찾아 근거로 매듭짓는 정서영입니다.</span></h1>
-        <div class="about-profile-grid"><div class="about-portraits"><img src="./assets/optimized/profile.webp" alt="정서영 프로필 사진" width="600" height="751" loading="lazy" decoding="async" fetchpriority="high"><img src="./assets/optimized/profile-thread.webp?v=04de062c" alt="주황색 실로 매듭을 만든 정서영" width="900" height="1126" loading="lazy" decoding="async"></div>
+        <div class="about-profile-grid"><div class="about-portraits"><img src="./assets/optimized/profile.webp" alt="정서영 프로필 사진" width="600" height="751" loading="lazy" decoding="async" fetchpriority="high"><img src="./assets/optimized/profile-thread-clean.webp" alt="주황색 실로 매듭을 만든 정서영" width="900" height="1126" loading="lazy" decoding="async"></div>
         <div class="document-links"><a class="document-button" href="./assets/seoyeong-resume.pdf" download="정서영_이력서.pdf">이력서 · 경험의 실 담아가기</a><a class="document-button" href="./assets/seoyeong-cover-letter.pdf" download="정서영_자기소개서.pdf">자기소개서 · 생각의 매듭 담아가기</a></div>
         <div class="about-profile-copy"><p>작은 불편을 발견하는 일이 기획의 시작이라고 생각합니다.<br>
 사용자의 이야기에서 얻은 단서를 구체적인 해결 방법으로 발전시키고,<br>
@@ -299,6 +300,8 @@
     <section data-page="detail" class="project-detail container" hidden aria-labelledby="detail-title">
       <div class="detail-toolbar">
         <a class="back-link" href="#/projects">전체 프로젝트 목록</a>
+        <a class="detail-pdf" data-pdf-file-view hidden target="_blank" rel="noopener">PDF 바로 보기</a>
+        <button class="detail-pdf" type="button" data-pdf-view hidden><span>PDF 바로 보기</span></button>
         <a class="detail-pdf" hidden download>전체 PDF 다운로드 <span aria-hidden="true">↓</span></a>
         <button class="detail-pdf" type="button" data-pdf-parts hidden><span>전체 PDF 다운로드</span><span aria-hidden="true">↓</span></button>
       </div>
@@ -327,7 +330,8 @@
   <footer class="site-footer"><div class="container footer-grid"><a class="brand" href="#/"><span>정서영</span><span lang="en">Seoyeong Jeong</span></a><div><h2 lang="en">Quick Links</h2><a href="#/projects">전체 프로젝트</a><a href="#/about">프로필</a></div><div><h2 lang="en">Contact</h2><a href="tel:+821091633356">+82 10 9163 3356</a><a href="mailto:richardis6551@naver.com">richardis6551@naver.com</a></div></div></footer>
 
 
-  <dialog id="process-dialog" aria-labelledby="process-title"><div class="process-dialog-toolbar"><span class="process-dialog-meta"></span><span class="process-dialog-step"></span><button type="button" class="process-close" aria-label="과정 상세 닫기">×</button></div><div id="process-content"></div></dialog>
+  <dialog id="process-dialog" aria-labelledby="process-title"><div class="process-dialog-toolbar"><span class="process-dialog-meta"></span><span class="process-dialog-step"></span><button type="button" class="process-close" aria-label="과정 상세 닫기">×</button></div><div class="process-reader"><nav id="process-navigation" aria-label="과정 단계"></nav><div id="process-content"></div></div></dialog>
+  <dialog id="image-dialog" aria-labelledby="image-dialog-title"><div class="image-dialog-toolbar"><h2 id="image-dialog-title">과정 자료</h2><button type="button" data-image-size aria-pressed="false">원본 크기</button><button type="button" data-image-close aria-label="자료 확대 닫기">×</button></div><div class="image-dialog-canvas"><img id="image-dialog-image" alt=""></div></dialog>
 
 </body>
 </html>
