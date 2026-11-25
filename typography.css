@@ -989,3 +989,16 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
 .site-footer [data-footer-contact][role="button"] { cursor: pointer; }
 .site-footer [data-footer-contact]:is(:hover, :focus-visible) { color: var(--accent); }
 .footer-contact-status { min-height: 1.6em; margin-top: 10px; font-size: 13px; line-height: 1.6; color: var(--accent); }
+
+/* Footer introduction and resolution note share the navigation label scale. */
+.site-footer { --footer-meta-size: 13px; }
+.site-footer .footer-intro { min-width: 0; }
+.site-footer .footer-intro .brand { display: block; margin-top: 0; line-height: 1.6; word-break: keep-all; overflow-wrap: anywhere; }
+.site-footer .footer-grid h2, .site-footer .footer-viewport-note { font-size: var(--footer-meta-size); }
+.site-footer .footer-viewport-note { margin-top: 10px; line-height: 1.6; color: #777; }
+@media (max-width: 800px) {
+  .site-footer { --footer-meta-size: 12px; }
+}
+@media (max-width: 680px) {
+  .footer-grid > .footer-intro { grid-column: 1 / -1; }
+}
