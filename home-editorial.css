@@ -136,18 +136,6 @@
 .home-editorial .identity-step h2 { font-size: 17px; font-weight: 600; gap: 8px; }
 .home-editorial .identity-step-icon { width: 22px; height: 22px; flex-basis: 22px; }
 .home-editorial .identity-step p { margin: 8px 0 0; font-size: 14px; line-height: 1.6; }
-.home-editorial .identity-step > a {
-  display: inline-block;
-  padding-block: 7px;
-  margin-top: 3px;
-  color: var(--accent);
-  font-size: 13px;
-  line-height: 1.5;
-  text-decoration: underline;
-  text-decoration-color: #edd0b7;
-  text-underline-offset: 4px;
-}
-.home-editorial .identity-step > a:is(:hover, :focus-visible) { text-decoration-color: currentColor; }
 .home-editorial .featured-section { margin-top: var(--home-section-space); padding-block: 0; }
 .home-editorial .profile-section { margin-top: var(--home-section-space); padding-block: 0; }
 #content:has(> .home-editorial:not([hidden])) > .contact-section { margin-top: var(--home-section-space); padding-top: 0; }
@@ -282,7 +270,6 @@
   .home-editorial .identity-step h2 { font-size: 15px; gap: 6px; }
   .home-editorial .identity-step-icon { flex-basis: 18px; width: 18px; height: 18px; }
   .home-editorial .identity-step p { font-size: 13px; line-height: 1.55; }
-  .home-editorial .identity-step > a { font-size: 12px; }
   .home-editorial .hero h1 { font-size: clamp(36px, 3.25vw, 50px); }
   .home-editorial .hero-description { margin-top: 16px; }
   .home-editorial .hero .document-links { margin-top: 22px; }
@@ -326,10 +313,9 @@
   .home-editorial .hero-visual-meta p { font-size: 12px; }
   .home-editorial .thread-stop .thread-icon { width: 32px; height: 32px; }
   .home-editorial .identity-steps { grid-template-columns: 1fr; gap: 0; }
-  .home-editorial .identity-step { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 12px; padding-block: 16px; }
+  .home-editorial .identity-step { display: grid; grid-template-columns: minmax(0, 1fr); padding-block: 16px; }
   .home-editorial .identity-step h2 { font-size: 16px; }
   .home-editorial .identity-step p { grid-column: 1 / -1; grid-row: 2; margin-top: 7px; font-size: 14px; }
-  .home-editorial .identity-step > a { align-self: center; margin: 0; padding: 3px 0; font-size: 12px; }
   #content { --home-section-space: 96px; }
   .home-editorial .featured-heading { display: block; padding-bottom: 24px; }
   .home-editorial .featured-index { gap: 0; padding-block: 8px; }

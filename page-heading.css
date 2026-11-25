@@ -1,0 +1,45 @@
+/* Shared introduction for the project catalogue and profile. */
+[data-page="projects"] .page-intro,
+.about-profile {
+  padding-top: 48px;
+}
+[data-page="projects"] .page-intro { padding-bottom: 40px; }
+[data-page] .page-heading .page-title {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin: 0;
+  font-size: 30px;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: -.035em;
+}
+.page-heading .page-title .section-title-icon {
+  flex: 0 0 1em;
+  width: 1em;
+  height: 1em;
+  margin-top: .2em;
+}
+.page-heading .page-title-text { min-width: 0; }
+.page-heading .page-lead {
+  margin: 12px 0 0;
+  max-width: none;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.65;
+  letter-spacing: -.025em;
+  color: #555;
+}
+.page-heading .page-lead > span { display: block; }
+.about-profile-grid { margin-top: 40px; }
+.about-profile .about-portraits { align-self: start; }
+.about-profile-copy .about-facts { margin-top: 0; padding-top: 0; }
+
+@media (max-width: 800px) {
+  [data-page="projects"] .page-intro,
+  .about-profile { padding-top: 36px; }
+  [data-page="projects"] .page-intro { padding-bottom: 32px; }
+  [data-page] .page-heading .page-title { font-size: 26px; }
+  .page-heading .page-lead { font-size: 15px; }
+  .about-profile-grid { margin-top: 32px; }
+}

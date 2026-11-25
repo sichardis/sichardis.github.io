@@ -16,7 +16,8 @@
   <link rel="stylesheet" href="./typography.css?v=footer-copy-20261125">
   <link rel="stylesheet" href="./process-reader.css?v=storyboard-review-20261125">
   <link rel="stylesheet" href="./contact.css?v=orange-profile-20261124">
-  <link rel="stylesheet" href="./home-editorial.css?v=home-title-scale-20261125">
+  <link rel="stylesheet" href="./home-editorial.css?v=shared-intro-20261125">
+  <link rel="stylesheet" href="./page-heading.css?v=shared-intro-20261125">
   <link rel="stylesheet" href="./detail-reading.css?v=storyboard-review-20261125">
   <script defer src="./app.js?v=home-sections-20261125"></script>
 </head>
@@ -85,9 +86,9 @@
             <div class="identity-steps">
             <div class="hero-visual-meta"><p>실마리에서 매듭까지</p>
             </div>
-              <article class="identity-step" id="identity-step-1"><h2><svg class="identity-step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg><span>실마리를 찾고</span></h2><p>사용자의 상황과 작은 불편을 관찰해 해결해야 할 질문을 찾습니다.</p><a href="#/project/bridge">브릿지의 사용자 조사</a></article>
-              <article class="identity-step" id="identity-step-2"><h2><svg class="identity-step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 4v5h-5M4 20v-5h5M5.7 9A7 7 0 0 1 17.3 6L20 9M4 15l2.7 3A7 7 0 0 0 18.3 15"/></svg><span>실을 엮어서</span></h2><p>서로 다른 의견과 근거를 비교해 기획의 방향과 흐름을 정리합니다.</p><a href="#/project/chak">착!의 서비스 기획</a></article>
-              <article class="identity-step" id="identity-step-3"><h2><svg class="identity-step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="m8.5 12 2.3 2.3 4.7-4.6"/></svg><span>매듭 짓습니다</span></h2><p>핵심 과제의 우선순위를 정하고 선택한 이유를 기획으로 구체화합니다.</p><a href="#/project/korail">코레일톡의 사용성 검증</a></article>
+              <article class="identity-step" id="identity-step-1"><h2><svg class="identity-step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg><span>실마리를 찾고</span></h2><p>사용자의 상황과 작은 불편을 관찰해 해결해야 할 질문을 찾습니다.</p></article>
+              <article class="identity-step" id="identity-step-2"><h2><svg class="identity-step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 4v5h-5M4 20v-5h5M5.7 9A7 7 0 0 1 17.3 6L20 9M4 15l2.7 3A7 7 0 0 0 18.3 15"/></svg><span>실을 엮어서</span></h2><p>서로 다른 의견과 근거를 비교해 기획의 방향과 흐름을 정리합니다.</p></article>
+              <article class="identity-step" id="identity-step-3"><h2><svg class="identity-step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="m8.5 12 2.3 2.3 4.7-4.6"/></svg><span>매듭 짓습니다</span></h2><p>핵심 과제의 우선순위를 정하고 선택한 이유를 기획으로 구체화합니다.</p></article>
             </div>
         </div>
       </section>
@@ -143,8 +144,11 @@
     </div>
 
     <div data-page="projects" hidden>
-      <section class="page-intro container"><p class="eyebrow">PROJECTS</p><h1 class="section-title"><span class="section-title-icon" aria-hidden="true"><img src="./assets/section-knot.svg?v=orange-20261118" alt="" width="30" height="30"></span>엮어온 매듭</h1><p><span>사용자의 필요에서 풀어야 할 문제를 찾습니다.</span>
-        <span>근거를 화면으로 옮기고 이용 흐름을 검증합니다.</span></p></section>
+      <section class="page-intro container" aria-labelledby="projects-title"><p class="eyebrow">PROJECTS</p>
+        <header class="page-heading"><h1 class="section-title page-title" id="projects-title"><span class="section-title-icon" aria-hidden="true"><img src="./assets/section-knot.svg?v=orange-20261118" alt="" width="30" height="30"></span><span class="page-title-text">엮어온 매듭</span></h1>
+          <p class="page-lead"><span>사용자의 필요에서 풀어야 할 문제를 찾습니다.</span><span>근거를 화면으로 옮기고 이용 흐름을 검증합니다.</span></p>
+        </header>
+      </section>
       <section class="project-list container" aria-label="전체 프로젝트">
         <div class="work-toolbar"><div class="filters" role="group" aria-label="문서 유형"></div><p id="project-count" class="sr-only" aria-live="polite"></p></div>
         <div class="project-grid work-grid" id="work-grid"></div>
@@ -152,12 +156,13 @@
     </div>
 
     <div data-page="about" hidden>
-      <section class="about-profile container" aria-labelledby="about-title"><h1 class="section-title profile-hero-title" id="about-title"><span class="section-title-icon" aria-hidden="true"><img src="./assets/section-knot.svg?v=orange-20261118" alt="" width="36" height="24"></span><span>실마리를 찾아 근거로 매듭짓는 정서영입니다.</span></h1>
+      <section class="about-profile container" aria-labelledby="about-title">
+        <header class="page-heading"><h1 class="section-title profile-hero-title page-title" id="about-title"><span class="section-title-icon" aria-hidden="true"><img src="./assets/section-knot.svg?v=orange-20261118" alt="" width="30" height="30"></span><span class="page-title-text">실마리를 찾아 근거로 매듭짓는 정서영입니다.</span></h1>
+          <p class="page-lead"><span>작은 불편을 발견하는 일이 기획의 시작이라고 생각합니다.</span><span>사용자의 이야기에서 얻은 단서를 구체적인 해결 방법으로 발전시키고,</span><span>그 방법이 실제로 도움이 되는지 검증합니다.</span></p>
+        </header>
         <div class="about-profile-grid"><div class="about-portraits"><img src="./assets/optimized/profile.webp" alt="정서영 프로필 사진" width="600" height="751" loading="lazy" decoding="async" fetchpriority="high"><img src="./assets/optimized/profile-thread-clean.webp" alt="주황색 실로 매듭을 만든 정서영" width="900" height="1126" loading="lazy" decoding="async"></div>
         <div class="document-links"><a class="document-button" href="./assets/seoyeong-resume.pdf" download="정서영_이력서.pdf">이력서 · 경험의 실 담아가기</a><a class="document-button" href="./assets/seoyeong-cover-letter.pdf" download="정서영_자기소개서.pdf">자기소개서 · 생각의 매듭 담아가기</a></div>
-        <div class="about-profile-copy"><p>작은 불편을 발견하는 일이 기획의 시작이라고 생각합니다.<br>
-사용자의 이야기에서 얻은 단서를 구체적인 해결 방법으로 발전시키고,<br>
-그 방법이 실제로 도움이 되는지 검증합니다.</p><dl class="about-facts"><div><dt>생년월일</dt><dd>2004.09.18</dd></div><div><dt>거주</dt><dd>서울 중랑구 망우동</dd></div><div class="about-education"><dt>학력</dt><dd>계원예술대학교<small>디지털미디어디자인과 기획 세부전공<br>졸업 예정</small></dd></div><div><dt>전화</dt><dd>010-9163-3356</dd></div><div><dt>이메일</dt><dd>richardis6551@naver.com</dd></div></dl></div></div>
+        <div class="about-profile-copy"><dl class="about-facts"><div><dt>생년월일</dt><dd>2004.09.18</dd></div><div><dt>거주</dt><dd>서울 중랑구 망우동</dd></div><div class="about-education"><dt>학력</dt><dd>계원예술대학교<small>디지털미디어디자인과 기획 세부전공<br>졸업 예정</small></dd></div><div><dt>전화</dt><dd>010-9163-3356</dd></div><div><dt>이메일</dt><dd>richardis6551@naver.com</dd></div></dl></div></div>
       </section>
 <section class="about-records about-section container" aria-labelledby="about-records-title"><div class="about-section-heading"><h2 id="about-records-title">경험의 실</h2><p>배움과 활동을 따라 풀어보는 이력</p></div><div class="record-columns"><div><section><h3 class="record-heading"><span class="tool-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m2 9 10-5 10 5-10 5L2 9Zm4 2v5c3 2.7 9 2.7 12 0v-5m4-2v6"/></svg></span>학력사항</h3><dl><div class="record-row"><dt>졸업 예정</dt><dd>계원예술대학교 디지털미디어디자인과</dd></div><div class="record-row"><dt>2026.03</dt><dd>디지털미디어디자인과 기획 세부전공</dd></div><div class="record-row"><dt>2025.03</dt><dd>계원예술대학교 입학</dd></div><div class="record-row"><dt>2023.02</dt><dd>염광고등학교 졸업</dd></div><div class="record-row"><dt>2020.03</dt><dd>염광고등학교 입학</dd></div></dl></section><section><h3 class="record-heading"><span class="tool-icon profile-award-icon" aria-hidden="true"><span class="project-award-trophy">🏆</span></span>수상내역</h3><dl><div class="record-row"><dt>2026.11</dt><dd>캡스톤 디자인 학과 우수작 선정<small>선행 챌린지 서비스 ‘착!’</small></dd></div><div class="record-row"><dt>2026.09</dt><dd>제32회 커뮤니케이션 국제 공모전<small>디지털미디어디자인 부문 · 시니어 커리어 브랜딩 서비스 ‘브릿지’ · 특별상</small></dd></div></dl></section><section><h3 class="record-heading"><span class="tool-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2M3 12h18m-10 0v2h2v-2"/></svg></span>경력사항</h3><dl><div class="record-row"><dt>2026.06–08</dt><dd>뉴발란스 풋웨어매장 청량리점 파트타이머<small>상품 안내 · 매장 정리 · 고객 응대</small></dd></div><div class="record-row"><dt>2025.04–2026.02</dt><dd>스파오 상봉점 파트타이머<small>상품 진열 · 매장 관리 · 고객 응대</small></dd></div></dl></section></div><section><h3 class="record-heading"><span class="tool-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="7" r="3"/><path d="M2 20v-2a4 4 0 0 1 4-4h6a4 4 0 0 1 4 4v2m0-16a3 3 0 0 1 0 6m2 4a4 4 0 0 1 4 4v2"/></svg></span>활동내역</h3><dl><div class="record-row"><dt>2026.09–12</dt><dd>캡스톤 디자인 ‘착!’ 프로젝트 <span class="leadership-chip">팀장</span><small>서비스 기획 총괄 · 팀 역할 및 일정 조율</small></dd></div><div class="record-row"><dt>2026.09–11</dt><dd>졸업전시 졸업준비위원회 전시팀 팀원<small>전시 배치 담당 · 전시 준비 및 운영 지원</small></dd></div><div class="record-row"><dt>2026.07–09</dt><dd>ESG Re:Act 환경실천·의왕로컬팀 <span class="leadership-chip">팀장</span><small>환경 실천 카드뉴스 기획·제작 · 팀 운영</small></dd></div><div class="record-row"><dt>2026.04–</dt><dd>기획동아리 카드뉴스팀 <span class="leadership-chip">팀장</span><small>주제와 구성 기획 · 제작 과정 조율</small></dd></div><div class="record-row"><dt>2026.03</dt><dd>신입생 학과 생활 멘토링 멘토</dd></div><div class="record-row"><dt>2026.02</dt><dd>학과 신입생 오리엔테이션 스태프</dd></div><div class="record-row"><dt>2025.05</dt><dd>계원예술대학교 축제 학과 부스 스태프</dd></div></dl></section></div></section>
       <section class="about-skills about-section container" aria-labelledby="about-skills-title"><div class="about-section-heading"><h2 id="about-skills-title">엮는 기술</h2><p>목적에 맞는 도구를 고르고, 사용자에게 필요한 방법으로 확인합니다.</p></div>
