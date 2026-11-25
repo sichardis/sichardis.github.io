@@ -16,10 +16,10 @@
   <link rel="stylesheet" href="./typography.css?v=footer-slogan-size-20261125">
   <link rel="stylesheet" href="./process-reader.css?v=storyboard-review-20261125">
   <link rel="stylesheet" href="./contact.css?v=orange-profile-20261124">
-  <link rel="stylesheet" href="./home-editorial.css?v=shared-intro-20261125">
+  <link rel="stylesheet" href="./home-editorial.css?v=rope-motion-20261125">
   <link rel="stylesheet" href="./page-heading.css?v=shared-intro-20261125">
   <link rel="stylesheet" href="./detail-reading.css?v=storyboard-review-20261125">
-  <script defer src="./app.js?v=home-sections-20261125"></script>
+  <script defer src="./app.js?v=rope-motion-20261125"></script>
 </head>
 <body>
   <a class="skip-link" href="#content">본문으로 건너뛰기</a>
@@ -49,7 +49,20 @@
           <div class="hero-visual-group">
             <div class="hero-visual thread-scene">
               <div class="thread-artwork">
-              <img class="hero-rope" src="./assets/identity-rope.png" width="2172" height="724" alt="주황색 실이 곡선을 따라 이어져 하나의 매듭을 이루는 일러스트" fetchpriority="high">
+              <svg class="hero-rope identity-rope-motion" width="2172" height="724" viewBox="0 0 2172 724" role="img" aria-labelledby="identity-rope-title">
+                <title id="identity-rope-title">양쪽에서 이어진 주황색 실이 가운데에서 엮여 하나의 매듭을 이루는 일러스트</title>
+                <defs>
+                  <mask id="identity-rope-reveal" maskUnits="userSpaceOnUse" x="0" y="0" width="2172" height="724">
+                    <g fill="none" stroke="white" stroke-width="190" stroke-linecap="round" stroke-linejoin="round">
+                      <path class="rope-feed rope-feed-left" pathLength="1" d="M30 650 C270 640 430 470 570 305 C750 125 950 360 1220 365"/>
+                      <path class="rope-feed rope-feed-right" pathLength="1" d="M2140 50 C1920 45 1780 230 1590 300"/>
+                      <path class="rope-loop" pathLength="1" d="M1210 365 C1320 370 1340 190 1460 180 C1565 160 1620 335 1530 420 C1435 505 1250 435 1250 300 C1250 200 1350 195 1440 250 C1500 285 1550 315 1610 300"/>
+                    </g>
+                    <rect class="rope-complete" width="2172" height="724" fill="white"/>
+                  </mask>
+                </defs>
+                <g class="rope-tightening"><image href="./assets/identity-rope.png" width="2172" height="724" mask="url(#identity-rope-reveal)"/></g>
+              </svg>
               </div>
             </div>
           </div>

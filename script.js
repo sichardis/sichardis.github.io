@@ -590,11 +590,22 @@ initFooterContacts($('.site-footer'));
 
 const threadScene = $('.identity-stage');
 const threadSteps = [...threadScene.querySelectorAll('.identity-step')];
+const threadArtwork = threadScene.querySelector('.thread-artwork');
 const reducedThreadMotion = matchMedia('(prefers-reduced-motion: reduce)');
 let threadPlaying = !reducedThreadMotion.matches;
 let threadInView = false;
 let threadStep = -1;
 let threadTimer;
+let threadImageReady = false;
+const threadImage = new Image();
+threadImage.src = threadArtwork.querySelector('image').getAttribute('href');
+threadImage.decode().then(() => {
+  threadImageReady = true;
+  startThreadCycle();
+}).catch(() => {
+  // Keep the static illustration if the browser cannot decode the image.
+  threadArtwork.classList.remove('is-tying');
+});
 
 function showThreadStep(step) {
   threadStep = step;
@@ -606,30 +617,47 @@ function showThreadStep(step) {
 }
 
 function threadStepDelay() {
-  return threadStep === -1 ? 1000 : threadStep === threadSteps.length - 1 ? 3400 : 1100;
+  return threadStep === threadSteps.length - 1 ? 3400 : 1100;
+}
+
+function startThreadCycle() {
+  clearTimeout(threadTimer);
+  threadArtwork.classList.remove('is-tying');
+  showThreadStep(-1);
+  if (!threadImageReady || !threadPlaying || !threadInView || document.hidden) return;
+  // Restart only when a new cycle begins, so returning to the page starts cleanly.
+  void threadArtwork.offsetWidth;
+  threadArtwork.classList.add('is-tying');
+  scheduleThreadStep(2800);
 }
 
 function scheduleThreadStep(delay) {
   clearTimeout(threadTimer);
-  if (!threadPlaying || !threadInView) return;
+  if (!threadPlaying || !threadInView || document.hidden) return;
   threadTimer = setTimeout(() => {
+    threadArtwork.classList.remove('is-tying');
     const next = threadStep + 1;
-    showThreadStep(next < threadSteps.length ? next : -1);
+    if (next >= threadSteps.length) {
+      startThreadCycle();
+      return;
+    }
+    showThreadStep(next);
     scheduleThreadStep(threadStepDelay());
   }, delay);
 }
 
 reducedThreadMotion.addEventListener('change', event => {
-  if (event.matches) showThreadStep(threadSteps.length - 1);
   threadPlaying = !event.matches;
-  scheduleThreadStep(threadStepDelay());
+  startThreadCycle();
+  if (event.matches) showThreadStep(threadSteps.length - 1);
 });
+
+document.addEventListener('visibilitychange', startThreadCycle);
 
 showThreadStep(-1);
 
 const threadObserver = new IntersectionObserver(([entry]) => {
   threadInView = entry.isIntersecting;
-  if (!threadInView && threadPlaying) showThreadStep(-1);
-  scheduleThreadStep(850);
+  startThreadCycle();
 }, {threshold: 0.25});
 threadObserver.observe(threadScene);
