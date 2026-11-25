@@ -43,7 +43,7 @@ test('screen design document authors and PDF page guidance remain visible', () =
     const html = caseStudyMarkup(project(id), 'hero', escape);
     assert(html.includes(author));
   }
-  assert(pdfDownloadMarkup(project('bluedog-storyboard'), escape).includes('화면설계 15–19쪽'));
+  assert(pdfDownloadMarkup(project('bluedog-storyboard'), escape).includes('화면설계 98–141쪽'));
 });
 
 test('projects without an available PDF do not show a download action', () => {

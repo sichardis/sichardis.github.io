@@ -22,7 +22,7 @@ for (const id of ['chak','lotte','bluedog','rocketfresh','kaywon']) {
   const original = allProjects.find(p => p.id === id);
   const storyboardId = id + '-storyboard';
   const storyboard = caseStudies[storyboardId];
-  allProjects.push({...original, id:storyboardId, cover:storyboard?.cover ?? original.cover, coverThumb:storyboard?.coverThumb ?? original.coverThumb, title: `[${original.title}] 화면설계서`, subtitle: '화면 구성과 기능, 이용 단계별 연결을 정리한 설계서', documentType:'storyboard', award:null, pdf:null, detail:null, role:'화면설계서', pending:true, lead:'화면별 목적과 기능, 이용 단계별 연결을 정리한 문서입니다. 상세 자료는 준비 중입니다.', question:'', approach:'', outcome:''});
+  allProjects.push({...original, pdf:null, detail:null, question:'', approach:'', outcome:'', ...storyboard, id:storyboardId, title:storyboard?.title || `[${original.title}] 화면설계서`, documentType:'storyboard', award:null, pending:!storyboard?.pdf && !storyboard?.pdfParts});
 }
 const projects = allProjects.filter(project => !project.hidden);
 const documentOrder = ['chak','bridge','korail','bluedog','lotte','rocketfresh','kaywon','chak-storyboard','lotte-storyboard','bluedog-storyboard','rocketfresh-storyboard','kaywon-storyboard'];
@@ -54,7 +54,8 @@ const summaries = {
 };
 
 function card(project, {featured = false, priority = 'auto', filterOrder} = {}) {
-  const description = escape(summaries[project.id] || project.subtitle);
+  const study = caseStudies[project.id] || {};
+  const description = escape(study.cardSummary || summaries[project.id] || project.subtitle);
   const image = project.cover
     ? `<img src="${escape(project.coverThumb || project.cover)}" alt="${escape(project.title)} 프로젝트 표지" width="768" height="432" loading="lazy" decoding="async" fetchpriority="${priority}">`
     : `<span class="project-cover-type">${escape(project.word || project.title)}</span>`;
@@ -71,11 +72,10 @@ function card(project, {featured = false, priority = 'auto', filterOrder} = {}) 
     rocketfresh: '2025.09–12',
     kaywon: '2026.09–12',
   }[sourceId] || project.year || '';
-  const date = period;
+  const date = project.documentType === 'storyboard' ? study.period || period : period;
   const animationStyle = Number.isInteger(filterOrder) ? ` style="--filter-delay:${30 + filterOrder * 42}ms"` : '';
-    const study = caseStudies[project.id] || {};
     const methods = project.documentType === 'storyboard'
-      ? ['화면설계', '이용 흐름']
+      ? study.cardTags || ['화면설계', '이용 흐름']
       : ({chak:['서비스 기획', 'MVP 검증'], bridge:['사용자 조사', '정보 구조'],
           korail:['사용성 테스트', '아이트래킹'], bluedog:['현장 조사', '서비스 기획'],
           rocketfresh:['UX 리뉴얼', '화면 제안'], kaywon:['UX 리뉴얼', '정보 구조']})[project.id] || [];
@@ -205,7 +205,7 @@ function renderDetail(id) {
   const previewParts = $('.detail-toolbar [data-pdf-view]');
   previewParts.hidden = !project?.pdfParts;
   preview.hidden = !project?.pdf || Boolean(project?.pdfParts);
-  if (project?.pdf) preview.href = project.pdf;
+  if (project?.pdf) preview.href = project.pdf + (Number.isInteger(project.pdfStartPage) ? `#page=${project.pdfStartPage}` : '');
   else preview.removeAttribute('href');
   if (!project) {
     $('#detail-content').innerHTML = '<div class="not-found"><h1 id="detail-title">프로젝트를 찾을 수 없습니다.</h1><p>프로젝트 목록에서 작업을 다시 선택해 주세요.</p></div>';
@@ -470,7 +470,7 @@ async function openProjectPdf(project, {preview = false} = {}) {
       pdfCache.set(key, cached);
     }
     if (preview) {
-      if (!reader.closed) reader.location.replace(cached.url);
+      if (!reader.closed) reader.location.replace(cached.url + (Number.isInteger(project.pdfStartPage) ? `#page=${project.pdfStartPage}` : ''));
     } else {
       const link = document.createElement('a');
       link.href = cached.url;
@@ -510,7 +510,7 @@ function openProcess(index) {
   $('.process-dialog-meta').textContent = name;
   $('.process-dialog-step').textContent = `${String(processIndex + 1).padStart(2, '0')} / ${String(count).padStart(2, '0')}`;
   $('#process-content').innerHTML = caseProcessMarkup(detailProject, steps, processIndex, escape);
-  $('#process-navigation').innerHTML = `<p class="process-navigation-label">기획의 흐름</p>${steps.map((step, i) => `<button type="button" data-process-select="${i}"${i === processIndex ? ' aria-current="step"' : ''}><span class="process-step-node" aria-hidden="true"></span><span>${escape(step.title)}</span></button>`).join('')}`;
+  $('#process-navigation').innerHTML = `<p class="process-navigation-label">${detailProject.documentType === 'storyboard' ? '문서의 흐름' : '기획의 흐름'}</p>${steps.map((step, i) => `<button type="button" data-process-select="${i}"${i === processIndex ? ' aria-current="step"' : ''}><span class="process-step-node" aria-hidden="true"></span><span>${escape(step.title)}</span></button>`).join('')}`;
   if (processDialog.open && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
     const content = $('#process-content');
     content.getAnimations().forEach(animation => animation.cancel());

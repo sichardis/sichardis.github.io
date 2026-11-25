@@ -9,10 +9,12 @@ const sectionLabels = [
   ['team-photos', teamPhotosLabel],
 ];
 
+const storyboardLabels = {summary:'문서 범위', background:'설계 기준', process:'화면 정의', contribution:'작성 내용', result:'문서 결과'};
+
 export function detailIndexButtons(projectId, hasTeamPhotos = true) {
   const labels = hasTeamPhotos ? sectionLabels : sectionLabels.slice(0, -1);
   return labels.map(([key, label]) =>
-    `<button type="button" data-section="${projectId}-${key}">${label}</button>`).join('');
+    `<button type="button" data-section="${projectId}-${key}">${projectId.endsWith('-storyboard') ? storyboardLabels[key] || label : label}</button>`).join('');
 }
 
 export function awardMarkup(award, escape) {
@@ -61,6 +63,7 @@ function processMedia(step, escape, {loading = 'eager', placeholder = ''} = {}) 
 
 export function caseStudyMarkup(project, hero, escape) {
   const hasTeamPhotos = project.documentType !== 'storyboard' && !['bridge', 'korail'].includes(project.id);
+  const label = key => project.documentType === 'storyboard' ? storyboardLabels[key] : sectionLabels.find(([id]) => id === key)[1];
   const sectionId = key => `${project.id}-${key}`;
   const cards = project.steps.map((step, i) => {
     const label = `${String(i + 1).padStart(2, '0')} ${escape(step.title)}`;
@@ -71,7 +74,7 @@ export function caseStudyMarkup(project, hero, escape) {
   const paragraphs = items => items.map(item => `<p>${escape(item)}</p>`).join('');
 
   const result = `<section id="${sectionId('result')}" class="bridge-section case-copy" tabindex="-1">
-    <h2>결과</h2>${paragraphs(project.results)}
+    <h2>${label('result')}</h2>${paragraphs(project.results)}
   </section>`;
 
   return `<div class="bridge-layout">
@@ -79,19 +82,19 @@ export function caseStudyMarkup(project, hero, escape) {
     <article class="bridge-article">
       <div class="bridge-hero">${hero}</div>
       <section id="${sectionId('summary')}" class="bridge-section" tabindex="-1">
-        <h2>요약</h2>
+        <h2>${label('summary')}</h2>
         ${summaryMarkup(project, escape)}
       </section>
       <section id="${sectionId('background')}" class="bridge-section case-copy" tabindex="-1">
-        <h2>배경·목표</h2><h3 class="bridge-goal">${escape(project.goal)}</h3>
+        <h2>${label('background')}</h2><h3 class="bridge-goal">${escape(project.goal)}</h3>
         ${paragraphs(project.background)}
       </section>
       <section id="${sectionId('process')}" class="bridge-section" tabindex="-1">
-        <h2>과정</h2><p>카드를 선택해 ${escape(project.processLabel)} 과정을 확인해 보세요.</p>
+        <h2>${label('process')}</h2><p>${project.documentType === 'storyboard' ? '카드를 선택해 원본 화면과 설계 내용을 확인해 보세요.' : `카드를 선택해 ${escape(project.processLabel)} 과정을 확인해 보세요.`}</p>
         <div class="process-grid">${cards}</div>${pdfDownloadMarkup(project, escape)}
       </section>
       <section id="${sectionId('contribution')}" class="bridge-section" tabindex="-1">
-        <h2>기여</h2><ul>${project.contributions.map(item => `<li>${escape(item)}</li>`).join('')}</ul>
+        <h2>${label('contribution')}</h2><ul>${project.contributions.map(item => `<li>${escape(item)}</li>`).join('')}</ul>
       </section>
       ${result}
       ${hasTeamPhotos ? teamPhotosMarkup(project.id, project.teamPhotos, escape) : ''}
@@ -106,7 +109,7 @@ export function caseProcessMarkup(project, steps, index, escape) {
     : processMedia(step, escape, {placeholder:project.processImagePlaceholder});
   const canZoom = project.id === 'bridge' || (step.image && !project.processImagePlaceholder);
   return `<h2 id="process-title">${escape(step.title)}</h2>
-    <p class="process-summary">${escape(step.summary)}</p>
+    <p class="process-summary">${escape(step.summary)}${step.sourcePages ? `<span class="process-source">원본 PDF ${escape(step.sourcePages)}쪽</span>` : ''}</p>
     ${canZoom ? `<button class="process-zoom" type="button" data-process-zoom aria-label="${escape(step.title)} 자료 확대">${media}<span>자료 확대</span></button>` : media}
     ${step.sections.map(([title, text]) => `<section class="process-explanation"><h3>${escape(title)}</h3><p>${escape(text)}</p></section>`).join('')}`;
 }
