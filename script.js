@@ -6,6 +6,7 @@ import { contactConfig } from './contact-config.js';
 import { initContactForm } from './contact.js';
 import { pdfDocuments } from './pdf-documents.js';
 import { loadNamedPdf } from './pdf-reader.js';
+import { initFooterContacts } from './footer-contact.js';
 
 const pdfProjectNames = {
   chak: '착!(Chak!)',
@@ -585,9 +586,9 @@ renderRoute();
 queueFeaturedIndexUpdate();
 
 initContactForm($('#contact-form'), contactConfig);
+initFooterContacts($('.site-footer'));
 
 const threadScene = $('.identity-stage');
-const threadStops = [...threadScene.querySelectorAll('.thread-stop')];
 const threadSteps = [...threadScene.querySelectorAll('.identity-step')];
 const threadPlayback = $('#thread-playback');
 const reducedThreadMotion = matchMedia('(prefers-reduced-motion: reduce)');
@@ -598,11 +599,6 @@ let threadTimer;
 
 function showThreadStep(step) {
   threadStep = step;
-  threadStops.forEach((stop, i) => {
-    stop.setAttribute('aria-pressed', String(i === step));
-    if (i === step) stop.setAttribute('aria-current', 'step');
-    else stop.removeAttribute('aria-current');
-  });
   threadSteps.forEach((item, i) => {
     item.classList.add('is-visible');
     item.classList.toggle('is-current', i === step);
@@ -611,7 +607,7 @@ function showThreadStep(step) {
 }
 
 function threadStepDelay() {
-  return threadStep === -1 ? 1000 : threadStep === threadStops.length - 1 ? 3400 : 1100;
+  return threadStep === -1 ? 1000 : threadStep === threadSteps.length - 1 ? 3400 : 1100;
 }
 
 function scheduleThreadStep(delay) {
@@ -619,7 +615,7 @@ function scheduleThreadStep(delay) {
   if (!threadPlaying || !threadInView) return;
   threadTimer = setTimeout(() => {
     const next = threadStep + 1;
-    showThreadStep(next < threadStops.length ? next : -1);
+    showThreadStep(next < threadSteps.length ? next : -1);
     scheduleThreadStep(threadStepDelay());
   }, delay);
 }
@@ -634,25 +630,13 @@ function setThreadPlaying(playing) {
   scheduleThreadStep(threadStepDelay());
 }
 
-threadStops.forEach((stop, i) => {
-  stop.addEventListener('click', () => {
-    setThreadPlaying(false);
-    showThreadStep(threadStep === i ? -1 : i);
-  });
-  stop.addEventListener('keydown', event => {
-    if (event.key === 'Escape' && threadStep === i) {
-      setThreadPlaying(false);
-      showThreadStep(-1);
-    }
-  });
-});
 threadPlayback.addEventListener('click', () => {
   if (threadPlaying && threadStep === -1) showThreadStep(0);
-  if (!threadPlaying && threadStep === threadStops.length - 1) showThreadStep(-1);
+  if (!threadPlaying && threadStep === threadSteps.length - 1) showThreadStep(-1);
   setThreadPlaying(!threadPlaying);
 });
 reducedThreadMotion.addEventListener('change', event => {
-  if (event.matches) showThreadStep(threadStops.length - 1);
+  if (event.matches) showThreadStep(threadSteps.length - 1);
   setThreadPlaying(!event.matches);
 });
 

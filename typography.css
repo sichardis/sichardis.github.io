@@ -984,3 +984,8 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
 @media (prefers-reduced-motion: reduce) {
   .identity-step { transform: none; }
 }
+
+/* Footer contacts copy on desktop and remain native links on mobile. */
+.site-footer [data-footer-contact][role="button"] { cursor: pointer; }
+.site-footer [data-footer-contact]:is(:hover, :focus-visible) { color: var(--accent); }
+.footer-contact-status { min-height: 1.6em; margin-top: 10px; font-size: 13px; line-height: 1.6; color: var(--accent); }
