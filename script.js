@@ -1,4 +1,3 @@
-import { createRopeMotion, ropeDuration } from './rope-motion.js';
 import { projects as sourceProjects, featuredIds } from './data.js?v=project-awards';
 import { bridgeMarkup, steps as bridgeSteps } from './bridge.js?v=unified-trophy-20261124';
 import { caseStudies } from './case-studies.js?v=storyboard-authors-20261118';
@@ -592,12 +591,21 @@ initFooterContacts($('.site-footer'));
 const threadScene = $('.identity-stage');
 const threadSteps = [...threadScene.querySelectorAll('.identity-step')];
 const threadArtwork = threadScene.querySelector('.thread-artwork');
-const knotMotion = createRopeMotion(threadArtwork.querySelector('.identity-rope-motion'));
 const reducedThreadMotion = matchMedia('(prefers-reduced-motion: reduce)');
 let threadPlaying = !reducedThreadMotion.matches;
 let threadInView = false;
 let threadStep = -1;
 let threadTimer;
+let threadImageReady = false;
+const threadImage = new Image();
+threadImage.src = threadArtwork.querySelector('image').getAttribute('href');
+threadImage.decode().then(() => {
+  threadImageReady = true;
+  startThreadCycle();
+}).catch(() => {
+  // Keep the static illustration if the browser cannot decode the image.
+  threadArtwork.classList.remove('is-tying');
+});
 
 function showThreadStep(step) {
   threadStep = step;
@@ -615,12 +623,12 @@ function threadStepDelay() {
 function startThreadCycle() {
   clearTimeout(threadTimer);
   threadArtwork.classList.remove('is-tying');
-  knotMotion.finish();
   showThreadStep(-1);
-  if (!threadPlaying || !threadInView || document.hidden) return;
+  if (!threadImageReady || !threadPlaying || !threadInView || document.hidden) return;
+  // Restart only when a new cycle begins, so returning to the page starts cleanly.
+  void threadArtwork.offsetWidth;
   threadArtwork.classList.add('is-tying');
-  knotMotion.play();
-  scheduleThreadStep(ropeDuration + 100);
+  scheduleThreadStep(2800);
 }
 
 function scheduleThreadStep(delay) {
@@ -628,7 +636,6 @@ function scheduleThreadStep(delay) {
   if (!threadPlaying || !threadInView || document.hidden) return;
   threadTimer = setTimeout(() => {
     threadArtwork.classList.remove('is-tying');
-    knotMotion.finish();
     const next = threadStep + 1;
     if (next >= threadSteps.length) {
       startThreadCycle();

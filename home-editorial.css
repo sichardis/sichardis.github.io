@@ -94,12 +94,13 @@
 }
 .home-editorial .thread-artwork { width: 100%; }
 .identity-rope-motion { overflow: visible; }
-.identity-rope-motion .rope-edge { stroke: #ef7b14; stroke-width: 48; }
-.identity-rope-motion .rope-body { stroke: url(#rope-colour); stroke-width: 43; }
-.identity-rope-motion .rope-soft-highlight { stroke: #ffd796; stroke-width: 22; opacity: .26; }
-.identity-rope-motion .rope-braid-dark { stroke: #df7011; stroke-width: 2.4; opacity: .65; }
-.identity-rope-motion .rope-braid-light { stroke: #ffdda0; stroke-width: 2.1; opacity: .85; }
-[data-rope-overpasses] .rope-edge { stroke: #e36d0b; stroke-width: 51; }
+.identity-rope-motion .rope-draw { stroke-dasharray: 1; stroke-dashoffset: 0; }
+@media (prefers-reduced-motion: no-preference) {
+  .thread-artwork.is-tying .rope-draw { animation: rope-draw-through 2.6s cubic-bezier(.35,0,.35,1) both; }
+  .thread-artwork.is-tying .rope-complete { animation: rope-finish .15s 2.45s both; }
+  @keyframes rope-draw-through { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+  @keyframes rope-finish { from { opacity: 0; } to { opacity: 1; } }
+}
 .home-editorial .thread-stroke { stroke-width: 36px; }
 .home-editorial .thread-stop .thread-icon { width: 38px; height: 38px; }
 .home-editorial .hero-visual-meta {
