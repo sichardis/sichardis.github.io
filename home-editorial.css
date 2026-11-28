@@ -95,14 +95,14 @@
 .home-editorial .thread-artwork { width: 100%; }
 .identity-rope-motion { overflow: visible; }
 .identity-rope-motion .rope-draw { stroke-dasharray: 1; stroke-dashoffset: 0; }
+.identity-rope-motion .rope-animated-art { display: none; }
 @media (prefers-reduced-motion: no-preference) {
-  .thread-artwork.is-tying .rope-entry { animation: rope-draw-through 1.55s linear both; }
-  .thread-artwork.is-tying .rope-knot-reveal { animation: rope-knot-sweep 1.75s 1.45s linear both; }
-  .thread-artwork.is-tying .rope-exit { animation: rope-draw-through 1.1s 3.1s linear both; }
-  .thread-artwork.is-tying .rope-complete { animation: rope-finish .14s 4.2s both; }
-  @keyframes rope-draw-through { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
-  @keyframes rope-knot-sweep { from { width: 0; } to { width: 604px; } }
-  @keyframes rope-finish { from { opacity: 0; } to { opacity: 1; } }
+  .thread-artwork.is-tying .rope-animated-art { display: block; animation: rope-route-hide .18s 4.2s both; }
+  .thread-artwork.is-tying .rope-draw { animation: rope-route-draw var(--rope-duration) linear var(--rope-delay) both; }
+  .thread-artwork.is-tying .rope-rest-art { animation: rope-route-finish .18s 4.2s both; }
+  @keyframes rope-route-draw { 0% { stroke-dashoffset: 1; opacity: 0; } .1% { opacity: 1; } 100% { stroke-dashoffset: 0; opacity: 1; } }
+  @keyframes rope-route-hide { from { opacity: 1; } to { opacity: 0; } }
+  @keyframes rope-route-finish { from { opacity: 0; } to { opacity: 1; } }
 }
 .home-editorial .thread-stroke { stroke-width: 36px; }
 .home-editorial .thread-stop .thread-icon { width: 38px; height: 38px; }
