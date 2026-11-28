@@ -598,7 +598,7 @@ let threadStep = -1;
 let threadTimer;
 let threadImageReady = false;
 const threadImage = new Image();
-threadImage.src = threadArtwork.querySelector('image').getAttribute('href');
+threadImage.src = threadArtwork.querySelector('[data-rope-art]').getAttribute('href').split('#')[0];
 threadImage.decode().then(() => {
   threadImageReady = true;
   startThreadCycle();
