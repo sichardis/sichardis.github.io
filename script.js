@@ -7,6 +7,7 @@ import { initContactForm } from './contact.js';
 import { pdfDocuments } from './pdf-documents.js';
 import { loadNamedPdf } from './pdf-reader.js';
 import { initFooterContacts } from './footer-contact.js';
+import { createPhotoRope } from './rope-photo.js';
 
 const pdfProjectNames = {
   chak: '착!(Chak!)',
@@ -597,14 +598,14 @@ let threadInView = false;
 let threadStep = -1;
 let threadTimer;
 let threadImageReady = false;
-const threadImage = new Image();
-threadImage.src = threadArtwork.querySelector('[data-rope-art]').getAttribute('href').split('#')[0];
-threadImage.decode().then(() => {
+const ropePhoto = createPhotoRope(threadArtwork.querySelector('[data-rope-canvas]'), './assets/identity-rope.png', './assets/identity-rope-flow.png');
+ropePhoto.ready.then(() => {
   threadImageReady = true;
   startThreadCycle();
 }).catch(() => {
-  // Keep the static illustration if the browser cannot decode the image.
-  threadArtwork.classList.remove('is-tying');
+  // The unchanged photograph remains visible if canvas preparation fails.
+  threadArtwork.querySelector('[data-rope-canvas]').hidden = true;
+  threadArtwork.querySelector('[data-rope-fallback]').hidden = false;
 });
 
 function showThreadStep(step) {
@@ -622,12 +623,11 @@ function threadStepDelay() {
 
 function startThreadCycle() {
   clearTimeout(threadTimer);
-  threadArtwork.classList.remove('is-tying');
+  ropePhoto.cancel();
   showThreadStep(-1);
-  if (!threadImageReady || !threadPlaying || !threadInView || document.hidden) return;
-  // Restart only when a new cycle begins, so returning to the page starts cleanly.
-  void threadArtwork.offsetWidth;
-  threadArtwork.classList.add('is-tying');
+  if (!threadImageReady) return;
+  if (!threadPlaying || !threadInView || document.hidden) { ropePhoto.render(1); return; }
+  ropePhoto.play();
   scheduleThreadStep(4500);
 }
 
@@ -635,7 +635,6 @@ function scheduleThreadStep(delay) {
   clearTimeout(threadTimer);
   if (!threadPlaying || !threadInView || document.hidden) return;
   threadTimer = setTimeout(() => {
-    threadArtwork.classList.remove('is-tying');
     const next = threadStep + 1;
     if (next >= threadSteps.length) {
       startThreadCycle();
