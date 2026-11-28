@@ -16,10 +16,10 @@
   <link rel="stylesheet" href="./typography.css?v=footer-slogan-size-20261125">
   <link rel="stylesheet" href="./process-reader.css?v=storyboard-review-20261125">
   <link rel="stylesheet" href="./contact.css?v=orange-profile-20261124">
-  <link rel="stylesheet" href="./home-editorial.css?v=figma-vector-rope-20261128">
+  <link rel="stylesheet" href="./home-editorial.css?v=photo-crossing-rope-20261128">
   <link rel="stylesheet" href="./page-heading.css?v=shared-intro-20261125">
   <link rel="stylesheet" href="./detail-reading.css?v=storyboard-review-20261125">
-  <script defer src="./app.js?v=figma-vector-rope-20261128"></script>
+  <script defer src="./app.js?v=photo-crossing-rope-20261128"></script>
 </head>
 <body>
   <a class="skip-link" href="#content">본문으로 건너뛰기</a>
@@ -52,12 +52,26 @@
               <svg class="hero-rope identity-rope-motion" width="2172" height="724" viewBox="0 0 2172 724" role="img" aria-labelledby="identity-rope-title">
                 <title id="identity-rope-title">왼쪽에서 시작한 주황색 실이 매듭을 이루고 오른쪽으로 이어지는 일러스트</title>
                 <defs>
+                  <!-- Reveal the untouched photograph once; the knot uses a soft sweep to preserve its real crossings. -->
+                  <clipPath id="rope-entry-region"><rect width="1180" height="724"/></clipPath>
+                  <clipPath id="rope-knot-region"><rect x="1180" width="460" height="724"/></clipPath>
+                  <clipPath id="rope-exit-region"><rect x="1640" width="532" height="724"/></clipPath>
+                  <filter id="rope-knot-soften" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="22"/></filter>
+                  <filter id="rope-reveal-soften" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="9"/></filter>
                   <mask id="identity-rope-reveal" maskUnits="userSpaceOnUse" x="0" y="0" width="2172" height="724">
-                    <path class="rope-draw" pathLength="1" d="M60 625 C290 615 373 545 450 465 C530 374 550 323 635 291 C735 234 830 240 900 272 C1000 309 1100 360 1195 350 C1280 340 1360 220 1465 190 C1480 179 1500 178 1515 187 C1570 195 1607 277 1573 345 C1540 400 1465 458 1397 448 C1297 441 1238 400 1242 330 C1240 270 1230 238 1272 228 C1290 215 1313 221 1335 232 C1420 249 1505 301 1594 295 C1710 289 1770 217 1860 161 C1955 101 2020 88 2115 95" fill="none" stroke="white" stroke-width="62" stroke-linecap="round" stroke-linejoin="round"/>
+                    <g clip-path="url(#rope-entry-region)">
+                      <path class="rope-draw rope-entry" pathLength="1" d="M40 625 C290 615 373 545 450 465 C530 374 550 323 635 291 C735 234 830 240 900 272 C1000 309 1100 360 1230 350" fill="none" stroke="white" stroke-width="142" stroke-linecap="round" stroke-linejoin="round" filter="url(#rope-reveal-soften)"/>
+                    </g>
+                    <g clip-path="url(#rope-knot-region)">
+                      <rect class="rope-knot-reveal" x="1108" y="0" width="604" height="724" fill="white" filter="url(#rope-knot-soften)"/>
+                    </g>
+                    <g clip-path="url(#rope-exit-region)">
+                      <path class="rope-draw rope-exit" pathLength="1" d="M1594 295 C1710 289 1770 217 1860 161 C1955 101 2020 88 2130 95" fill="none" stroke="white" stroke-width="142" stroke-linecap="round" stroke-linejoin="round" filter="url(#rope-reveal-soften)"/>
+                    </g>
                     <rect class="rope-complete" width="2172" height="724" fill="white"/>
                   </mask>
                 </defs>
-                <use data-rope-art fill="none" href="./assets/identity-rope-vector.svg#rope-art" mask="url(#identity-rope-reveal)"/>
+                <image data-rope-art href="./assets/identity-rope.png" width="2172" height="724" mask="url(#identity-rope-reveal)"/>
               </svg>
               </div>
             </div>

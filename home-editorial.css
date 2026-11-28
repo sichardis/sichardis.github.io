@@ -96,9 +96,12 @@
 .identity-rope-motion { overflow: visible; }
 .identity-rope-motion .rope-draw { stroke-dasharray: 1; stroke-dashoffset: 0; }
 @media (prefers-reduced-motion: no-preference) {
-  .thread-artwork.is-tying .rope-draw { animation: rope-draw-through 4.2s linear both; }
+  .thread-artwork.is-tying .rope-entry { animation: rope-draw-through 1.55s linear both; }
+  .thread-artwork.is-tying .rope-knot-reveal { animation: rope-knot-sweep 1.75s 1.45s linear both; }
+  .thread-artwork.is-tying .rope-exit { animation: rope-draw-through 1.1s 3.1s linear both; }
   .thread-artwork.is-tying .rope-complete { animation: rope-finish .14s 4.2s both; }
   @keyframes rope-draw-through { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+  @keyframes rope-knot-sweep { from { width: 0; } to { width: 604px; } }
   @keyframes rope-finish { from { opacity: 0; } to { opacity: 1; } }
 }
 .home-editorial .thread-stroke { stroke-width: 36px; }
