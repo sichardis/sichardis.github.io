@@ -38,3 +38,13 @@ test('temporary underpasses cannot remain over the photographed foreground after
   revealPhotoPixels(photo,[.7],[.3],[1],[patch],.8,output);
   assert.deepEqual(output,photo);
 });
+
+test('underpass edges never become more opaque than the original photographed silhouette', () => {
+  const output = new Uint8ClampedArray(4);
+  const photo = new Uint8ClampedArray([232,134,46,32]);
+  const patch = new Uint8ClampedArray([185,80,7,255]);
+  revealPhotoPixels(photo,[.8],[.1],[1],[patch],.5,output);
+  assert.equal(output[3],32);
+  revealPhotoPixels(photo,[.8],[.1],[1],[patch],1,output,[.7]);
+  assert.deepEqual(output,photo);
+});

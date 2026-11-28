@@ -2263,13 +2263,14 @@ __modules["rope-photo.js"] = (() => {
 // Original photographic pixels, revealed in path order. No final-image replacement.
 const clamp01 = value => Math.max(0, Math.min(1, value));
 
-function revealPhotoPixels(photo, times, underTimes, bridgeIds, patches, progress, output) {
+function revealPhotoPixels(photo, times, underTimes, bridgeIds, patches, progress, output, originalBlend = null) {
   for (let i = 0, p = 0; i < times.length; i++, p += 4) {
-    const main = clamp01((progress - times[i]) / .0025);
     const patch = patches[bridgeIds[i] - 1];
-    const under = patch ? clamp01((progress - underTimes[i]) / .0025) * (1 - main) : 0;
+    const arrival = patch ? clamp01((progress - underTimes[i]) / .004) : 0;
+    const main = Math.max(clamp01((progress - times[i]) / .004), arrival * (originalBlend?.[i] || 0));
+    const under = arrival * (1 - main);
     const mainAlpha = photo[p + 3] * main;
-    const underAlpha = patch ? patch[p + 3] * under : 0;
+    const underAlpha = patch ? Math.min(photo[p + 3], patch[p + 3]) * under : 0;
     const alpha = mainAlpha + underAlpha;
     for (let c = 0; c < 3; c++) {
       output[p + c] = underAlpha ? (photo[p + c] * mainAlpha + patch[p + c] * underAlpha) / alpha : photo[p + c];
@@ -2278,11 +2279,15 @@ function revealPhotoPixels(photo, times, underTimes, bridgeIds, patches, progres
   }
 }
 
-function createPhotoRope(canvas, photoUrl, timelineUrl) {
+function createPhotoRope(canvas, photoUrl, timelineUrl, underpassUrl = './assets/identity-rope-underpass-uv.png?v=smooth-photo-joins-20261128') {
   const photo = new Image();
   const timeline = new Image();
+  const uvImage = new Image();
+  const coverageImage = new Image();
   photo.src = photoUrl;
   timeline.src = timelineUrl;
+  uvImage.src = underpassUrl;
+  coverageImage.src = './assets/identity-rope-underpass-coverage.png?v=smooth-photo-joins-20261128';
   let prepared;
   let progress = 1;
   let frame = 0;
@@ -2315,23 +2320,41 @@ function createPhotoRope(canvas, photoUrl, timelineUrl) {
       underTimes[i] = (((map[p + 1] >> 2) & 3) * 256 + map[p + 2]) / 1023;
       bridgeIds[i] = map[p + 1] & 3;
     }
-    const patches = [[1245,350,-16],[1385,255,-62],[1590,305,70]].map(([x,y,angle]) => {
-      const layer = surface(width, height);
-      const layerContext = layer.getContext('2d', {willReadFrequently:true});
-      layerContext.scale(width / 2172, height / 724);
-      layerContext.translate(x, y);
-      layerContext.rotate(angle * Math.PI / 180);
-      layerContext.translate(-1050, -328);
-      layerContext.drawImage(photo, 935, 275, 245, 115, 935, 275, 245, 115);
-      return layerContext.getImageData(0, 0, width, height).data;
-    });
-    prepared = {pixels, times, underTimes, bridgeIds, patches, output:context.createImageData(width, height)};
+    // Warp only the small occluded pieces, sampling original photographic
+    // fibers along the same curve instead of joining rigid rectangular crops.
+    ctx.clearRect(0,0,width,height);
+    ctx.drawImage(uvImage,0,0,width,height);
+    const uv = ctx.getImageData(0,0,width,height).data;
+    ctx.clearRect(0,0,width,height);
+    ctx.drawImage(coverageImage,0,0,width,height);
+    const coverage = ctx.getImageData(0,0,width,height).data;
+    const originalSurface = surface(2172,724);
+    const originalContext = originalSurface.getContext('2d',{willReadFrequently:true});
+    originalContext.drawImage(photo,0,0);
+    const original = originalContext.getImageData(0,0,2172,724).data;
+    const patch = new Uint8ClampedArray(pixels.length);
+    const originalBlend = new Float32Array(bridgeIds.length);
+    for(let i=0,p=0;i<bridgeIds.length;i++,p+=4) {
+      if(!bridgeIds[i]) continue;
+      const packed=(uv[p]<<16)|(uv[p+1]<<8)|uv[p+2];
+      const x=(packed>>11)/2, y=(packed&2047)/2;
+      const x0=Math.floor(x),y0=Math.floor(y),fx=x-x0,fy=y-y0;
+      for(let c=0;c<4;c++) {
+        const a=original[(y0*2172+x0)*4+c],b=original[(y0*2172+Math.min(2171,x0+1))*4+c];
+        const d=original[(Math.min(723,y0+1)*2172+x0)*4+c],e=original[(Math.min(723,y0+1)*2172+Math.min(2171,x0+1))*4+c];
+        patch[p+c]=(a*(1-fx)+b*fx)*(1-fy)+(d*(1-fx)+e*fx)*fy;
+      }
+      patch[p+3] *= coverage[p]/255;
+      originalBlend[i] = coverage[p+1]/255;
+    }
+    const patches = [patch,patch,patch];
+    prepared = {pixels, times, underTimes, bridgeIds, patches, originalBlend, output:context.createImageData(width, height)};
   }
   function render(value) {
     progress = clamp01(value);
     if (!prepared) return;
-    const {pixels,times,underTimes,bridgeIds,patches,output} = prepared;
-    revealPhotoPixels(pixels,times,underTimes,bridgeIds,patches,progress,output.data);
+    const {pixels,times,underTimes,bridgeIds,patches,originalBlend,output} = prepared;
+    revealPhotoPixels(pixels,times,underTimes,bridgeIds,patches,progress,output.data,originalBlend);
     context.putImageData(output, 0, 0);
     canvas.dataset.progress = progress.toFixed(4);
   }
@@ -2347,7 +2370,7 @@ function createPhotoRope(canvas, photoUrl, timelineUrl) {
     };
     frame = requestAnimationFrame(tick);
   }
-  const ready = Promise.all([photo.decode(), timeline.decode()]).then(() => {
+  const ready = Promise.all([photo.decode(), timeline.decode(), uvImage.decode(), coverageImage.decode()]).then(() => {
     prepare();
     render(1);
     canvas.hidden = false;
@@ -2965,7 +2988,7 @@ let threadInView = false;
 let threadStep = -1;
 let threadTimer;
 let threadImageReady = false;
-const ropePhoto = createPhotoRope(threadArtwork.querySelector('[data-rope-canvas]'), './assets/identity-rope.png', './assets/identity-rope-flow.png');
+const ropePhoto = createPhotoRope(threadArtwork.querySelector('[data-rope-canvas]'), './assets/identity-rope.png', './assets/identity-rope-flow.png?v=smooth-photo-joins-20261128');
 ropePhoto.ready.then(() => {
   threadImageReady = true;
   startThreadCycle();

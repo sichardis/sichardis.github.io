@@ -598,7 +598,7 @@ let threadInView = false;
 let threadStep = -1;
 let threadTimer;
 let threadImageReady = false;
-const ropePhoto = createPhotoRope(threadArtwork.querySelector('[data-rope-canvas]'), './assets/identity-rope.png', './assets/identity-rope-flow.png');
+const ropePhoto = createPhotoRope(threadArtwork.querySelector('[data-rope-canvas]'), './assets/identity-rope.png', './assets/identity-rope-flow.png?v=smooth-photo-joins-20261128');
 ropePhoto.ready.then(() => {
   threadImageReady = true;
   startThreadCycle();
