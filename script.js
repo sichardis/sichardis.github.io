@@ -628,7 +628,7 @@ function startThreadCycle() {
   // Restart only when a new cycle begins, so returning to the page starts cleanly.
   void threadArtwork.offsetWidth;
   threadArtwork.classList.add('is-tying');
-  scheduleThreadStep(2800);
+  scheduleThreadStep(4500);
 }
 
 function scheduleThreadStep(delay) {

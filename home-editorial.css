@@ -96,8 +96,8 @@
 .identity-rope-motion { overflow: visible; }
 .identity-rope-motion .rope-draw { stroke-dasharray: 1; stroke-dashoffset: 0; }
 @media (prefers-reduced-motion: no-preference) {
-  .thread-artwork.is-tying .rope-draw { animation: rope-draw-through 2.6s cubic-bezier(.35,0,.35,1) both; }
-  .thread-artwork.is-tying .rope-complete { animation: rope-finish .15s 2.45s both; }
+  .thread-artwork.is-tying .rope-draw { animation: rope-draw-through 4.2s linear both; }
+  .thread-artwork.is-tying .rope-complete { animation: rope-finish .14s 4.2s both; }
   @keyframes rope-draw-through { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
   @keyframes rope-finish { from { opacity: 0; } to { opacity: 1; } }
 }
