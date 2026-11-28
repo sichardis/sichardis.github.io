@@ -16,10 +16,10 @@
   <link rel="stylesheet" href="./typography.css?v=footer-slogan-size-20261125">
   <link rel="stylesheet" href="./process-reader.css?v=storyboard-review-20261125">
   <link rel="stylesheet" href="./contact.css?v=orange-profile-20261124">
-  <link rel="stylesheet" href="./home-editorial.css?v=rope-draw-20261125">
+  <link rel="stylesheet" href="./home-editorial.css?v=continuous-rope-20261128">
   <link rel="stylesheet" href="./page-heading.css?v=shared-intro-20261125">
   <link rel="stylesheet" href="./detail-reading.css?v=storyboard-review-20261125">
-  <script defer src="./app.js?v=rope-motion-20261125"></script>
+  <script defer src="./app.js?v=continuous-rope-20261128"></script>
 </head>
 <body>
   <a class="skip-link" href="#content">본문으로 건너뛰기</a>
@@ -50,16 +50,20 @@
             <div class="hero-visual thread-scene">
               <div class="thread-artwork">
               <svg class="hero-rope identity-rope-motion" width="2172" height="724" viewBox="0 0 2172 724" role="img" aria-labelledby="identity-rope-title">
-                <title id="identity-rope-title">왼쪽에서 시작한 주황색 실이 매듭을 이루고 오른쪽으로 이어지는 일러스트</title>
+                <title id="identity-rope-title">한 가닥의 주황색 실이 고리를 만들고 끝을 통과시켜 매듭으로 이어지는 일러스트</title>
                 <defs>
-                  <mask id="identity-rope-reveal" maskUnits="userSpaceOnUse" x="0" y="0" width="2172" height="724">
-                    <g fill="none" stroke="white" stroke-width="190" stroke-linecap="round" stroke-linejoin="round">
-                      <path class="rope-draw" pathLength="1" d="M30 650 C270 640 430 470 570 305 C750 125 950 360 1210 365 C1320 370 1340 190 1460 180 C1565 160 1620 335 1530 420 C1435 505 1250 435 1250 300 C1250 200 1350 195 1440 250 C1500 285 1550 315 1610 300 C1780 230 1920 45 2140 50"/>
-                    </g>
-                    <rect class="rope-complete" width="2172" height="724" fill="white"/>
-                  </mask>
+                  <linearGradient id="rope-colour" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stop-color="#ffb24b"/><stop offset=".5" stop-color="#ff941d"/><stop offset="1" stop-color="#f77d10"/>
+                  </linearGradient>
                 </defs>
-                <image href="./assets/identity-rope.png" width="2172" height="724" mask="url(#identity-rope-reveal)"/>
+                <g fill="none" stroke-linecap="round" stroke-linejoin="round" data-rope-strand>
+                  <path class="rope-edge" data-rope-body d="M40 605 C480 600 420 80 910 290 S1250 340 1470 170 C1670 100 1630 500 1380 470 S1180 160 1320 225 S1560 400 2130 85"/>
+                  <path class="rope-body" data-rope-body/>
+                  <path class="rope-soft-highlight" data-rope-body/>
+                  <path class="rope-braid-dark" data-rope-dark/>
+                  <path class="rope-braid-light" data-rope-light/>
+                </g>
+                <g fill="none" stroke-linecap="round" stroke-linejoin="round" data-rope-overpasses aria-hidden="true"></g>
               </svg>
               </div>
             </div>
