@@ -94,15 +94,15 @@
 }
 .home-editorial .thread-artwork { width: 100%; }
 .identity-rope-motion { overflow: visible; }
+.identity-rope-motion .rope-photo-underpasses { display: none; }
 .identity-rope-motion .rope-draw { stroke-dasharray: 1; stroke-dashoffset: 0; }
-.identity-rope-motion .rope-animated-art { display: none; }
 @media (prefers-reduced-motion: no-preference) {
-  .thread-artwork.is-tying .rope-animated-art { display: block; animation: rope-route-hide .18s 4.2s both; }
-  .thread-artwork.is-tying .rope-draw { animation: rope-route-draw var(--rope-duration) linear var(--rope-delay) both; }
-  .thread-artwork.is-tying .rope-rest-art { animation: rope-route-finish .18s 4.2s both; }
-  @keyframes rope-route-draw { 0% { stroke-dashoffset: 1; opacity: 0; } .1% { opacity: 1; } 100% { stroke-dashoffset: 0; opacity: 1; } }
-  @keyframes rope-route-hide { from { opacity: 1; } to { opacity: 0; } }
-  @keyframes rope-route-finish { from { opacity: 0; } to { opacity: 1; } }
+  .thread-artwork.is-tying .rope-draw { animation: rope-photo-draw var(--rope-duration) linear var(--rope-delay) both; }
+  .thread-artwork.is-tying .rope-photo-underpasses { display: block; animation: rope-photo-underpass-hide .01s 4.2s both; }
+  .thread-artwork.is-tying .rope-edge-finish { animation: rope-photo-edge-finish .06s 4.2s both; }
+  @keyframes rope-photo-draw { 0% { stroke-dashoffset: 1; opacity: 0; } .1% { opacity: 1; } 100% { stroke-dashoffset: 0; opacity: 1; } }
+  @keyframes rope-photo-underpass-hide { from { opacity: 1; } to { opacity: 0; } }
+  @keyframes rope-photo-edge-finish { from { opacity: 0; } to { opacity: 1; } }
 }
 .home-editorial .thread-stroke { stroke-width: 36px; }
 .home-editorial .thread-stop .thread-icon { width: 38px; height: 38px; }
